@@ -1,0 +1,31 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+
+/* 这里配置 element 的主题颜色 */
+/*:root {*/
+/*    !*主题色*!*/
+/*    --el-color-primary: #C3030F!important;*/
+
+/*    !*鼠标悬浮到按钮 的颜色 *!*/
+/*    --el-color-primary-light-3: #D70415!important;*/
+/*    !*鼠标按下的颜色*!*/
+/*    --el-color-primary-dark-2:#C3030F!important;*/
+/*    !* disable 的颜色*!*/
+/*    --el-color-primary-light-5: #ea848a !important;*/
+/*}*/

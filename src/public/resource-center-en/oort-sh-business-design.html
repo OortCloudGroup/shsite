@@ -1,0 +1,1034 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Explains how business system design, development, deployment, and production launch evolve in the AI Vibe Coding era with OORT.sh, including changes and best practices." />
+  <title>OORT.sh | A New Paradigm for Business System Design and Deployment in the AI Era</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f8f9fa;
+      --bg-soft-2: #f1f3f4;
+      --ink: #202124;
+      --ink-2: #3c4043;
+      --muted: #5f6368;
+      --line: #e8eaed;
+      --blue: #1a73e8;
+      --blue-dark: #1557b0;
+      --green: #34a853;
+      --yellow: #fbbc04;
+      --red: #ea4335;
+      --blue-soft: #e8f0fe;
+      --green-soft: #e6f4ea;
+      --yellow-soft: #fef7e0;
+      --red-soft: #fce8e6;
+      --shadow-sm: 0 1px 2px rgba(60,64,67,.1), 0 1px 3px rgba(60,64,67,.08);
+      --shadow-md: 0 1px 3px rgba(60,64,67,.12), 0 4px 8px rgba(60,64,67,.1);
+      --shadow-lg: 0 2px 6px rgba(60,64,67,.12), 0 8px 24px rgba(60,64,67,.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Google Sans", "Google Sans Text", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.6;
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* ---------- Nav ---------- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      color: var(--ink);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      background: conic-gradient(from 90deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+    }
+    .brand b { font-weight: 500; }
+    .brand .sh { color: var(--blue); font-weight: 700; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: var(--ink-2);
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      transition: background .2s ease, color .2s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links a.active { background: var(--bg-soft-2); color: var(--blue); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 11px 22px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--blue-dark); box-shadow: var(--shadow-md); }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--blue);
+      border-color: var(--line);
+    }
+    .btn.ghost:hover { background: var(--blue-soft); box-shadow: none; }
+
+    .btn.text {
+      background: transparent;
+      color: var(--blue);
+      padding: 11px 8px;
+    }
+    .btn.text:hover { background: transparent; box-shadow: none; text-decoration: none; color: var(--blue-dark); }
+    .btn.text::after { content: "→"; transition: transform .2s ease; }
+    .btn.text:hover::after { transform: translateX(4px); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      padding: 80px 0 64px;
+      background:
+        radial-gradient(circle at 88% 0%, var(--blue-soft) 0%, transparent 42%),
+        radial-gradient(circle at 6% 22%, var(--green-soft) 0%, transparent 30%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .spark {
+      width: 18px; height: 18px;
+      display: inline-block;
+      background: conic-gradient(from 0deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 30%, #000 31%) ;
+      border-radius: 50%;
+    }
+
+    h1, h2, h3 { line-height: 1.15; margin: 0; color: var(--ink); font-weight: 500; }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 60px);
+      letter-spacing: -1.5px;
+      max-width: 640px;
+    }
+    h1 .hl { color: var(--blue); }
+    h1 .hl-g { color: var(--green); }
+
+    .hero p.lead {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.6vw, 20px);
+      max-width: 600px;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; align-items: center; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+    .chip {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-2);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ---------- Hero visual ---------- */
+    .visual {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .visual-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-soft);
+    }
+    .dots { display: flex; gap: 6px; }
+    .dots span { width: 11px; height: 11px; border-radius: 50%; }
+    .dots span:nth-child(1){ background: var(--red); }
+    .dots span:nth-child(2){ background: var(--yellow); }
+    .dots span:nth-child(3){ background: var(--green); }
+    .visual-top small { color: var(--muted); margin-left: 6px; font-size: 13px; }
+
+    .deploy-flow { padding: 18px; display: grid; gap: 12px; }
+    .flow-card {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #fff;
+      transition: box-shadow .2s ease, transform .2s ease;
+    }
+    .flow-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .flow-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 14px; color: #fff;
+    }
+    .fi-blue { background: var(--blue); }
+    .fi-green { background: var(--green); }
+    .fi-yellow { background: var(--yellow); color: #5f4b00; }
+    .fi-red { background: var(--red); }
+    .flow-card strong { display: block; font-size: 15px; font-weight: 600; color: var(--ink); }
+    .flow-card small { color: var(--muted); font-size: 13px; }
+    .status { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+    .st-green { background: var(--green-soft); color: var(--green); }
+    .st-blue { background: var(--blue-soft); color: var(--blue); }
+    .st-yellow { background: var(--yellow-soft); color: #b06000; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 88px 0; }
+    section.soft { background: var(--bg-soft); }
+
+    .section-head { max-width: 760px; margin: 0 auto 52px; text-align: center; }
+    .section-head.left { margin-left: 0; text-align: left; }
+    .section-kicker {
+      display: inline-block;
+      color: var(--blue);
+      font-weight: 600;
+      letter-spacing: .06em;
+      font-size: 13px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    h2 { font-size: clamp(28px, 3.4vw, 44px); letter-spacing: -1px; }
+    .section-head p { margin: 18px 0 0; color: var(--muted); font-size: 18px; }
+
+    .grid { display: grid; gap: 24px; }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid.cols-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 28px;
+      transition: box-shadow .25s ease, transform .25s ease;
+    }
+    .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    .card p { color: var(--muted); margin: 0; font-size: 15px; }
+
+    .icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+    .ic-blue { background: var(--blue-soft); color: var(--blue); }
+    .ic-green { background: var(--green-soft); color: var(--green); }
+    .ic-yellow { background: var(--yellow-soft); color: #b06000; }
+    .ic-red { background: var(--red-soft); color: var(--red); }
+
+    /* ---------- Quote ---------- */
+    .quote-block {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, var(--blue-soft), var(--green-soft));
+      padding: clamp(28px, 5vw, 60px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .quote-block::after {
+      content: "20%";
+      position: absolute;
+      right: 36px; bottom: -28px;
+      font-size: clamp(80px, 15vw, 180px);
+      line-height: .8;
+      font-weight: 800;
+      color: rgba(26,115,232,.1);
+      letter-spacing: -6px;
+    }
+    .quote-block p { position: relative; z-index: 1; margin: 0; font-size: clamp(20px, 2.4vw, 30px); line-height: 1.5; color: var(--ink); font-weight: 500; }
+    .quote-block .note { margin-top: 20px; color: var(--ink-2); font-size: 16px; font-weight: 400; }
+
+    /* ---------- Split / steps ---------- */
+    .split { display: grid; grid-template-columns: .85fr 1.15fr; gap: 44px; align-items: start; }
+
+    .sticky-note { position: sticky; top: 96px; }
+    .sticky-note h2 { margin-top: 12px; }
+    .sticky-note p { color: var(--muted); margin-top: 16px; font-size: 17px; }
+    .big-number { font-size: 64px; line-height: 1; font-weight: 700; color: var(--blue); letter-spacing: -3px; }
+
+    .timeline { display: grid; gap: 18px; }
+    .step {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 18px;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: #fff;
+      transition: box-shadow .2s ease;
+    }
+    .step:hover { box-shadow: var(--shadow-md); }
+    .step-no {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      color: #fff; font-weight: 700; font-size: 18px;
+      background: var(--blue);
+    }
+    .step:nth-child(2) .step-no { background: var(--green); }
+    .step:nth-child(3) .step-no { background: var(--yellow); color: #5f4b00; }
+    .step h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .step p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    /* ---------- Compare ---------- */
+    .compare { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .compare-panel { border-radius: var(--radius-lg); border: 1px solid var(--line); background: #fff; overflow: hidden; }
+    .compare-panel h3 { padding: 22px 26px; border-bottom: 1px solid var(--line); font-size: 20px; font-weight: 600; }
+    .compare-panel.bad h3 { background: var(--red-soft); color: var(--red); }
+    .compare-panel.good h3 { background: var(--green-soft); color: var(--green); }
+    .compare-panel ul { list-style: none; padding: 12px 26px 26px; margin: 0; }
+    .compare-panel li { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); display: flex; gap: 12px; font-size: 15px; }
+    .compare-panel li:last-child { border-bottom: 0; }
+    .bad li::before { content: "✕"; color: var(--red); font-weight: 700; }
+    .good li::before { content: "✓"; color: var(--green); font-weight: 700; }
+
+    /* ---------- Practice ---------- */
+    .practice-list { display: grid; gap: 16px; counter-reset: practice; }
+    .practice-item {
+      counter-increment: practice;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      transition: box-shadow .2s ease;
+    }
+    .practice-item:hover { box-shadow: var(--shadow-md); }
+    .practice-item::before {
+      content: counter(practice, decimal-leading-zero);
+      width: 56px; height: 56px;
+      display: grid; place-items: center;
+      border-radius: 14px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-weight: 700; font-size: 18px;
+    }
+    .practice-item h3 { font-size: 19px; font-weight: 600; margin-bottom: 6px; }
+    .practice-item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    /* ---------- CTA ---------- */
+    .cta { padding: 96px 0; }
+    .cta-box {
+      text-align: center;
+      border-radius: var(--radius-xl);
+      padding: clamp(40px, 7vw, 80px);
+      background: linear-gradient(135deg, var(--blue) 0%, #4285f4 60%, #1557b0 100%);
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+    .cta-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 12% 20%, rgba(255,255,255,.16), transparent 30%), radial-gradient(circle at 88% 80%, rgba(255,255,255,.12), transparent 32%);
+    }
+    .cta-box > * { position: relative; }
+    .cta-box h2 { color: #fff; max-width: 860px; margin: 0 auto; }
+    .cta-box p { max-width: 740px; margin: 20px auto 0; color: rgba(255,255,255,.9); font-size: 18px; }
+    .cta-box .hero-actions { justify-content: center; margin-top: 34px; }
+    .cta-box .btn { background: #fff; color: var(--blue); }
+    .cta-box .btn:hover { background: #f1f3f4; }
+    .cta-box .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+    .cta-box .btn.ghost:hover { background: rgba(255,255,255,.12); }
+
+    /* ---------- Footer ---------- */
+    footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--muted); font-size: 14px; background: var(--bg-soft); }
+    .footer-grid { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+    /* ---------- Reveal / to-top ---------- */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .to-top {
+      position: fixed;
+      right: 22px; bottom: 22px;
+      width: 48px; height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--blue);
+      display: grid; place-items: center;
+      cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transform: translateY(10px);
+      transition: .25s ease;
+      box-shadow: var(--shadow-md);
+      font-size: 18px;
+      z-index: 60;
+    }
+    .to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .nav-links { display: none; }
+      .hero-grid, .split { grid-template-columns: 1fr; }
+      .grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .compare { grid-template-columns: 1fr; }
+      .sticky-note { position: relative; top: auto; }
+      .section-head.left { text-align: left; }
+    }
+    @media (max-width: 640px) {
+      .container, .nav-inner { width: calc(100% - 32px); }
+      section { padding: 60px 0; }
+      .hero { padding: 56px 0 48px; }
+      .grid.cols-2, .grid.cols-3, .grid.cols-4 { grid-template-columns: 1fr; }
+      .practice-item, .step { grid-template-columns: 1fr; }
+      .practice-item::before, .step-no { width: 48px; height: 48px; }
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+    /* ===== Benchmark white pill navigation sync (same as platform-ios floating nav) ===== */
+    :root {
+      --benchmark-nav-bg: rgba(255, 255, 255, .94);
+      --benchmark-nav-line: rgba(218, 225, 235, .92);
+      --benchmark-nav-text: #182337;
+      --benchmark-nav-muted: #5f6f86;
+      --benchmark-nav-brand: #0f172a;
+      --benchmark-nav-accent: #1a73e8;
+      --benchmark-nav-accent-2: #44b7ff;
+      --benchmark-nav-hover: rgba(26, 115, 232, .08);
+      --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+    }
+
+    html { scroll-padding-top: 112px; }
+    body { padding-top: 0 !important; }
+    .btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .btn-primary:hover{background:var(--blue-dark);box-shadow:var(--shadow-md)}
+    .btn-ghost{color:var(--ink-2);background:transparent;border-color:transparent}
+    .btn-ghost:hover{background:var(--bg-soft);box-shadow:none}
+    .btn-sm{padding:7px 16px;font-size:13px}
+
+    body > header.navbar {
+      position: fixed !important;
+      top: 18px !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+      max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+      z-index: 1000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0 !important;
+      min-height: 64px !important;
+      padding: 0 !important;
+      border: 1px solid var(--benchmark-nav-line) !important;
+      border-radius: 999px !important;
+      background: var(--benchmark-nav-bg) !important;
+      backdrop-filter: saturate(180%) blur(22px) !important;
+      -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+      box-shadow: var(--benchmark-nav-shadow) !important;
+      overflow: visible !important;
+    }
+    body > header.navbar.scrolled {
+      border-color: rgba(203, 213, 225, .98) !important;
+      box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+    }
+    body > header.navbar .nav-in {
+      width: 100% !important;
+      max-width: none !important;
+      min-height: 64px !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 10px 14px 10px 18px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 18px !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: inherit !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+    }
+    body > header.navbar .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      color: var(--benchmark-nav-brand) !important;
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      letter-spacing: .2px !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      min-height: 42px !important;
+      flex: 0 0 auto !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    body > header.navbar .brand-logo {
+      display: block !important;
+      width: auto !important;
+      height: 51px !important;
+      object-fit: contain !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    body > header.navbar .nav-links {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      flex: 1 1 auto !important;
+      margin: 0 !important;
+      color: var(--benchmark-nav-muted) !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      overflow-x: auto !important;
+      scrollbar-width: none !important;
+    }
+    body > header.navbar .nav-links::-webkit-scrollbar { display: none; }
+    body > header.navbar .nav-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: var(--benchmark-nav-muted) !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      line-height: 1 !important;
+      min-height: 38px !important;
+      padding: 0 13px !important;
+      border-radius: 999px !important;
+      transition: color .22s ease, background .22s ease, transform .22s ease !important;
+      white-space: nowrap !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    body > header.navbar .nav-link:hover,
+    body > header.navbar .nav-link.active {
+      color: var(--benchmark-nav-accent) !important;
+      background: var(--benchmark-nav-hover) !important;
+      transform: translateY(-1px) !important;
+    }
+    body > header.navbar .nav-acts {
+      margin-left: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      flex: 0 0 auto !important;
+    }
+    body > header.navbar .nav-acts .btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      min-height: 42px !important;
+      border: 1px solid rgba(26, 115, 232, .16) !important;
+      border-radius: 999px !important;
+      padding: 0 17px !important;
+      background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+      color: #ffffff !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+      white-space: nowrap !important;
+    }
+    body > header.navbar .nav-acts .btn:hover {
+      transform: translateY(-2px) !important;
+      filter: saturate(1.08) !important;
+      box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border: 1px solid var(--benchmark-nav-line) !important;
+      background: #ffffff !important;
+      color: var(--benchmark-nav-text) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+    }
+    .nav-toggle span { width:20px;height:2px;background:var(--benchmark-nav-text)!important;border-radius:2px;transition:.3s }
+
+    .hero{padding-top:158px}
+
+    @media (max-width: 980px) {
+      .hero-grid, .split { grid-template-columns: 1fr; }
+      .grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .compare { grid-template-columns: 1fr; }
+      .sticky-note { position: relative; top: auto; }
+      .section-head.left { text-align: left; }
+    }
+    @media (max-width: 980px) {
+      body > header.navbar {
+        top: 10px !important;
+        width: min(100% - 24px, var(--max, 1180px)) !important;
+        max-width: min(100% - 24px, var(--max, 1180px)) !important;
+        border-radius: 24px !important;
+      }
+      body > header.navbar .nav-in {
+        min-height: 58px !important;
+        padding: 8px 12px 8px 14px !important;
+      }
+      body > header.navbar .nav-links { display: none !important; }
+      body > header.navbar .nav-links.open {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        position: absolute !important;
+        top: calc(100% + 10px) !important;
+        left: 0 !important;
+        right: 0 !important;
+        padding: 10px !important;
+        border: 1px solid var(--benchmark-nav-line) !important;
+        border-radius: 22px !important;
+        background: #ffffff !important;
+        box-shadow: var(--benchmark-nav-shadow) !important;
+      }
+      body > header.navbar .nav-links.open a {
+        min-height: 42px !important;
+        justify-content: flex-start !important;
+        padding: 0 14px !important;
+      }
+      .nav-toggle{display:flex}
+    }
+    @media (max-width: 640px) {
+      html { scroll-padding-top: 90px; }
+      .container { width: calc(100% - 32px); }
+      section { padding: 60px 0; }
+      .hero { padding:128px 0 48px; }
+      .grid.cols-2, .grid.cols-3, .grid.cols-4 { grid-template-columns: 1fr; }
+      .practice-item, .step { grid-template-columns: 1fr; }
+      .practice-item::before, .step-no { width: 48px; height: 48px; }
+    }
+</style>
+</head>
+<body id="top">
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+      <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh website">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Page navigation">
+        <a href="#why" class="nav-link">Why</a>
+        <a href="#change" class="nav-link">Design Changes</a>
+        <a href="#workflow" class="nav-link">New Flow</a>
+        <a href="#capability" class="nav-link">Platform Features</a>
+        <a href="#practice" class="nav-link">Best Practices</a>
+        <a href="#private" class="nav-link">Private Deploy</a>
+      </nav>
+      <div class="nav-acts">
+        <a class="btn btn-primary btn-sm" href="#workflow">Start for Free</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <header class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="spark"></span> Developer deployment platform for the AI era · Vibe Coding companion</div>
+          <h1>A more efficient way to build <span class="hl">business software</span>, from design to <span class="hl-g">production launch</span></h1>
+          <p class="lead">With OORT.sh, pages, services, and Agents generated through AI Vibe Coding no longer stop at demos. They can connect permissions, business systems, compliance requirements, and private deployment to enter truly runnable, operable, and reusable production environments.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#workflow">Start for Free</a>
+            <a class="btn text" href="#why">Understand the Platform Philosophy</a>
+          </div>
+          <div class="chips" aria-label="Platform keywords">
+            <span class="chip">Hosted Applications</span>
+            <span class="chip">Hosted Services</span>
+            <span class="chip">App Market</span>
+            <span class="chip">Service Catalog</span>
+            <span class="chip">OortCloud AI Studio</span>
+            <span class="chip">Private Deployment Solutions</span>
+          </div>
+        </div>
+
+        <div class="visual reveal" aria-label="OORT.sh deployment console illustration">
+          <div class="visual-top">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <small>oort.sh / production-ready workspace</small>
+          </div>
+          <div class="deploy-flow">
+            <div class="flow-card">
+              <div class="flow-icon fi-blue">AI</div>
+              <div><strong>Vibe Coding Output</strong><small>Rapidly generated prototypes, pages, APIs, and Agents</small></div>
+              <span class="status st-green">Ready</span>
+            </div>
+            <div class="flow-card">
+              <div class="flow-icon fi-green">S</div>
+              <div><strong>Service Catalog and Foundation Services</strong><small>Reusable authentication, messaging, storage, tasks, and gateways</small></div>
+              <span class="status st-blue">Bound</span>
+            </div>
+            <div class="flow-card">
+              <div class="flow-icon fi-yellow">P</div>
+              <div><strong>Permissions, Business, and Compliance Embedded</strong><small>Organization roles, business data, audits, and private constraints</small></div>
+              <span class="status st-yellow">Hardened</span>
+            </div>
+            <div class="flow-card">
+              <div class="flow-icon fi-red">↗</div>
+              <div><strong>Hosted Deployment and Continuous Iteration</strong><small>Application hosting, service hosting, observability, upgrades, and rollback</small></div>
+              <span class="status st-green">Running</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="why" class="soft">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Why</div>
+          <h2>Why keep developing an application enablement platform?</h2>
+          <p>Because a platform is not a fixed name, but an evolving tool system for real needs. Needs persist over the long term; products are only solutions for a specific phase, scenario, and technical condition.</p>
+        </div>
+
+        <div class="quote-block reveal">
+          <p>After four years, the application enablement platform has completed at most 20% of the original vision. But this is not a failure. It shows that the real problem is much bigger than any single product form: products are never unique or permanent, while the needs remain.</p>
+          <div class="note">The value of a tool is not in its name, but in the feeling of holding it in your hand: whether it is easy to use, saves effort, and helps business systems become runnable faster.</div>
+        </div>
+
+        <div class="grid cols-4" style="margin-top: 24px;">
+          <article class="card reveal">
+            <div class="icon ic-blue">◌</div>
+            <h3>Needs Persist</h3>
+            <p>The same category of domain needs can be met by different products. Products change, needs remain, and the platform must serve the needs themselves.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon ic-green">⌁</div>
+            <h3>Constrained by Scenarios</h3>
+            <p>Differences in organization, permissions, processes, and compliance across government, enterprise, and industry customers continually reshape product boundaries.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon ic-yellow">✦</div>
+            <h3>Constrained by Technology</h3>
+            <p>Technology shifts such as AI Agents, Vibe Coding, cloud native architectures, and private deployment continually introduce better solutions.</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon ic-red">↻</div>
+            <h3>Experience Determines Value</h3>
+            <p>Any pen can write, but a good pen makes people want to keep using it. A platform is also a tool, and must keep pursuing usability.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="change">
+      <div class="container split">
+        <div class="sticky-note reveal">
+          <div class="big-number">02</div>
+          <h2>Two major changes brought by OORT.sh</h2>
+          <p>The value of OORT.sh is not to make business design disappear, but to upgrade it from isolated software ideation into deployable, integrable, and governable platform engineering.</p>
+        </div>
+        <div class="timeline">
+          <article class="step reveal">
+            <div class="step-no">01</div>
+            <div>
+              <h3>From designing one application to designing a composable business system</h3>
+              <p>In the past, teams often started with pages, features, and databases. With OORT.sh, business objects, role permissions, reusable services, runtime environments, and deployment boundaries should be identified earlier. Applications no longer exist in isolation; they are composed across hosted applications, hosted services, service catalogs, and foundation services.</p>
+            </div>
+          </article>
+          <article class="step reveal">
+            <div class="step-no">02</div>
+            <div>
+              <h3>From completed code to production-ready delivery</h3>
+              <p>AI Vibe Coding can generate results quickly, but going to production means connecting complex permission systems, business systems, audit compliance, installation, deployment, and operations monitoring. OORT.sh productizes deep engineering capabilities so deployment, hosting, reuse, and governance become the default path.</p>
+            </div>
+          </article>
+          <article class="step reveal">
+            <div class="step-no">03</div>
+            <div>
+              <h3>From temporary project experience to accumulated best practices</h3>
+              <p>Every application deployment, service development, and private delivery can be accumulated into templates, components, service catalogs, app markets, and developer community experience, improving the design efficiency of the next business software product.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" class="soft">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">New Workflow</div>
+          <h2>A new workflow from software design to production deployment</h2>
+          <p>Best practice is not to let AI finish all code first, but to incorporate business intent, engineering structure, permission compliance, and deployment operations into the design at the same time.</p>
+        </div>
+        <div class="grid cols-3">
+          <article class="card reveal"><div class="icon ic-blue">1</div><h3>Define Business Intent</h3><p>Identify business objects, roles, processes, data boundaries, compliance requirements, and launch scenarios first instead of drawing pages first.</p></article>
+          <article class="card reveal"><div class="icon ic-green">2</div><h3>Generate Prototypes with AI Collaboration</h3><p>Use AI Vibe Coding to quickly generate pages, interactions, API drafts, and business scripts so requirements become visible as soon as possible.</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">3</div><h3>Model Services and Data</h3><p>Split application services, shared services, data models, and external integration points, and identify which capabilities should enter the service catalog.</p></article>
+          <article class="card reveal"><div class="icon ic-red">4</div><h3>Embed Permissions and Compliance</h3><p>Treat organization, identity, roles, audits, data permissions, and business rules as part of the design rather than patches before launch.</p></article>
+          <article class="card reveal"><div class="icon ic-blue">5</div><h3>Host Applications and Services</h3><p>Use OORT.sh to bring applications, APIs, databases, model services, and foundation services into one unified hosting and runtime view.</p></article>
+          <article class="card reveal"><div class="icon ic-green">6</div><h3>Deploy, Observe, and Iterate</h3><p>Create a closed loop around configuration, logs, monitoring, upgrades, rollback, and private delivery so software keeps evolving.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capability">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Platform Capabilities</div>
+          <h2>All the capabilities you need, plus others you may love</h2>
+          <p>OORT.sh productizes complex technologies and places development, hosting, services, markets, catalogs, communities, cloud capabilities, and private deployment solutions in one platform context.</p>
+        </div>
+        <div class="grid cols-4">
+          <article class="card reveal"><div class="icon ic-blue">▣</div><h3>Hosted Applications</h3><p>Host Web apps, backend systems, lightweight apps, and AI-generated applications so outputs have stable runtime entrances.</p></article>
+          <article class="card reveal"><div class="icon ic-green">◫</div><h3>Hosted Services</h3><p>Bring service-oriented capabilities such as databases, queues, APIs, and models into unified hosting and lifecycle management.</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">⚙</div><h3>Service Development</h3><p>Accumulate shared capabilities as reusable services, reduce duplicate construction, and let future applications stand on existing capabilities.</p></article>
+          <article class="card reveal"><div class="icon ic-red">✎</div><h3>Application Development</h3><p>Support the continuous development process from prototype and engineering structure to deployment configuration for business applications.</p></article>
+          <article class="card reveal"><div class="icon ic-green">▤</div><h3>App Market</h3><p>Make applications publishable, discoverable, installable, and reusable, connecting products with scenarios.</p></article>
+          <article class="card reveal"><div class="icon ic-blue">☷</div><h3>Service Catalog</h3><p>Make foundation capabilities searchable, requestable, and governable, helping teams know where existing capabilities are.</p></article>
+          <article class="card reveal"><div class="icon ic-red">◆</div><h3>Foundation Services</h3><p>General capabilities such as authentication, messaging, storage, logs, tasks, and gateways provide the foundation for business systems.</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">☁</div><h3>Foundation Cloud Capabilities</h3><p>Runtime, network, resource, elasticity, and monitoring capabilities support applications from development environments into production.</p></article>
+          <article class="card reveal"><div class="icon ic-blue">AI</div><h3>OortCloud AI Studio</h3><p>As the entrance for developer-AI collaboration, it connects ideas, prompts, prototypes, and engineering implementation.</p></article>
+          <article class="card reveal"><div class="icon ic-green">◎</div><h3>Developer Community</h3><p>Accumulate templates, components, experience, and best practices so platform capabilities grow through real usage.</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">↧</div><h3>Installation and Deployment Solutions</h3><p>Solve user challenges in installation, deployment, upgrade, and delivery, turning complex technologies into deliverable products.</p></article>
+          <article class="card reveal"><div class="icon ic-red">P</div><h3>Private Deployment Solutions</h3><p>For enterprise, government, and industry customers, adapt to permission systems, business systems, and compliance requirements.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="practice" class="soft">
+      <div class="container split">
+        <div class="section-head left reveal" style="margin-bottom:0;">
+          <div class="section-kicker">Best Practices</div>
+          <h2>Best practices for designing business software: production-oriented from the start</h2>
+          <p>AI makes generation faster, while OORT.sh makes landing steadier. True best practice is to design requirements, engineering, deployment, and operations on the same map.</p>
+        </div>
+        <div class="practice-list">
+          <article class="practice-item reveal"><div><h3>Do not design pages first; design business objects first</h3><p>Clarify people, events, objects, organizations, processes, states, permissions, and constraints before letting pages carry these business structures.</p></div></article>
+          <article class="practice-item reveal"><div><h3>Do not turn every project into an island</h3><p>Identify shared capabilities such as authentication, notifications, approvals, files, logs, tasks, and reports early, and prioritize accumulating them as services.</p></div></article>
+          <article class="practice-item reveal"><div><h3>AI-generated code must enter engineering standards</h3><p>Bring AI-generated results into directory structures, API specifications, permission models, configuration management, testing, and deployment pipelines.</p></div></article>
+          <article class="practice-item reveal"><div><h3>Plan installation and deployment before launch</h3><p>Production-oriented design must include environment variables, dependent services, data migration, upgrades, rollback, and private delivery.</p></div></article>
+          <article class="practice-item reveal"><div><h3>All services must be observable and governable</h3><p>Logs, metrics, alerts, audits, access control, and runtime boundaries are the foundation for long-term availability of business systems.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Before and After</div>
+          <h2>Differences between the traditional approach and the OORT.sh-supported approach</h2>
+        </div>
+        <div class="compare">
+          <div class="compare-panel bad reveal">
+            <h3>Traditional Project Delivery</h3>
+            <ul>
+              <li>Prototypes may be fast, but production launch depends on extensive manual coordination.</li>
+              <li>Services are scattered across projects, making reuse difficult.</li>
+              <li>Permissions, compliance, and audits are often handled late.</li>
+              <li>Deployment scripts, environment configuration, and installation documents easily get out of control.</li>
+              <li>One project experience is hard to turn into efficiency for the next.</li>
+            </ul>
+          </div>
+          <div class="compare-panel good reveal">
+            <h3>Platform-based Delivery Supported by OORT.sh</h3>
+            <ul>
+              <li>Prototypes, applications, services, and deployment collaborate in one platform context.</li>
+              <li>Shared capabilities enter the service catalog and become governable assets.</li>
+              <li>Permission systems, business systems, and compliance requirements enter design earlier.</li>
+              <li>Hosted applications and hosted services reduce repeated deployment costs.</li>
+              <li>App markets, communities, and best practices compound experience continuously.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="private" class="soft">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Privatization</div>
+          <h2>To truly go to production, permissions, business systems, and compliance must be addressed</h2>
+          <p>For AI Agent and Vibe Coding outputs to enter enterprise and industry scenarios, they need more than an application URL. They must connect organization permissions, data boundaries, business processes, audit requirements, and private environments.</p>
+        </div>
+        <div class="grid cols-3">
+          <article class="card reveal"><div class="icon ic-blue">ID</div><h3>Complex Permission Systems</h3><p>Identity, organizations, roles, positions, data permissions, and operation audits determine whether business software can enter real organizations.</p></article>
+          <article class="card reveal"><div class="icon ic-green">API</div><h3>Business System Integration</h3><p>New applications must connect with existing systems, data APIs, workflow engines, and foundation services instead of starting from scratch.</p></article>
+          <article class="card reveal"><div class="icon ic-red">✓</div><h3>Compliance and Privatization</h3><p>For government, enterprise, and industry customers, deployment location, network boundaries, data security, and upgrade mechanisms are all part of the product.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box reveal">
+          <div class="section-kicker" style="color:rgba(255,255,255,.85)">OORT.sh for AI Builders</div>
+          <h2>Turn AI-era development results into deployable, operable, and reusable business productivity.</h2>
+          <p>Products will iterate, names will change, and technologies will evolve; but making tools easier to use, helping business land faster, and bringing developers closer to production environments are worth continuous investment. Without persistence, there is no meaningful journey.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#workflow">Review the Workflow</a>
+            <a class="btn ghost" href="#capability">View Platform Capabilities</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+            <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh website">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+
+      <div>The developer deployment platform for the AI era is a Vibe Coding companion.</div>
+      <div>© 2026 OORT.sh Business Design Narrative</div>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Back to top">↑</button>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinksWrap = document.getElementById('navLinks');
+    const navLinks = [...document.querySelectorAll('.nav-links a')];
+    const reveals = [...document.querySelectorAll('.reveal')];
+    const toTop = document.querySelector('.to-top');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    const activeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
+    document.querySelectorAll('section[id]').forEach(section => activeObserver.observe(section));
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 8);
+      toTop.classList.toggle('show', window.scrollY > 700);
+    }, { passive: true });
+    navbar.classList.toggle('scrolled', window.scrollY > 8);
+    navToggle.addEventListener('click', () => navLinksWrap.classList.toggle('open'));
+    navLinks.forEach(link => link.addEventListener('click', () => navLinksWrap.classList.remove('open')));
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>
+

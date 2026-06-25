@@ -1,0 +1,801 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OORT - 小程序/公众号端侧分发</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--platform:#34a853;--platform-bg:#e6f4ea}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#1a1a2e;line-height:1.6;overflow-x:hidden}
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--platform-bg) 0%,#fff 100%);overflow:hidden;padding:80px 20px}
+  .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.7;pointer-events:none}
+  .b1{width:600px;height:600px;background:var(--platform-bg);top:-150px;right:-100px}
+  .b2{width:500px;height:500px;background:#d4edda;bottom:-100px;left:-80px}
+  .hero-inner{position:relative;z-index:2;max-width:1100px;text-align:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(52,168,83,.12);color:var(--platform);font-size:14px;font-weight:600;padding:8px 20px;border-radius:40px;margin-bottom:24px;letter-spacing:.5px}
+  .eyebrow svg{width:18px;height:18px;fill:var(--platform)}
+  .hero-title{font-size:clamp(36px,5.5vw,64px);font-weight:800;line-height:1.15;margin-bottom:20px;color:#1a1a2e}
+  .grad{background:linear-gradient(135deg,var(--platform),#4caf50 45%,#34a853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-subtitle{font-size:clamp(15px,1.8vw,18px);color:#555;max-width:720px;margin:0 auto 24px;line-height:1.75}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(52,168,83,.18);color:#444;font-size:13px;padding:10px 22px;border-radius:40px;box-shadow:0 2px 12px rgba(52,168,83,.08)}
+  .hero-badge span{display:flex;align-items:center;gap:4px}
+  .hero-badge span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--platform)}
+  .device-frame{margin-top:48px;max-width:500px;margin-left:auto;margin-right:auto}
+  .device-frame svg{width:100%;height:auto;filter:drop-shadow(0 20px 60px rgba(0,0,0,.12))}
+  .section{padding:100px 20px}
+  .section-inner{max-width:1100px;margin:0 auto}
+  .section-title{text-align:center;font-size:clamp(26px,3.5vw,40px);font-weight:700;margin-bottom:56px;color:#1a1a2e}
+  .overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+  .overview-card{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:32px 24px;text-align:center;transition:transform .25s,box-shadow .25s}
+  .overview-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(52,168,83,.1)}
+  .overview-icon{width:56px;height:56px;margin:0 auto 16px;background:var(--platform-bg);border-radius:14px;display:flex;align-items:center;justify-content:center}
+  .overview-icon svg{width:28px;height:28px;fill:var(--platform)}
+  .overview-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#1a1a2e}
+  .overview-card p{font-size:14px;color:#666}
+  .steps{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:wrap;margin-top:48px}
+  .step{flex:1;min-width:200px;max-width:260px;text-align:center;padding:0 16px;position:relative}
+  .step-num{width:44px;height:44px;border-radius:50%;background:var(--platform);color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+  .step h4{font-size:16px;font-weight:600;margin-bottom:6px}
+  .step p{font-size:13px;color:#666}
+  .step-arrow{position:absolute;right:-12px;top:22px;color:#ccc;font-size:22px}
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+  .feature-card{background:linear-gradient(135deg,var(--platform-bg),#f0faf3);border-radius:16px;padding:32px 24px;transition:transform .25s}
+  .feature-card:hover{transform:translateY(-3px)}
+  .feature-card h3{font-size:17px;font-weight:700;margin:12px 0 6px;color:#1a1a2e}
+  .feature-card p{font-size:14px;color:#555;line-height:1.6}
+  .feature-icon{width:48px;height:48px;border-radius:12px;background:var(--platform);display:flex;align-items:center;justify-content:center}
+  .feature-icon svg{width:24px;height:24px;fill:#fff}
+  .marketplace{background:linear-gradient(180deg,#f0faf3 0%,#fff 100%)}
+  .marketplace-search{max-width:520px;margin:0 auto 40px;position:relative}
+  .marketplace-search input{width:100%;padding:14px 20px 14px 48px;border:2px solid #e0e4ea;border-radius:12px;font-size:15px;outline:none;transition:border .2s}
+  .marketplace-search input:focus{border-color:var(--platform)}
+  .marketplace-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;fill:#aaa}
+  .marketplace-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;max-width:900px;margin:0 auto}
+  .app-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;overflow:hidden;transition:box-shadow .25s,transform .25s}
+  .app-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(52,168,83,.1)}
+  .app-thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:36px}
+  .app-thumb.t1{background:linear-gradient(135deg,#e6f4ea,#c8e6c9)}
+  .app-thumb.t2{background:linear-gradient(135deg,#fef3e8,#fde2c4)}
+  .app-thumb.t3{background:linear-gradient(135deg,#e8f5e9,#c8e6c9)}
+  .app-thumb.t4{background:linear-gradient(135deg,#f3e5f5,#e1bee7)}
+  .app-thumb.t5{background:linear-gradient(135deg,#e0f7fa,#b2ebf2)}
+  .app-thumb.t6{background:linear-gradient(135deg,#fce4ec,#f8bbd0)}
+  .app-info{padding:14px}
+  .app-info h4{font-size:14px;font-weight:600;margin-bottom:4px}
+  .app-info p{font-size:12px;color:#888}
+  .app-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:var(--platform-bg);color:var(--platform);font-weight:600;margin-top:6px}
+  .specs{background:#f0faf3}
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .spec-item{background:#fff;border-radius:12px;padding:20px 24px;border-left:4px solid var(--platform)}
+  .spec-item h4{font-size:14px;font-weight:700;color:var(--platform);margin-bottom:6px}
+  .spec-item p{font-size:13px;color:#555;line-height:1.6}
+  .cta{text-align:center;background:linear-gradient(180deg,var(--platform-bg),#fff);padding:80px 20px}
+  .cta h2{font-size:clamp(26px,3.5vw,38px);font-weight:700;margin-bottom:16px}
+  .cta p{font-size:16px;color:#555;max-width:600px;margin:0 auto 32px;line-height:1.7}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--platform);color:#fff;font-size:16px;font-weight:600;padding:14px 36px;border-radius:40px;text-decoration:none;transition:background .2s,transform .2s;border:none;cursor:pointer}
+  .cta-btn:hover{background:#2d8e47;transform:translateY(-2px)}
+  .cta-btn svg{width:20px;height:20px;fill:#fff}
+  footer{text-align:center;padding:40px 20px;border-top:1px solid #e8ecf1}
+  .footer-tagline{font-size:20px;font-weight:700;color:var(--platform);margin-bottom:4px}
+  .footer-bot{font-size:13px;color:#999}
+  @media(max-width:768px){.step-arrow{display:none}.steps{flex-direction:column;align-items:center}}
+
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+        .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+</style>
+</head>
+<body>
+  <header class="topbar">
+        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+      <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#overview">平台概述</a>
+      <a href="#distribution">分发流程</a>
+      <a href="#features">平台特性</a>
+      <a href="#marketplace">应用市场</a>
+      <a class="nav-cta" href="portal.html#platforms">返回多端</a>
+    </nav>
+  </header>
+
+
+<!-- Hero -->
+<section id="overview" class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">
+      <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+      小程序端侧分发
+    </div>
+    <h1 class="hero-title">将应用分发到<br><span class="grad">微信与支付宝生态</span></h1>
+    <p class="hero-subtitle">通过微信/支付宝平台审核、二维码扫码与分享卡片，将 OORT 应用快速分发到小程序生态。即开即用、分享到聊天、微信登录、支付集成，充分利用小程序轻量快捷的优势。</p>
+    <div class="hero-badge">
+      <span>微信小程序</span>
+      <span>支付宝小程序</span>
+      <span>即开即用</span>
+      <span>社交分享</span>
+    </div>
+
+    <!-- Device Frame: Phone with Mini Program Overlay -->
+    <div class="device-frame">
+      <svg viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg">
+        <!-- Phone Body -->
+        <rect x="40" y="20" width="280" height="600" rx="36" fill="#000"/>
+        <rect x="48" y="28" width="264" height="584" rx="30" fill="#111"/>
+        <!-- Phone Screen -->
+        <rect x="56" y="36" width="248" height="568" rx="24" fill="#f5f5f5"/>
+        <!-- Notch -->
+        <rect x="140" y="36" width="80" height="24" rx="12" fill="#000"/>
+        <circle cx="168" cy="48" r="5" fill="#1a1a2e"/>
+        <circle cx="168" cy="48" r="2" fill="#34a853"/>
+        <!-- Mini Program Window -->
+        <rect x="70" y="80" width="220" height="340" rx="12" fill="#fff" filter="url(#mpshadow)"/>
+        <!-- Mini Program Top Bar -->
+        <rect x="70" y="80" width="220" height="44" rx="12" fill="#34a853"/>
+        <rect x="70" y="108" width="220" height="16" fill="#34a853"/>
+        <!-- Capsule Buttons -->
+        <rect x="250" y="90" width="30" height="24" rx="12" fill="rgba(255,255,255,0.25)"/>
+        <line x1="258" y1="102" x2="266" y2="102" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="220" y="90" width="24" height="24" rx="12" fill="rgba(255,255,255,0.25)"/>
+        <line x1="228" y1="96" x2="236" y2="104" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="236" y1="96" x2="228" y2="104" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Mini Program Title -->
+        <text x="180" y="107" font-size="13" font-weight="600" fill="#fff" text-anchor="middle" font-family="system-ui,sans-serif">OORT 应用</text>
+        <!-- Mini Program Content Area -->
+        <rect x="82" y="136" width="196" height="80" rx="8" fill="#e6f4ea"/>
+        <text x="180" y="168" font-size="14" font-weight="700" fill="#34a853" text-anchor="middle" font-family="system-ui,sans-serif">欢迎使用</text>
+        <text x="180" y="190" font-size="11" fill="#5a9e6f" text-anchor="middle" font-family="system-ui,sans-serif">小程序已加载完成</text>
+        <!-- Content Cards -->
+        <rect x="82" y="226" width="92" height="64" rx="8" fill="#f8f9fa"/>
+        <text x="128" y="252" font-size="11" font-weight="600" fill="#333" text-anchor="middle" font-family="system-ui">应用市场</text>
+        <text x="128" y="270" font-size="9" fill="#999" text-anchor="middle" font-family="system-ui">浏览应用</text>
+        <rect x="186" y="226" width="92" height="64" rx="8" fill="#f8f9fa"/>
+        <text x="232" y="252" font-size="11" font-weight="600" fill="#333" text-anchor="middle" font-family="system-ui">我的</text>
+        <text x="232" y="270" font-size="9" fill="#999" text-anchor="middle" font-family="system-ui">个人中心</text>
+        <!-- Bottom Tab Bar -->
+        <rect x="70" y="372" width="220" height="48" rx="0" fill="#fff" stroke="#e8e8e8" stroke-width=".5"/>
+        <rect x="70" y="372" width="73" height="48" fill="#fff"/>
+        <rect x="143" y="372" width="74" height="48" fill="#fff"/>
+        <rect x="217" y="372" width="73" height="48" fill="#fff"/>
+        <!-- Tab Icons -->
+        <rect x="96" y="380" width="20" height="20" rx="4" fill="#e6f4ea"/>
+        <text x="106" y="394" font-size="10" fill="#34a853" text-anchor="middle" font-family="system-ui">首</text>
+        <rect x="173" y="380" width="20" height="20" rx="4" fill="#f5f5f5"/>
+        <text x="183" y="394" font-size="10" fill="#999" text-anchor="middle" font-family="system-ui">分</text>
+        <rect x="247" y="380" width="20" height="20" rx="4" fill="#f5f5f5"/>
+        <text x="257" y="394" font-size="10" fill="#999" text-anchor="middle" font-family="system-ui">我</text>
+        <!-- Home Indicator -->
+        <rect x="140" y="428" width="80" height="4" rx="2" fill="#ccc"/>
+        <!-- QR Code Float -->
+        <rect x="240" y="300" width="100" height="100" rx="10" fill="#fff" filter="url(#mpshadow)"/>
+        <rect x="252" y="312" width="76" height="76" rx="4" fill="#f5f5f5"/>
+        <!-- QR Pattern -->
+        <rect x="260" y="320" width="14" height="14" rx="2" fill="#34a853"/>
+        <rect x="280" y="320" width="14" height="14" rx="2" fill="#34a853"/>
+        <rect x="300" y="320" width="14" height="14" rx="2" fill="#34a853"/>
+        <rect x="260" y="340" width="14" height="14" rx="2" fill="#34a853"/>
+        <rect x="280" y="340" width="14" height="14" rx="2" fill="#e6f4ea"/>
+        <rect x="300" y="340" width="14" height="14" rx="2" fill="#34a853"/>
+        <rect x="260" y="360" width="14" height="14" rx="2" fill="#34a853"/>
+        <rect x="280" y="360" width="14" height="14" rx="2" fill="#34a853"/>
+        <rect x="300" y="360" width="14" height="14" rx="2" fill="#34a853"/>
+        <text x="290" y="406" font-size="8" fill="#666" text-anchor="middle" font-family="system-ui">扫码进入</text>
+        <!-- Share Card Float -->
+        <rect x="20" y="240" width="120" height="80" rx="10" fill="#fff" filter="url(#mpshadow)"/>
+        <rect x="30" y="250" width="50" height="50" rx="6" fill="#e6f4ea"/>
+        <text x="55" y="280" font-size="16" text-anchor="middle" font-family="system-ui">📤</text>
+        <text x="90" y="268" font-size="10" font-weight="600" fill="#333" font-family="system-ui">分享小程序</text>
+        <text x="90" y="282" font-size="8" fill="#999" font-family="system-ui">发给朋友一起用</text>
+        <rect x="82" y="304" width="48" height="10" rx="5" fill="#34a853"/>
+        <defs>
+          <filter id="mpshadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.1"/>
+          </filter>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Overview -->
+<section id="distribution" class="section">
+  <div class="section-inner">
+    <h2 class="section-title">小程序，轻量快捷的移动应用底座</h2>
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 1.62-.49 3.13-1.32 4.39l1.46 1.46C21.32 16.15 22 14.16 22 12c0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V3.03c-4.06.5-7.18 3.91-7.18 8.03 0 4.52 3.66 8.17 8.18 8.17 1.85 0 3.55-.61 4.93-1.65l-1.46-1.46A6.948 6.948 0 0112 19z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg>
+        </div>
+        <h3>即开即用</h3>
+        <p>免安装秒开体验</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+        </div>
+        <h3>社交分享</h3>
+        <p>一键分享到聊天</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <h3>微信登录</h3>
+        <p>快捷身份认证</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+        </div>
+        <h3>支付集成</h3>
+        <p>微信支付/支付宝</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Distribution Steps -->
+<section id="features" class="section" style="background:#f0faf3">
+  <div class="section-inner">
+    <h2 class="section-title">分发流程</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>小程序开发</h4>
+        <p>使用原生小程序框架或跨端框架开发应用</p>
+        <span class="step-arrow">&rarr;</span>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>平台审核</h4>
+        <p>提交到微信/支付宝小程序平台进行内容审核</p>
+        <span class="step-arrow">&rarr;</span>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>扫码/分享</h4>
+        <p>审核通过后生成小程序码，支持分享卡片传播</p>
+        <span class="step-arrow">&rarr;</span>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>用户使用</h4>
+        <p>用户扫码或点击分享卡片，即开即用无需安装</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="marketplace" class="section">
+  <div class="section-inner">
+    <h2 class="section-title">核心能力</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M13 2.05v2.02c3.95.49 7 3.85 7 7.93 0 1.62-.49 3.13-1.32 4.39l1.46 1.46C21.32 16.15 22 14.16 22 12c0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V3.03c-4.06.5-7.18 3.91-7.18 8.03 0 4.52 3.66 8.17 8.18 8.17 1.85 0 3.55-.61 4.93-1.65l-1.46-1.46A6.948 6.948 0 0112 19z"/></svg>
+        </div>
+        <h3>即开即用</h3>
+        <p>免安装加载，扫码或点击即可秒开，无需下载安装包</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+        </div>
+        <h3>分享到聊天</h3>
+        <p>一键转发到微信/支付宝聊天窗口，实现社交传播</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        </div>
+        <h3>微信登录</h3>
+        <p>一键授权登录，快捷完成身份认证与用户绑定</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+        </div>
+        <h3>支付集成</h3>
+        <p>原生接入微信支付、支付宝支付，支持多种支付场景</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marketplace -->
+<section class="section marketplace">
+  <div class="section-inner">
+    <h2 class="section-title">小程序内的应用市场体验</h2>
+    <div class="marketplace-search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" placeholder="搜索小程序...">
+    </div>
+    <div class="marketplace-grid">
+      <div class="app-card">
+        <div class="app-thumb t1">&#128221;</div>
+        <div class="app-info"><h4>文档编辑器</h4><p>在线协作编辑</p><span class="app-tag">生产力</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t2">&#128202;</div>
+        <div class="app-info"><h4>数据分析</h4><p>可视化报表</p><span class="app-tag">分析</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t3">&#128197;</div>
+        <div class="app-info"><h4>项目管理</h4><p>敏捷协作</p><span class="app-tag">协作</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t4">&#128172;</div>
+        <div class="app-info"><h4>即时通讯</h4><p>团队沟通</p><span class="app-tag">通讯</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t5">&#9729;&#65039;</div>
+        <div class="app-info"><h4>云存储</h4><p>文件管理</p><span class="app-tag">存储</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t6">&#9993;&#65039;</div>
+        <div class="app-info"><h4>邮件客户端</h4><p>智能邮箱</p><span class="app-tag">邮件</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tech Specs -->
+<section class="section specs">
+  <div class="section-inner">
+    <h2 class="section-title">技术规格</h2>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <h4>支持平台</h4>
+        <p>微信小程序 / 支付宝小程序 / 百度小程序</p>
+      </div>
+      <div class="spec-item">
+        <h4>开发框架</h4>
+        <p>原生小程序 / UniApp / Taro / Remax</p>
+      </div>
+      <div class="spec-item">
+        <h4>API 版本</h4>
+        <p>微信小程序 API 2.x / 支付宝小程序 API</p>
+      </div>
+      <div class="spec-item">
+        <h4>分包大小</h4>
+        <p>主包 2MB / 分包 8MB / 总计 20MB</p>
+      </div>
+      <div class="spec-item">
+        <h4>分发方式</h4>
+        <p>扫码 / 分享卡片 / 搜索 / 公众号关联</p>
+      </div>
+      <div class="spec-item">
+        <h4>登录能力</h4>
+        <p>微信登录 / 支付宝登录 / 手机号快捷登录</p>
+      </div>
+      <div class="spec-item">
+        <h4>支付能力</h4>
+        <p>微信支付 / 支付宝支付 / 小程序支付</p>
+      </div>
+      <div class="spec-item">
+        <h4>安全能力</h4>
+        <p>内容安全审核、用户隐私保护、数据加密</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>开始小程序分发</h2>
+  <p>将你的企业应用分发到微信与支付宝小程序生态，享受 OORT 平台的小程序分发与社交传播能力。</p>
+  <a href="#" class="cta-btn">
+    <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+    开始分发
+  </a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-tagline">即开即用，社交传播。</div>
+  <div class="footer-bot">小程序端侧分发</div>
+</footer>
+
+</body>
+</html>
+

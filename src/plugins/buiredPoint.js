@@ -1,0 +1,9 @@
+import directives from '@/utils/directive'
+
+// 定义nuxt插件
+export default defineNuxtPlugin((nuxtApp) => {
+  // 通过循环注册所有指令
+  for (let key in directives) {
+    nuxtApp.vueApp.directive(key, directives[key])
+  }
+})

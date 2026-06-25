@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="OORT.sh 下载中心：面向开发者部署平台、私有化部署、AI Studio、端侧门户、开发模板、测试工具、开放能力与支持资源的统一下载入口。" />
+  <title>OORT.sh 下载中心｜开发者部署平台资源总览</title>
+  <style>
+    :root{
+      --blue:#1a73e8;--blue-dark:#1558b0;--blue-soft:#e8f0fe;
+      --green:#34a853;--green-soft:#e6f4ea;
+      --yellow:#fbbc04;--yellow-soft:#fef7e0;
+      --red:#ea4335;--red-soft:#fce8e6;
+      --purple:#a142f4;--purple-soft:#f3e8fd;
+      --cyan:#12b5cb;--cyan-soft:#e6f7fb;
+      --ink:#202124;--ink-soft:#3c4043;--muted:#5f6368;--line:#dadce0;
+      --bg:#fff;--bg-soft:#f8fafd;--max:1180px;
+      --r-xl:30px;--r-lg:24px;--r-md:18px;
+      --s1:0 1px 2px rgba(60,64,67,.08),0 1px 3px rgba(60,64,67,.08);
+      --s2:0 8px 26px rgba(60,64,67,.12);
+      --s3:0 24px 70px rgba(60,64,67,.16);
+      --t:.24s cubic-bezier(.2,.8,.2,1);
+      --nav-bg:rgba(255,255,255,.94);
+      --nav-shadow:0 18px 48px rgba(15,23,42,.12),0 2px 10px rgba(15,23,42,.06);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:112px;background:#fff}
+    body{margin:0;color:var(--ink);font-family:"Google Sans","Google Sans Text",Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;line-height:1.65;background:#fff;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    .navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:1000;width:min(var(--max),calc(100% - 32px));min-height:64px;border:1px solid rgba(218,225,235,.92);border-radius:999px;background:var(--nav-bg);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);box-shadow:var(--nav-shadow)}
+    .nav-in{min-height:64px;padding:10px 14px 10px 18px;display:flex;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:#0f172a;white-space:nowrap}.brand-mark{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),#44b7ff);box-shadow:0 10px 24px rgba(26,115,232,.18);font-weight:900}.nav-links{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;overflow:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-links a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:999px;color:#5f6f86;font-size:14px;font-weight:700;line-height:1;white-space:nowrap;transition:background var(--t),color var(--t),transform var(--t);text-decoration:none}.nav-links a:hover,.nav-links a.active{color:var(--blue);background:rgba(26,115,232,.08);transform:translateY(-1px)}.nav-actions{display:flex;align-items:center;gap:10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:999px;font-weight:800;cursor:pointer;transition:transform var(--t),box-shadow var(--t),background var(--t);white-space:nowrap}.btn-primary{min-height:42px;padding:0 18px;background:linear-gradient(135deg,var(--blue),#44b7ff);color:#fff;box-shadow:0 12px 26px rgba(26,115,232,.2)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(26,115,232,.28)}.btn-ghost{min-height:42px;padding:0 16px;color:var(--blue);background:#fff;border-color:rgba(26,115,232,.16)}.btn-ghost:hover{background:var(--blue-soft)}.nav-toggle{display:none;flex-direction:column;gap:5px;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:12px;padding:8px;box-shadow:0 8px 18px rgba(15,23,42,.08);cursor:pointer}.nav-toggle span{width:20px;height:2px;background:#182337;border-radius:2px}
+
+    .hero{position:relative;overflow:hidden;padding:158px 0 86px;background:radial-gradient(circle at 84% 10%,rgba(26,115,232,.18),transparent 32%),radial-gradient(circle at 8% 18%,rgba(52,168,83,.14),transparent 30%),linear-gradient(180deg,#fff 0%,#f8fbff 66%,#fff 100%)}.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(26,115,232,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,115,232,.06) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(180deg,transparent,#000 18%,#000 76%,transparent);pointer-events:none}.hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:#fff;border:1px solid rgba(218,220,224,.8);box-shadow:var(--s1);font-size:13px;font-weight:800;color:var(--blue);margin-bottom:22px}.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));box-shadow:0 0 0 4px rgba(26,115,232,.12)}h1{margin:0;font-size:clamp(42px,5.5vw,68px);line-height:1.06;letter-spacing:-2px;font-weight:850}.grad{background:linear-gradient(110deg,var(--blue),var(--green) 43%,var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.hero-sub{font-size:18px;color:var(--muted);line-height:1.8;max-width:650px;margin:24px 0 0}.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn-lg{min-height:50px;padding:0 24px;font-size:15px}.hero-note{display:flex;gap:10px;align-items:center;margin-top:22px;color:var(--muted);font-size:14px}.hero-note span{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-weight:900}
+
+    .download-console{position:relative;min-height:520px;border-radius:34px;background:rgba(255,255,255,.82);border:1px solid rgba(218,220,224,.72);box-shadow:var(--s3);padding:24px;backdrop-filter:blur(18px);overflow:hidden}.download-console::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 84% 14%,rgba(251,188,4,.2),transparent 24%),radial-gradient(circle at 10% 90%,rgba(161,66,244,.14),transparent 30%);pointer-events:none}.console-top{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;display:block}.dots i:nth-child(1){background:var(--red)}.dots i:nth-child(2){background:var(--yellow)}.dots i:nth-child(3){background:var(--green)}.console-chip{font-size:12px;color:var(--blue);font-weight:800;background:var(--blue-soft);border-radius:999px;padding:6px 10px}.download-stack{position:relative;display:grid;gap:14px}.stack-card{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;padding:15px;border:1px solid rgba(218,220,224,.76);border-radius:20px;background:rgba(255,255,255,.92);box-shadow:0 5px 16px rgba(60,64,67,.08);transition:transform var(--t),box-shadow var(--t)}.stack-card:hover{transform:translateY(-4px);box-shadow:var(--s2)}.stack-ic{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;color:#fff;font-weight:900}.ic-blue{background:var(--blue)}.ic-green{background:var(--green)}.ic-yellow{background:var(--yellow);color:#5f4b00}.ic-purple{background:var(--purple)}.ic-cyan{background:var(--cyan)}.stack-card b{display:block;font-size:15px}.stack-card small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}.status{font-size:12px;font-weight:900;border-radius:999px;padding:5px 9px}.s-blue{color:var(--blue);background:var(--blue-soft)}.s-green{color:var(--green);background:var(--green-soft)}.s-purple{color:var(--purple);background:var(--purple-soft)}
+
+    section{padding:86px 0}.sec-soft{background:linear-gradient(180deg,#f8fafd,#fff)}.sec-dark{background:linear-gradient(135deg,#172033,#263653);color:#fff}.sec-head{max-width:780px;margin:0 auto 46px;text-align:center}.kicker{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}.sec-dark .kicker{color:#8ab4f8}.sec-head h2{font-size:clamp(30px,3.7vw,48px);line-height:1.12;letter-spacing:-1.1px;margin:0;font-weight:850}.sec-head p{margin:16px 0 0;color:var(--muted);font-size:17px}.sec-dark .sec-head p{color:#c4ccd8}
+
+    .category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.download-card{position:relative;min-height:250px;padding:24px;border:1px solid rgba(218,220,224,.72);border-radius:24px;background:#fff;box-shadow:var(--s1);overflow:hidden;transition:transform var(--t),box-shadow var(--t),border-color var(--t)}.download-card::after{content:"";position:absolute;right:-42px;top:-42px;width:118px;height:118px;border-radius:50%;background:var(--tone);opacity:.58}.download-card:hover{transform:translateY(-6px);box-shadow:var(--s2);border-color:rgba(26,115,232,.25)}.card-icon{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--tone);color:var(--tone-ink);font-weight:900;font-size:20px;margin-bottom:18px}.download-card h3{font-size:18px;margin:0 0 10px;font-weight:850}.download-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}.meta span{font-size:12px;color:var(--ink-soft);background:var(--bg-soft);border:1px solid rgba(218,220,224,.72);border-radius:999px;padding:3px 8px}.download-link{margin-top:18px;display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-weight:850;font-size:14px}.download-link::after{content:"↓";transition:transform var(--t)}.download-card:hover .download-link::after{transform:translateY(2px)}.blue{--tone:var(--blue-soft);--tone-ink:var(--blue)}.green{--tone:var(--green-soft);--tone-ink:var(--green)}.yellow{--tone:var(--yellow-soft);--tone-ink:#b06000}.red{--tone:var(--red-soft);--tone-ink:var(--red)}.purple{--tone:var(--purple-soft);--tone-ink:var(--purple)}.cyan{--tone:var(--cyan-soft);--tone-ink:var(--cyan)}
+
+    .featured{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.feature-panel{position:relative;overflow:hidden;border-radius:30px;border:1px solid rgba(218,220,224,.72);background:#fff;box-shadow:var(--s2);padding:30px}.feature-panel::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 8%,var(--tone),transparent 32%);opacity:.95;pointer-events:none}.feature-panel>*{position:relative}.feature-panel h3{font-size:28px;line-height:1.2;margin:0;font-weight:850}.feature-panel p{color:var(--muted);margin:14px 0 0}.check{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}.check li{display:flex;gap:10px;color:var(--ink-soft);font-size:15px}.check li::before{content:"✓";width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--green-soft);color:var(--green);font-weight:900;flex:0 0 auto}.release-box{border-radius:24px;background:linear-gradient(135deg,var(--blue),#44b7ff);padding:26px;color:#fff;box-shadow:var(--s2)}.release-box h3{font-size:25px;margin:0;font-weight:850}.release-box p{margin:12px 0 0;color:rgba(255,255,255,.88)}.release-list{display:grid;gap:10px;margin-top:20px}.release-item{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.22);font-size:14px}.release-item:last-child{border-bottom:0}.release-item b{font-weight:850}.release-item span{color:rgba(255,255,255,.78)}
+
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{position:relative;border:1px solid rgba(255,255,255,.14);border-radius:24px;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);padding:24px;overflow:hidden}.step-no{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:rgba(138,180,248,.18);color:#8ab4f8;font-weight:900;margin-bottom:18px}.step h3{margin:0 0 8px;font-size:18px}.step p{margin:0;color:#c4ccd8;font-size:14px;line-height:1.65}
+
+    .matrix{border:1px solid rgba(218,220,224,.8);border-radius:28px;overflow:hidden;background:#fff;box-shadow:var(--s2)}.matrix-row{display:grid;grid-template-columns:1.05fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}.matrix-row:last-child{border-bottom:0}.matrix-row>div{padding:18px;border-right:1px solid var(--line);font-size:14px}.matrix-row>div:last-child{border-right:0}.matrix-head{background:#f8fafd;font-weight:850;color:var(--ink)}.matrix strong{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}.matrix span{color:var(--muted)}
+
+    .cta{padding:84px 0 96px}.cta-box{position:relative;overflow:hidden;text-align:center;border-radius:34px;padding:clamp(42px,7vw,82px);background:linear-gradient(135deg,#1a73e8 0%,#4285f4 48%,#34a853 100%);color:#fff;box-shadow:var(--s3)}.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 18%,rgba(255,255,255,.18),transparent 28%),radial-gradient(circle at 86% 82%,rgba(255,255,255,.16),transparent 32%)}.cta-box>*{position:relative}.cta-box h2{font-size:clamp(30px,4vw,50px);line-height:1.15;margin:0;font-weight:850;letter-spacing:-1px}.cta-box p{max-width:760px;margin:18px auto 0;color:rgba(255,255,255,.92);font-size:17px}.cta-box .hero-cta{justify-content:center}.cta-box .btn-ghost{background:#fff;color:var(--blue);border-color:#fff}
+    footer{border-top:1px solid var(--line);background:#f8fafd;color:var(--muted);font-size:14px}.footer-in{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:30px 24px}
+
+    @media(max-width:980px){.hero-in,.featured{grid-template-columns:1fr}.category-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}.matrix-row{grid-template-columns:1fr}.matrix-row>div{border-right:0;border-bottom:1px solid var(--line)}.matrix-row>div:last-child{border-bottom:0}.nav-links{display:none}.nav-links.open{display:flex;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:22px;padding:10px;box-shadow:var(--nav-shadow)}.nav-links.open a{justify-content:flex-start}.nav-toggle{display:flex}.download-console{min-height:auto}}
+    @media(max-width:640px){.container{padding:0 18px}.navbar{top:10px;width:calc(100% - 24px);border-radius:24px}.nav-in{padding:8px 12px 8px 14px;min-height:58px}.brand span{display:none}.nav-actions{display:none}.hero{padding:128px 0 58px}section{padding:66px 0}.category-grid,.steps{grid-template-columns:1fr}.stack-card{grid-template-columns:42px 1fr}.status{display:none}.footer-in{padding:24px 18px}}
+  
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+    </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+      <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#platform" class="nav-link">平台包</a>
+        <a href="#developer" class="nav-link">开发资源</a>
+        <a href="#clients" class="nav-link">端侧门户</a>
+        <a href="#process" class="nav-link">部署流程</a>
+        <a href="#matrix" class="nav-link">选型</a>
+      </nav>
+      <div class="nav-acts"><a class="btn btn-primary btn-sm" href="#platform">开始下载</a></div>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-in">
+        <div>
+          <div class="eyebrow">下载、私有部署、全球分发，一站完成</div>
+          <h1>面向开发者部署平台的 <span class="grad">统一下载中心</span></h1>
+          <p class="hero-sub">汇总 OORT.sh 平台安装包、私有化部署组件、OortCloud AI Studio、开发模板、测试工具、端侧门户与应用市场客户端，帮助开发者把 AI 编程与 Vibe Coding 成果真正部署到生产环境。</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#platform">下载平台包</a>
+            <a class="btn btn-ghost btn-lg" href="#clients">查看端侧客户端</a>
+          </div>
+          <div class="hero-note"><span>✓</span>支持下载 OORT.sh 后部署到全球服务器，构建自己的私有全球部署体系。</div>
+        </div>
+        <div class="download-console" aria-label="下载中心资源控制台示意">
+          <div class="console-top"><div class="dots"><i></i><i></i><i></i></div><div class="console-chip">Download Workspace</div></div>
+          <div class="download-stack">
+            <article class="stack-card"><div class="stack-ic ic-blue">核</div><div><b>OORT.sh 平台核心包</b><small>企业级应用托管、服务目录、应用市场与统一门户能力</small></div><span class="status s-blue">核心下载</span></article>
+            <article class="stack-card"><div class="stack-ic ic-green">私</div><div><b>私有化部署套件</b><small>全球服务器部署、内网运行、权限/业务/合规接入</small></div><span class="status s-green">私有部署</span></article>
+            <article class="stack-card"><div class="stack-ic ic-purple">AI</div><div><b>OortCloud AI Studio</b><small>OortCode、ClawCode、Qoder、Codex、Gemini 等 CLI 工具链</small></div><span class="status s-purple">AI 开发</span></article>
+            <article class="stack-card"><div class="stack-ic ic-cyan">端</div><div><b>端侧门户与应用市场</b><small>Android、iOS、鸿蒙、Desktop、AxI、OortClaw、PC Web、小程序、移动端</small></div><span class="status s-blue">多端分发</span></article>
+            <article class="stack-card"><div class="stack-ic ic-yellow">模</div><div><b>开发模板与测试工具</b><small>项目、前端、后台服务、AI Agent、低代码、数据、GIS、AIGC 与移动测试工具</small></div><span class="status s-green">工程资产</span></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Platform Downloads</div>
+          <h2>平台与私有化部署核心下载</h2>
+          <p>下载中心首先服务于 OORT.sh 的核心目标：把复杂技术产品化，让用户可以安装、部署、运行，并在全球服务器上构建自己的私有部署体系。</p>
+        </div>
+        <div class="featured">
+          <article class="feature-panel blue">
+            <h3>OORT.sh 开发者部署平台</h3>
+            <p>面向企业级应用托管、AI 编程成果发布、统一门户与应用市场、开发者支持的核心平台包。适合构建应用从开发、托管、发布、分发到运营的完整闭环。</p>
+            <ul class="check">
+              <li>托管应用、托管服务、服务开发、应用开发统一管理。</li>
+              <li>内置应用市场、服务目录、基础服务、基础云能力与开发者社区能力。</li>
+              <li>支撑 AI Agent 真正上生产，接入复杂权限体系、业务系统和合规要求。</li>
+            </ul>
+            <a class="download-link" href="#">下载 OORT.sh 平台包</a>
+          </article>
+          <aside class="release-box">
+            <h3>推荐下载组合</h3>
+            <p>根据部署目标选择组合包：快速体验、企业私有化、全球部署或离线开发。</p>
+            <div class="release-list">
+              <div class="release-item"><b>快速体验包</b><span>平台核心 + 示例应用</span></div>
+              <div class="release-item"><b>私有化部署包</b><span>平台核心 + 基础设施配置</span></div>
+              <div class="release-item"><b>全球部署包</b><span>多区域节点 + 发布策略</span></div>
+              <div class="release-item"><b>离线开发包</b><span>AI Studio + 私有模型适配</span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="developer">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Developer Resources</div>
+          <h2>开发环境、模板、文档与测试工具</h2>
+          <p>面向开发者的一组资源，帮助团队从 AI 编程、业务系统设计、工程开发、测试调试到多环境上线持续推进。</p>
+        </div>
+        <div class="category-grid">
+          <article class="download-card purple"><div class="card-icon">AI</div><h3>OortCloud AI Studio</h3><p>支持 OortCode、ClawCode、Qoder、Codex、Gemini、OpenCode、ClaudeCode 等 CLI 工具，支持私有化大模型与纯离线开发。</p><div class="meta"><span>AI 编程</span><span>离线模式</span><span>CLI</span></div><a class="download-link" href="oortcloud-ai-studio.html">查看资源</a></article>
+          <article class="download-card blue"><div class="card-icon">环</div><h3>多环境开发部署</h3><p>DEV、SIT、UAT、STAGING、PROD、COB 等多环境配置，适配大型企业研发合规、统一 CI/CD 与依赖治理。</p><div class="meta"><span>DEV</span><span>UAT</span><span>PROD</span></div><a class="download-link" href="dev-environment-platform.html">查看资源</a></article>
+          <article class="download-card green"><div class="card-icon">模</div><h3>开发模板</h3><p>项目、前端、后台服务、AI Agent、网站、小程序、低代码、无代码、数据、GIS、标注训练、AIGC 等模板。</p><div class="meta"><span>项目模板</span><span>分离部署</span><span>AIGC</span></div><a class="download-link" href="dev-templates.html">查看资源</a></article>
+          <article class="download-card yellow"><div class="card-icon">测</div><h3>测试工具包</h3><p>移动端专门测试工具中心，集成 PostMan、vConsole、总线 API 测试与数据可观测工具，支持业务系统调试。</p><div class="meta"><span>PostMan</span><span>vConsole</span><span>Observability</span></div><a class="download-link" href="mobile-test-workspace.html">查看资源</a></article>
+          <article class="download-card cyan"><div class="card-icon">文</div><h3>开发文档</h3><p>覆盖 JavaScript、TypeScript、Vue、Nuxt、Next.js、Java 后台、Go 后台等常用语言与框架的开发指南。</p><div class="meta"><span>JS/TS</span><span>Vue</span><span>Java/Go</span></div><a class="download-link" href="dev-docs.html">查看资源</a></article>
+          <article class="download-card red"><div class="card-icon">能</div><h3>开放能力与服务总线</h3><p>统一门户、统一用户、统一服务、统一授权、数据对标、基础服务、业务服务、云+端一体化能力。</p><div class="meta"><span>服务总线</span><span>基础服务</span><span>业务服务</span></div><a class="download-link" href="oort-platform.html">查看资源</a></article>
+          <article class="download-card blue"><div class="card-icon">云</div><h3>私有云开发基础能力</h3><p>共享、解耦、分层、服务化开发，前端/后端能力集合复用，能力调用申请审批与管控。</p><div class="meta"><span>私有云</span><span>共享复用</span><span>审批管控</span></div><a class="download-link" href="oort-private-cloud-development.html">查看资源</a></article>
+          <article class="download-card green"><div class="card-icon">支</div><h3>支持与技能提升</h3><p>智能客服、社区问答、在线提单、指南与文档、技能提升资源，保障从下载到上线的全流程支持。</p><div class="meta"><span>客服</span><span>社区</span><span>提单</span></div><a class="download-link" href="support.html">查看资源</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="clients">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Portal Clients</div>
+          <h2>统一门户与应用市场端侧下载</h2>
+          <p>OORT.sh 的企业级独特能力在于不仅能部署应用，还能集中管理应用申请、上架、审核、发布、升级、下架、可见性与授权，并分发到不同端侧。</p>
+        </div>
+        <div class="category-grid">
+          <article class="download-card green"><div class="card-icon">An</div><h3>Android 门户</h3><p>面向 Android 设备的企业应用市场入口，支持应用查询、安装、升级、评价和可见性授权。</p><div class="meta"><span>APK</span><span>企业分发</span></div><a class="download-link" href="platform-android.html">查看下载</a></article>
+          <article class="download-card blue"><div class="card-icon">iOS</div><h3>iOS 门户</h3><p>支持企业证书签名、MDM 推送与可信安装，面向 iPhone 与 iPad 的应用分发。</p><div class="meta"><span>MDM</span><span>Profile</span></div><a class="download-link" href="platform-ios.html">查看下载</a></article>
+          <article class="download-card red"><div class="card-icon">鸿</div><h3>鸿蒙门户</h3><p>面向 HarmonyOS 的应用分发与端侧能力集成，服务政企与行业多端统一入口。</p><div class="meta"><span>HarmonyOS</span><span>端侧</span></div><a class="download-link" href="platform-harmony.html">查看下载</a></article>
+          <article class="download-card purple"><div class="card-icon">PC</div><h3>OortCloud Desktop</h3><p>桌面端应用市场与 Desktop 扩展分发，支持利旧网页 AI 化的扩展能力。</p><div class="meta"><span>Desktop</span><span>扩展</span></div><a class="download-link" href="platform-desktop.html">查看下载</a></article>
+          <article class="download-card cyan"><div class="card-icon">Ax</div><h3>AxI 桌面端</h3><p>突出办公场景的智能体端侧入口，支持分发 AxI 插件工具，形成类似 zTools 的效率工具生态。</p><div class="meta"><span>Agent</span><span>插件</span></div><a class="download-link" href="platform-axi.html">查看下载</a></article>
+          <article class="download-card yellow"><div class="card-icon">虾</div><h3>OortClaw 本地虾</h3><p>本地桌面端运行的管理软件，可完全在内网私有化运行，数据不出网、数据合规。</p><div class="meta"><span>内网</span><span>合规</span></div><a class="download-link" href="platform-claw.html">查看下载</a></article>
+          <article class="download-card blue"><div class="card-icon">Web</div><h3>PC Web 门户</h3><p>浏览器端统一门户与应用市场入口，集中展示、搜索、授权和访问企业应用。</p><div class="meta"><span>Browser</span><span>Portal</span></div><a class="download-link" href="platform-web.html">查看下载</a></article>
+          <article class="download-card green"><div class="card-icon">小</div><h3>小程序 / 公众号</h3><p>面向轻量触达与移动业务闭环，支持小程序、公众号和移动端入口统一接入。</p><div class="meta"><span>Mini App</span><span>公众号</span></div><a class="download-link" href="platform-miniprogram.html">查看下载</a></article>
+          <article class="download-card purple"><div class="card-icon">H5</div><h3>移动端 H5</h3><p>面向跨端移动访问、嵌入式门户和快速分发场景，支持移动端统一入口。</p><div class="meta"><span>H5</span><span>Mobile</span></div><a class="download-link" href="platform-h5.html">查看下载</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-dark" id="process">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Install & Deploy</div>
+          <h2>从下载到私有全球部署体系</h2>
+          <p>下载中心不是文件列表，而是把平台安装、开发环境、端侧分发、合规接入与持续运营串成一条可执行路径。</p>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-no">01</div><h3>下载平台</h3><p>获取 OORT.sh 核心平台包、私有化部署套件、AI Studio 与开发模板。</p></article>
+          <article class="step"><div class="step-no">02</div><h3>部署基础设施</h3><p>部署到企业内网或全球服务器，接入容器、存储、消息、数据库、日志与网关。</p></article>
+          <article class="step"><div class="step-no">03</div><h3>发布应用与服务</h3><p>选择项目一键部署，或高级用户分别部署应用、服务、Agent 与基础设施。</p></article>
+          <article class="step"><div class="step-no">04</div><h3>分发与运营</h3><p>通过统一门户与应用市场分发到多端，完成可见性授权、升级、统计与维护。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="matrix">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Download Matrix</div>
+          <h2>按使用场景选择下载资源</h2>
+          <p>不同角色下载不同资源：开发者关注模板与工具，运维关注部署套件，业务组织关注门户客户端与应用市场。</p>
+        </div>
+        <div class="matrix" role="table" aria-label="下载资源选型矩阵">
+          <div class="matrix-row matrix-head" role="row"><div>场景</div><div>推荐下载</div><div>适合对象</div><div>目标结果</div></div>
+          <div class="matrix-row" role="row"><div><strong>快速体验</strong><span>本地或测试环境启动</span></div><div>OORT.sh 快速体验包 + 示例模板</div><div>开发者、售前、方案团队</div><div>快速跑通应用托管与发布流程</div></div>
+          <div class="matrix-row" role="row"><div><strong>企业私有化</strong><span>内网、合规、权限接入</span></div><div>私有化部署套件 + 开放能力包</div><div>企业 IT、平台团队、运维团队</div><div>构建可治理的私有部署平台</div></div>
+          <div class="matrix-row" role="row"><div><strong>AI 开发上生产</strong><span>AI 编程与 Agent 发布</span></div><div>AI Studio + CLI 工具 + Agent 模板</div><div>AI 开发者、应用开发团队</div><div>把 Vibe Coding 成果部署成生产服务</div></div>
+          <div class="matrix-row" role="row"><div><strong>多端分发</strong><span>统一门户与应用市场</span></div><div>Android / iOS / 鸿蒙 / Desktop / Web / 小程序客户端</div><div>业务用户、移动团队、桌面团队</div><div>应用查询、安装、升级、授权统一入口</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <div class="kicker" style="color:rgba(255,255,255,.86)">OORT.sh Download Center</div>
+          <h2>下载的不只是安装包，而是一套可上生产的工程能力。</h2>
+          <p>从平台核心、私有部署、AI Studio、开发模板、测试工具，到统一门户和端侧应用市场，OORT.sh 下载中心帮助团队把复杂技术产品化、把开发成果带入真实生产环境。</p>
+          <div class="hero-cta"><a class="btn btn-ghost btn-lg" href="#top">返回顶部</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-in">
+      <a class="brand" href="#top"><b class="brand-mark">↓</b><span>OORT.sh 下载中心</span></a>
+      <span>© 2026 OORT.sh Download Center</span>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    const links = [...navLinks.querySelectorAll('a')];
+    const sections = [...document.querySelectorAll('main section[id]')];
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 8), { passive: true });
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    links.forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
+

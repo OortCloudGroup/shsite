@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="OORT.sh Download Center: a unified download entry for the developer deployment platform, private deployment, AI Studio, client-side portals, development templates, testing tools, open capabilities, and support resources." />
+  <title>OORT.sh Download Center | Developer Deployment Platform Resource Overview</title>
+  <style>
+    :root{
+      --blue:#1a73e8;--blue-dark:#1558b0;--blue-soft:#e8f0fe;
+      --green:#34a853;--green-soft:#e6f4ea;
+      --yellow:#fbbc04;--yellow-soft:#fef7e0;
+      --red:#ea4335;--red-soft:#fce8e6;
+      --purple:#a142f4;--purple-soft:#f3e8fd;
+      --cyan:#12b5cb;--cyan-soft:#e6f7fb;
+      --ink:#202124;--ink-soft:#3c4043;--muted:#5f6368;--line:#dadce0;
+      --bg:#fff;--bg-soft:#f8fafd;--max:1180px;
+      --r-xl:30px;--r-lg:24px;--r-md:18px;
+      --s1:0 1px 2px rgba(60,64,67,.08),0 1px 3px rgba(60,64,67,.08);
+      --s2:0 8px 26px rgba(60,64,67,.12);
+      --s3:0 24px 70px rgba(60,64,67,.16);
+      --t:.24s cubic-bezier(.2,.8,.2,1);
+      --nav-bg:rgba(255,255,255,.94);
+      --nav-shadow:0 18px 48px rgba(15,23,42,.12),0 2px 10px rgba(15,23,42,.06);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:112px;background:#fff}
+    body{margin:0;color:var(--ink);font-family:"Google Sans","Google Sans Text",Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;line-height:1.65;background:#fff;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    .navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:1000;width:min(var(--max),calc(100% - 32px));min-height:64px;border:1px solid rgba(218,225,235,.92);border-radius:999px;background:var(--nav-bg);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);box-shadow:var(--nav-shadow)}
+    .nav-in{min-height:64px;padding:10px 14px 10px 18px;display:flex;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:#0f172a;white-space:nowrap}.brand-mark{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),#44b7ff);box-shadow:0 10px 24px rgba(26,115,232,.18);font-weight:900}.nav-links{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;overflow:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}.nav-links a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:999px;color:#5f6f86;font-size:14px;font-weight:700;line-height:1;white-space:nowrap;transition:background var(--t),color var(--t),transform var(--t);text-decoration:none}.nav-links a:hover,.nav-links a.active{color:var(--blue);background:rgba(26,115,232,.08);transform:translateY(-1px)}.nav-actions{display:flex;align-items:center;gap:10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:999px;font-weight:800;cursor:pointer;transition:transform var(--t),box-shadow var(--t),background var(--t);white-space:nowrap}.btn-primary{min-height:42px;padding:0 18px;background:linear-gradient(135deg,var(--blue),#44b7ff);color:#fff;box-shadow:0 12px 26px rgba(26,115,232,.2)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(26,115,232,.28)}.btn-ghost{min-height:42px;padding:0 16px;color:var(--blue);background:#fff;border-color:rgba(26,115,232,.16)}.btn-ghost:hover{background:var(--blue-soft)}.nav-toggle{display:none;flex-direction:column;gap:5px;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:12px;padding:8px;box-shadow:0 8px 18px rgba(15,23,42,.08);cursor:pointer}.nav-toggle span{width:20px;height:2px;background:#182337;border-radius:2px}
+
+    .hero{position:relative;overflow:hidden;padding:158px 0 86px;background:radial-gradient(circle at 84% 10%,rgba(26,115,232,.18),transparent 32%),radial-gradient(circle at 8% 18%,rgba(52,168,83,.14),transparent 30%),linear-gradient(180deg,#fff 0%,#f8fbff 66%,#fff 100%)}.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(26,115,232,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,115,232,.06) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(180deg,transparent,#000 18%,#000 76%,transparent);pointer-events:none}.hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:#fff;border:1px solid rgba(218,220,224,.8);box-shadow:var(--s1);font-size:13px;font-weight:800;color:var(--blue);margin-bottom:22px}.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));box-shadow:0 0 0 4px rgba(26,115,232,.12)}h1{margin:0;font-size:clamp(42px,5.5vw,68px);line-height:1.06;letter-spacing:-2px;font-weight:850}.grad{background:linear-gradient(110deg,var(--blue),var(--green) 43%,var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.hero-sub{font-size:18px;color:var(--muted);line-height:1.8;max-width:650px;margin:24px 0 0}.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn-lg{min-height:50px;padding:0 24px;font-size:15px}.hero-note{display:flex;gap:10px;align-items:center;margin-top:22px;color:var(--muted);font-size:14px}.hero-note span{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-weight:900}
+
+    .download-console{position:relative;min-height:520px;border-radius:34px;background:rgba(255,255,255,.82);border:1px solid rgba(218,220,224,.72);box-shadow:var(--s3);padding:24px;backdrop-filter:blur(18px);overflow:hidden}.download-console::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 84% 14%,rgba(251,188,4,.2),transparent 24%),radial-gradient(circle at 10% 90%,rgba(161,66,244,.14),transparent 30%);pointer-events:none}.console-top{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;display:block}.dots i:nth-child(1){background:var(--red)}.dots i:nth-child(2){background:var(--yellow)}.dots i:nth-child(3){background:var(--green)}.console-chip{font-size:12px;color:var(--blue);font-weight:800;background:var(--blue-soft);border-radius:999px;padding:6px 10px}.download-stack{position:relative;display:grid;gap:14px}.stack-card{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;padding:15px;border:1px solid rgba(218,220,224,.76);border-radius:20px;background:rgba(255,255,255,.92);box-shadow:0 5px 16px rgba(60,64,67,.08);transition:transform var(--t),box-shadow var(--t)}.stack-card:hover{transform:translateY(-4px);box-shadow:var(--s2)}.stack-ic{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;color:#fff;font-weight:900}.ic-blue{background:var(--blue)}.ic-green{background:var(--green)}.ic-yellow{background:var(--yellow);color:#5f4b00}.ic-purple{background:var(--purple)}.ic-cyan{background:var(--cyan)}.stack-card b{display:block;font-size:15px}.stack-card small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}.status{font-size:12px;font-weight:900;border-radius:999px;padding:5px 9px}.s-blue{color:var(--blue);background:var(--blue-soft)}.s-green{color:var(--green);background:var(--green-soft)}.s-purple{color:var(--purple);background:var(--purple-soft)}
+
+    section{padding:86px 0}.sec-soft{background:linear-gradient(180deg,#f8fafd,#fff)}.sec-dark{background:linear-gradient(135deg,#172033,#263653);color:#fff}.sec-head{max-width:780px;margin:0 auto 46px;text-align:center}.kicker{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}.sec-dark .kicker{color:#8ab4f8}.sec-head h2{font-size:clamp(30px,3.7vw,48px);line-height:1.12;letter-spacing:-1.1px;margin:0;font-weight:850}.sec-head p{margin:16px 0 0;color:var(--muted);font-size:17px}.sec-dark .sec-head p{color:#c4ccd8}
+
+    .category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.download-card{position:relative;min-height:250px;padding:24px;border:1px solid rgba(218,220,224,.72);border-radius:24px;background:#fff;box-shadow:var(--s1);overflow:hidden;transition:transform var(--t),box-shadow var(--t),border-color var(--t)}.download-card::after{content:"";position:absolute;right:-42px;top:-42px;width:118px;height:118px;border-radius:50%;background:var(--tone);opacity:.58}.download-card:hover{transform:translateY(-6px);box-shadow:var(--s2);border-color:rgba(26,115,232,.25)}.card-icon{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--tone);color:var(--tone-ink);font-weight:900;font-size:20px;margin-bottom:18px}.download-card h3{font-size:18px;margin:0 0 10px;font-weight:850}.download-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}.meta span{font-size:12px;color:var(--ink-soft);background:var(--bg-soft);border:1px solid rgba(218,220,224,.72);border-radius:999px;padding:3px 8px}.download-link{margin-top:18px;display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-weight:850;font-size:14px}.download-link::after{content:"↓";transition:transform var(--t)}.download-card:hover .download-link::after{transform:translateY(2px)}.blue{--tone:var(--blue-soft);--tone-ink:var(--blue)}.green{--tone:var(--green-soft);--tone-ink:var(--green)}.yellow{--tone:var(--yellow-soft);--tone-ink:#b06000}.red{--tone:var(--red-soft);--tone-ink:var(--red)}.purple{--tone:var(--purple-soft);--tone-ink:var(--purple)}.cyan{--tone:var(--cyan-soft);--tone-ink:var(--cyan)}
+
+    .featured{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.feature-panel{position:relative;overflow:hidden;border-radius:30px;border:1px solid rgba(218,220,224,.72);background:#fff;box-shadow:var(--s2);padding:30px}.feature-panel::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 8%,var(--tone),transparent 32%);opacity:.95;pointer-events:none}.feature-panel>*{position:relative}.feature-panel h3{font-size:28px;line-height:1.2;margin:0;font-weight:850}.feature-panel p{color:var(--muted);margin:14px 0 0}.check{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}.check li{display:flex;gap:10px;color:var(--ink-soft);font-size:15px}.check li::before{content:"✓";width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--green-soft);color:var(--green);font-weight:900;flex:0 0 auto}.release-box{border-radius:24px;background:linear-gradient(135deg,var(--blue),#44b7ff);padding:26px;color:#fff;box-shadow:var(--s2)}.release-box h3{font-size:25px;margin:0;font-weight:850}.release-box p{margin:12px 0 0;color:rgba(255,255,255,.88)}.release-list{display:grid;gap:10px;margin-top:20px}.release-item{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.22);font-size:14px}.release-item:last-child{border-bottom:0}.release-item b{font-weight:850}.release-item span{color:rgba(255,255,255,.78)}
+
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{position:relative;border:1px solid rgba(255,255,255,.14);border-radius:24px;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);padding:24px;overflow:hidden}.step-no{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:rgba(138,180,248,.18);color:#8ab4f8;font-weight:900;margin-bottom:18px}.step h3{margin:0 0 8px;font-size:18px}.step p{margin:0;color:#c4ccd8;font-size:14px;line-height:1.65}
+
+    .matrix{border:1px solid rgba(218,220,224,.8);border-radius:28px;overflow:hidden;background:#fff;box-shadow:var(--s2)}.matrix-row{display:grid;grid-template-columns:1.05fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}.matrix-row:last-child{border-bottom:0}.matrix-row>div{padding:18px;border-right:1px solid var(--line);font-size:14px}.matrix-row>div:last-child{border-right:0}.matrix-head{background:#f8fafd;font-weight:850;color:var(--ink)}.matrix strong{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}.matrix span{color:var(--muted)}
+
+    .cta{padding:84px 0 96px}.cta-box{position:relative;overflow:hidden;text-align:center;border-radius:34px;padding:clamp(42px,7vw,82px);background:linear-gradient(135deg,#1a73e8 0%,#4285f4 48%,#34a853 100%);color:#fff;box-shadow:var(--s3)}.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 18%,rgba(255,255,255,.18),transparent 28%),radial-gradient(circle at 86% 82%,rgba(255,255,255,.16),transparent 32%)}.cta-box>*{position:relative}.cta-box h2{font-size:clamp(30px,4vw,50px);line-height:1.15;margin:0;font-weight:850;letter-spacing:-1px}.cta-box p{max-width:760px;margin:18px auto 0;color:rgba(255,255,255,.92);font-size:17px}.cta-box .hero-cta{justify-content:center}.cta-box .btn-ghost{background:#fff;color:var(--blue);border-color:#fff}
+    footer{border-top:1px solid var(--line);background:#f8fafd;color:var(--muted);font-size:14px}.footer-in{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:30px 24px}
+
+    @media(max-width:980px){.hero-in,.featured{grid-template-columns:1fr}.category-grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}.matrix-row{grid-template-columns:1fr}.matrix-row>div{border-right:0;border-bottom:1px solid var(--line)}.matrix-row>div:last-child{border-bottom:0}.nav-links{display:none}.nav-links.open{display:flex;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:22px;padding:10px;box-shadow:var(--nav-shadow)}.nav-links.open a{justify-content:flex-start}.nav-toggle{display:flex}.download-console{min-height:auto}}
+    @media(max-width:640px){.container{padding:0 18px}.navbar{top:10px;width:calc(100% - 24px);border-radius:24px}.nav-in{padding:8px 12px 8px 14px;min-height:58px}.brand span{display:none}.nav-actions{display:none}.hero{padding:128px 0 58px}section{padding:66px 0}.category-grid,.steps{grid-template-columns:1fr}.stack-card{grid-template-columns:42px 1fr}.status{display:none}.footer-in{padding:24px 18px}}
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+      <a class="brand" href="#top" aria-label="OORT.sh Download Center"><b class="brand-mark">↓</b><span>OORT.sh Download Center</span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#platform">Platform Packages</a>
+        <a href="#developer">Developer Resources</a>
+        <a href="#clients">Client Portals</a>
+        <a href="#process">Deployment Process</a>
+        <a href="#matrix">Selection</a>
+      </nav>
+      <div class="nav-actions"><a class="btn btn-primary" href="#platform">Start Downloading</a></div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-in">
+        <div>
+          <div class="eyebrow">Download, private deployment, and global distribution in one place</div>
+          <h1>A <span class="grad">unified download center</span> for the developer deployment platform</h1>
+          <p class="hero-sub">Centralized access to OORT.sh platform installers, private deployment components, OortCloud AI Studio, development templates, testing tools, client-side portals, and app marketplace clients—helping developers deploy AI programming and Vibe Coding results into real production environments.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#platform">Download Platform Packages</a>
+            <a class="btn btn-ghost btn-lg" href="#clients">View Client-Side Apps</a>
+          </div>
+          <div class="hero-note"><span>✓</span>Download OORT.sh and deploy it to global servers to build your own private global deployment system.</div>
+        </div>
+        <div class="download-console" aria-label="Download center resource console diagram">
+          <div class="console-top"><div class="dots"><i></i><i></i><i></i></div><div class="console-chip">Download Workspace</div></div>
+          <div class="download-stack">
+            <article class="stack-card"><div class="stack-ic ic-blue">Core</div><div><b>OORT.sh Platform Core Package</b><small>Enterprise app hosting, service catalog, app marketplace, and unified portal capabilities</small></div><span class="status s-blue">Core Download</span></article>
+            <article class="stack-card"><div class="stack-ic ic-green">Priv</div><div><b>Private Deployment Suite</b><small>Global server deployment, intranet operation, and permissions/business/compliance integration</small></div><span class="status s-green">Private Deployment</span></article>
+            <article class="stack-card"><div class="stack-ic ic-purple">AI</div><div><b>OortCloud AI Studio</b><small>CLI toolchains including OortCode, ClawCode, Qoder, Codex, and Gemini</small></div><span class="status s-purple">AI Development</span></article>
+            <article class="stack-card"><div class="stack-ic ic-cyan">App</div><div><b>Client Portals and App Marketplace</b><small>Android, iOS, HarmonyOS, Desktop, AxI, OortClaw, PC Web, mini programs, and mobile apps</small></div><span class="status s-blue">Multi-end Distribution</span></article>
+            <article class="stack-card"><div class="stack-ic ic-yellow">Tpl</div><div><b>Development Templates and Testing Tools</b><small>Projects, frontend, backend services, AI Agents, low-code, data, GIS, AIGC, and mobile testing tools</small></div><span class="status s-green">Engineering Assets</span></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Platform Downloads</div>
+          <h2>Core downloads for platform and private deployment</h2>
+          <p>The download center first serves OORT.sh's core goal: productizing complex technologies so users can install, deploy, and run them, then build their own private deployment systems on global servers.</p>
+        </div>
+        <div class="featured">
+          <article class="feature-panel blue">
+            <h3>OORT.sh Developer Deployment Platform</h3>
+            <p>The core platform package for enterprise application hosting, AI programming result publishing, unified portals and app marketplaces, and developer support. Ideal for building a complete loop from app development, hosting, release, distribution, to operations.</p>
+            <ul class="check">
+              <li>Unified management for hosted applications, hosted services, service development, and application development.</li>
+              <li>Built-in app marketplace, service catalog, basic services, cloud capabilities, and developer community capabilities.</li>
+              <li>Supports bringing AI Agents into real production with complex permission systems, business systems, and compliance requirements.</li>
+            </ul>
+            <a class="download-link" href="#">Download OORT.sh Platform Package</a>
+          </article>
+          <aside class="release-box">
+            <h3>Recommended Download Bundles</h3>
+            <p>Select a bundle based on your deployment goal: quick trial, enterprise private deployment, global deployment, or offline development.</p>
+            <div class="release-list">
+              <div class="release-item"><b>Quick Trial Bundle</b><span>Platform core + sample apps</span></div>
+              <div class="release-item"><b>Private Deployment Bundle</b><span>Platform core + infrastructure configuration</span></div>
+              <div class="release-item"><b>Global Deployment Bundle</b><span>Multi-region nodes + release strategies</span></div>
+              <div class="release-item"><b>Offline Development Bundle</b><span>AI Studio + private model adaptation</span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="developer">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Developer Resources</div>
+          <h2>Development environments, templates, documentation, and testing tools</h2>
+          <p>A set of resources for developers that helps teams continuously move forward from AI programming, business system design, engineering development, testing and debugging, to multi-environment launch.</p>
+        </div>
+        <div class="category-grid">
+          <article class="download-card purple"><div class="card-icon">AI</div><h3>OortCloud AI Studio</h3><p>Supports CLI tools such as OortCode, ClawCode, Qoder, Codex, Gemini, OpenCode, and ClaudeCode, as well as private large models and fully offline development.</p><div class="meta"><span>AI Programming</span><span>Offline Mode</span><span>CLI</span></div><a class="download-link" href="oortcloud-ai-studio.html">View Resources</a></article>
+          <article class="download-card blue"><div class="card-icon">Env</div><h3>Multi-Environment Development Deployment</h3><p>Multi-environment configurations such as DEV, SIT, UAT, STAGING, PROD, and COB, adapted for large-enterprise R&D compliance, unified CI/CD, and dependency governance.</p><div class="meta"><span>DEV</span><span>UAT</span><span>PROD</span></div><a class="download-link" href="dev-environment-platform.html">View Resources</a></article>
+          <article class="download-card green"><div class="card-icon">Tpl</div><h3>Development Templates</h3><p>Templates for projects, frontend, backend services, AI Agents, websites, mini programs, low-code, no-code, data, GIS, annotation training, AIGC, and more.</p><div class="meta"><span>Project Templates</span><span>Separate Deployment</span><span>AIGC</span></div><a class="download-link" href="dev-templates.html">View Resources</a></article>
+          <article class="download-card yellow"><div class="card-icon">Test</div><h3>Testing Toolkit</h3><p>A dedicated mobile testing tool center integrating PostMan, vConsole, bus API testing, and data observability tools to support business system debugging.</p><div class="meta"><span>PostMan</span><span>vConsole</span><span>Observability</span></div><a class="download-link" href="mobile-test-workspace.html">View Resources</a></article>
+          <article class="download-card cyan"><div class="card-icon">Docs</div><h3>Developer Docs</h3><p>Development guides covering common languages and frameworks such as JavaScript, TypeScript, Vue, Nuxt, Next.js, Java backend, and Go backend.</p><div class="meta"><span>JS/TS</span><span>Vue</span><span>Java/Go</span></div><a class="download-link" href="dev-docs.html">View Resources</a></article>
+          <article class="download-card red"><div class="card-icon">API</div><h3>Open Capabilities and Service Bus</h3><p>Unified portal, unified users, unified services, unified authorization, data benchmarking, basic services, business services, and cloud + endpoint integrated capabilities.</p><div class="meta"><span>Service Bus</span><span>Basic Services</span><span>Business Services</span></div><a class="download-link" href="oort-platform.html">View Resources</a></article>
+          <article class="download-card blue"><div class="card-icon">Cloud</div><h3>Private Cloud Development Capabilities</h3><p>Shared, decoupled, layered, service-oriented development; reuse of frontend/backend capability collections; approval and control for capability invocation requests.</p><div class="meta"><span>Private Cloud</span><span>Shared Reuse</span><span>Approval Control</span></div><a class="download-link" href="oort-private-cloud-development.html">View Resources</a></article>
+          <article class="download-card green"><div class="card-icon">Help</div><h3>Support and Skill Improvement</h3><p>Smart customer service, community Q&A, online ticketing, guides and docs, and skill improvement resources to support the full process from download to launch.</p><div class="meta"><span>Support</span><span>Community</span><span>Tickets</span></div><a class="download-link" href="support.html">View Resources</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="clients">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Portal Clients</div>
+          <h2>Unified portal and app marketplace client-side downloads</h2>
+          <p>OORT.sh's unique enterprise capability is not only deploying applications, but also centrally managing app requests, listing, review, release, upgrade, delisting, visibility, and authorization, then distributing them to different client endpoints.</p>
+        </div>
+        <div class="category-grid">
+          <article class="download-card green"><div class="card-icon">An</div><h3>Android Portal</h3><p>An enterprise app marketplace entry for Android devices, supporting app search, installation, upgrades, reviews, and visibility authorization.</p><div class="meta"><span>APK</span><span>Enterprise Distribution</span></div><a class="download-link" href="platform-android.html">View Download</a></article>
+          <article class="download-card blue"><div class="card-icon">iOS</div><h3>iOS Portal</h3><p>Supports enterprise certificate signing, MDM push, and trusted installation for iPhone and iPad app distribution.</p><div class="meta"><span>MDM</span><span>Profile</span></div><a class="download-link" href="platform-ios.html">View Download</a></article>
+          <article class="download-card red"><div class="card-icon">HM</div><h3>HarmonyOS Portal</h3><p>Application distribution and client-side capability integration for HarmonyOS, serving unified multi-end entries for government, enterprise, and industry scenarios.</p><div class="meta"><span>HarmonyOS</span><span>Client-side</span></div><a class="download-link" href="platform-harmony.html">View Download</a></article>
+          <article class="download-card purple"><div class="card-icon">PC</div><h3>OortCloud Desktop</h3><p>Desktop app marketplace and Desktop extension distribution, supporting extension capabilities for AI-enhanced legacy web pages.</p><div class="meta"><span>Desktop</span><span>Extensions</span></div><a class="download-link" href="platform-desktop.html">View Download</a></article>
+          <article class="download-card cyan"><div class="card-icon">Ax</div><h3>AxI Desktop</h3><p>An agent client-side entry focused on office scenarios, supporting distribution of AxI plugin tools and forming a productivity tool ecosystem similar to zTools.</p><div class="meta"><span>Agent</span><span>Plugins</span></div><a class="download-link" href="platform-axi.html">View Download</a></article>
+          <article class="download-card yellow"><div class="card-icon">Claw</div><h3>OortClaw Local Client</h3><p>Management software running on the local desktop that can operate fully privately inside an intranet, keeping data in-network and compliant.</p><div class="meta"><span>Intranet</span><span>Compliance</span></div><a class="download-link" href="platform-claw.html">View Download</a></article>
+          <article class="download-card blue"><div class="card-icon">Web</div><h3>PC Web Portal</h3><p>A browser-based unified portal and app marketplace entry for centralized display, search, authorization, and access to enterprise applications.</p><div class="meta"><span>Browser</span><span>Portal</span></div><a class="download-link" href="platform-web.html">View Download</a></article>
+          <article class="download-card green"><div class="card-icon">Mini</div><h3>Mini Program / Official Account</h3><p>For lightweight reach and mobile business loops, supporting unified access to mini programs, official accounts, and mobile entries.</p><div class="meta"><span>Mini App</span><span>Official Account</span></div><a class="download-link" href="platform-miniprogram.html">View Download</a></article>
+          <article class="download-card purple"><div class="card-icon">H5</div><h3>Mobile H5</h3><p>For cross-end mobile access, embedded portals, and rapid distribution scenarios, supporting a unified mobile entry.</p><div class="meta"><span>H5</span><span>Mobile</span></div><a class="download-link" href="platform-h5.html">View Download</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-dark" id="process">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Install & Deploy</div>
+          <h2>From download to a private global deployment system</h2>
+          <p>The download center is not just a file list; it connects platform installation, development environments, client-side distribution, compliance integration, and continuous operations into an executable path.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><div class="step-no">01</div><h3>Download the Platform</h3><p>Get the OORT.sh core platform package, private deployment suite, AI Studio, and development templates.</p></article>
+          <article class="step"><div class="step-no">02</div><h3>Deploy Infrastructure</h3><p>Deploy to enterprise intranets or global servers, integrating containers, storage, messaging, databases, logs, and gateways.</p></article>
+          <article class="step"><div class="step-no">03</div><h3>Release Apps and Services</h3><p>Choose one-click project deployment, or let advanced users deploy apps, services, agents, and infrastructure separately.</p></article>
+          <article class="step"><div class="step-no">04</div><h3>Distribute and Operate</h3><p>Distribute to multiple endpoints through the unified portal and app marketplace, completing visibility authorization, upgrades, statistics, and maintenance.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="matrix">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Download Matrix</div>
+          <h2>Select download resources by usage scenario</h2>
+          <p>Different roles download different resources: developers focus on templates and tools, operations teams focus on deployment suites, and business organizations focus on portal clients and app marketplaces.</p>
+        </div>
+        <div class="matrix" role="table" aria-label="Download resource selection matrix">
+          <div class="matrix-row matrix-head" role="row"><div>Scenario</div><div>Recommended Download</div><div>Best For</div><div>Target Outcome</div></div>
+          <div class="matrix-row" role="row"><div><strong>Quick Trial</strong><span>Start locally or in a test environment</span></div><div>OORT.sh quick trial package + sample templates</div><div>Developers, presales, solution teams</div><div>Quickly run through app hosting and release workflows</div></div>
+          <div class="matrix-row" role="row"><div><strong>Enterprise Private Deployment</strong><span>Intranet, compliance, permission integration</span></div><div>Private deployment suite + open capability package</div><div>Enterprise IT, platform teams, operations teams</div><div>Build a governable private deployment platform</div></div>
+          <div class="matrix-row" role="row"><div><strong>AI Development to Production</strong><span>AI programming and Agent release</span></div><div>AI Studio + CLI tools + Agent templates</div><div>AI developers, application development teams</div><div>Deploy Vibe Coding results as production services</div></div>
+          <div class="matrix-row" role="row"><div><strong>Multi-End Distribution</strong><span>Unified portal and app marketplace</span></div><div>Android / iOS / HarmonyOS / Desktop / Web / mini program clients</div><div>Business users, mobile teams, desktop teams</div><div>Unified entry for app search, installation, upgrades, and authorization</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <div class="kicker" style="color:rgba(255,255,255,.86)">OORT.sh Download Center</div>
+          <h2>What you download is not just an installer, but production-ready engineering capabilities.</h2>
+          <p>From platform core, private deployment, AI Studio, development templates, and testing tools to unified portals and client-side app marketplaces, the OORT.sh Download Center helps teams productize complex technologies and bring development results into real production environments.</p>
+          <div class="hero-cta"><a class="btn btn-ghost btn-lg" href="#top">Back to Top</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-in">
+      <a class="brand" href="#top"><b class="brand-mark">↓</b><span>OORT.sh Download Center</span></a>
+      <span>© 2026 OORT.sh Download Center</span>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    const links = [...navLinks.querySelectorAll('a')];
+    const sections = [...document.querySelectorAll('main section[id]')];
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 8), { passive: true });
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    links.forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

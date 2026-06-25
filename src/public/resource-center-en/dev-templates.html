@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Development Template Center: introductions to templates for projects, frontend, backend services, AI Agents, websites, mini programs, low-code, no-code, data, GIS, model annotation and training, AIGC, and more." />
+  <title>Development Template Center | From Integrated Projects to Separate Deployment Templates</title>
+  <style>
+    :root{
+      --blue:#1a73e8;
+      --blue-dark:#1558b0;
+      --blue-soft:#e8f0fe;
+      --green:#34a853;
+      --green-soft:#e6f4ea;
+      --yellow:#fbbc04;
+      --yellow-soft:#fef7e0;
+      --red:#ea4335;
+      --red-soft:#fce8e6;
+      --purple:#a142f4;
+      --purple-soft:#f3e8fd;
+      --cyan:#12b5cb;
+      --cyan-soft:#e6f7fb;
+      --ink:#202124;
+      --ink-soft:#3c4043;
+      --muted:#5f6368;
+      --line:#dadce0;
+      --bg:#fff;
+      --bg-soft:#f8fafd;
+      --card:#fff;
+      --max:1180px;
+      --r-lg:24px;
+      --r-md:18px;
+      --s1:0 1px 2px rgba(60,64,67,.08),0 1px 3px rgba(60,64,67,.08);
+      --s2:0 8px 26px rgba(60,64,67,.12);
+      --s3:0 24px 70px rgba(60,64,67,.16);
+      --t:.24s cubic-bezier(.2,.8,.2,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:108px}
+    body{margin:0;color:var(--ink);font-family:"Google Sans","Google Sans Text",Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    /* Workspace-like floating navigation */
+    .navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:1000;width:min(var(--max),calc(100% - 32px));min-height:64px;border:1px solid rgba(218,225,235,.92);border-radius:999px;background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(22px);box-shadow:0 18px 48px rgba(15,23,42,.12),0 2px 10px rgba(15,23,42,.06)}
+    .nav-in{min-height:64px;padding:10px 14px 10px 18px;display:flex;align-items:center;gap:18px}
+    .brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:#0f172a;white-space:nowrap;letter-spacing:.2px}
+    .brand-mark{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),#44b7ff);box-shadow:0 10px 24px rgba(26,115,232,.18);font-weight:900}
+    .nav-links{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;overflow:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:999px;color:#5f6f86;font-size:14px;font-weight:600;line-height:1;white-space:nowrap;transition:background var(--t),color var(--t),transform var(--t);text-decoration:none}
+    .nav-links a:hover{color:var(--blue);background:rgba(26,115,232,.08);transform:translateY(-1px)}
+    .nav-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:999px;font-weight:700;cursor:pointer;transition:transform var(--t),box-shadow var(--t),background var(--t),border-color var(--t);white-space:nowrap}
+    .btn-primary{min-height:42px;padding:0 18px;background:linear-gradient(135deg,var(--blue),#44b7ff);color:#fff;box-shadow:0 12px 26px rgba(26,115,232,.2)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(26,115,232,.28)}
+    .btn-ghost{min-height:42px;padding:0 16px;color:var(--blue);background:#fff;border-color:rgba(26,115,232,.16)}
+    .btn-ghost:hover{background:var(--blue-soft)}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:12px;padding:8px;box-shadow:0 8px 18px rgba(15,23,42,.08);cursor:pointer}.nav-toggle span{width:20px;height:2px;background:#182337;border-radius:2px}
+
+    .hero{position:relative;overflow:hidden;padding:154px 0 86px;background:radial-gradient(circle at 84% 12%,rgba(26,115,232,.16),transparent 32%),radial-gradient(circle at 12% 18%,rgba(52,168,83,.14),transparent 30%),linear-gradient(180deg,#fff 0%,#f8fbff 68%,#fff 100%)}
+    .hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(26,115,232,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,115,232,.06) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(180deg,transparent,#000 18%,#000 76%,transparent);pointer-events:none}
+    .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.04fr .96fr;gap:58px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:#fff;border:1px solid rgba(218,220,224,.8);box-shadow:var(--s1);font-size:13px;font-weight:700;color:var(--blue);margin-bottom:22px}.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));box-shadow:0 0 0 4px rgba(26,115,232,.12)}
+    h1{margin:0;font-size:clamp(42px,5.6vw,68px);line-height:1.06;letter-spacing:-2px;font-weight:800;color:var(--ink)}
+    .grad{background:linear-gradient(110deg,var(--blue),var(--green) 43%,var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:18px;color:var(--muted);line-height:1.8;max-width:650px;margin:24px 0 0}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn-lg{min-height:50px;padding:0 24px;font-size:15px}
+    .hero-note{display:flex;gap:10px;align-items:center;margin-top:22px;color:var(--muted);font-size:14px}.hero-note span{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-weight:900}
+
+    .workspace-board{position:relative;min-height:540px;border-radius:34px;background:rgba(255,255,255,.82);border:1px solid rgba(218,220,224,.72);box-shadow:var(--s3);padding:24px;backdrop-filter:blur(18px);overflow:hidden}
+    .workspace-board::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 12%,rgba(251,188,4,.2),transparent 24%),radial-gradient(circle at 12% 88%,rgba(161,66,244,.14),transparent 30%);pointer-events:none}
+    .board-top{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;display:block}.dots i:nth-child(1){background:var(--red)}.dots i:nth-child(2){background:var(--yellow)}.dots i:nth-child(3){background:var(--green)}.board-chip{font-size:12px;color:var(--blue);font-weight:700;background:var(--blue-soft);border-radius:999px;padding:6px 10px}
+    .template-stack{position:relative;display:grid;gap:14px}.stack-card{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;padding:15px;border:1px solid rgba(218,220,224,.76);border-radius:20px;background:rgba(255,255,255,.9);box-shadow:0 5px 16px rgba(60,64,67,.08);transition:transform var(--t),box-shadow var(--t)}.stack-card:hover{transform:translateY(-4px);box-shadow:var(--s2)}.stack-ic{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;color:#fff;font-weight:800}.ic-blue{background:var(--blue)}.ic-green{background:var(--green)}.ic-yellow{background:var(--yellow);color:#5f4b00}.ic-purple{background:var(--purple)}.ic-cyan{background:var(--cyan)}.stack-card b{display:block;font-size:15px}.stack-card small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}.status{font-size:12px;font-weight:800;border-radius:999px;padding:5px 9px}.s-blue{color:var(--blue);background:var(--blue-soft)}.s-green{color:var(--green);background:var(--green-soft)}.s-purple{color:var(--purple);background:var(--purple-soft)}
+
+    section{padding:86px 0}.sec-soft{background:linear-gradient(180deg,#f8fafd,#fff)}.sec-head{max-width:760px;margin:0 auto 46px;text-align:center}.kicker{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}.sec-head h2{font-size:clamp(30px,3.7vw,48px);line-height:1.12;letter-spacing:-1.1px;margin:0;font-weight:800}.sec-head p{margin:16px 0 0;color:var(--muted);font-size:17px}
+    .pill-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:30px}.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 15px;font-size:14px;font-weight:700;color:var(--ink-soft);box-shadow:var(--s1)}.pill.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .template-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.tpl-card{position:relative;min-height:230px;padding:24px;border:1px solid rgba(218,220,224,.72);border-radius:24px;background:#fff;box-shadow:var(--s1);overflow:hidden;transition:transform var(--t),box-shadow var(--t),border-color var(--t)}.tpl-card::after{content:"";position:absolute;right:-42px;top:-42px;width:118px;height:118px;border-radius:50%;background:var(--tone);opacity:.55}.tpl-card:hover{transform:translateY(-6px);box-shadow:var(--s2);border-color:rgba(26,115,232,.25)}.tpl-icon{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--tone);color:var(--tone-ink);font-weight:900;font-size:20px;margin-bottom:18px}.tpl-card h3{font-size:18px;margin:0 0 10px;font-weight:800}.tpl-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}.tags span{font-size:12px;color:var(--ink-soft);background:var(--bg-soft);border:1px solid rgba(218,220,224,.72);border-radius:999px;padding:3px 8px}
+    .blue{--tone:var(--blue-soft);--tone-ink:var(--blue)}.green{--tone:var(--green-soft);--tone-ink:var(--green)}.yellow{--tone:var(--yellow-soft);--tone-ink:#b06000}.red{--tone:var(--red-soft);--tone-ink:var(--red)}.purple{--tone:var(--purple-soft);--tone-ink:var(--purple)}.cyan{--tone:var(--cyan-soft);--tone-ink:var(--cyan)}
+
+    .dual{display:grid;grid-template-columns:1fr 1fr;gap:24px}.mode-card{border:1px solid rgba(218,220,224,.76);border-radius:30px;background:#fff;box-shadow:var(--s2);padding:30px;position:relative;overflow:hidden}.mode-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 90% 0,var(--tone),transparent 34%);opacity:.9;pointer-events:none}.mode-card>*{position:relative}.mode-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}.mode-no{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:var(--tone);color:var(--tone-ink);font-weight:900;font-size:20px}.mode-card h3{font-size:26px;line-height:1.2;margin:0;font-weight:800}.mode-card p{color:var(--muted);margin:14px 0 0}.check{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}.check li{display:flex;gap:10px;color:var(--ink-soft);font-size:15px}.check li::before{content:"✓";width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--green-soft);color:var(--green);font-weight:900;flex:0 0 auto}.flow-line{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px}.flow-line span{font-size:13px;font-weight:700;color:var(--tone-ink);background:var(--tone);border-radius:999px;padding:6px 10px}
+
+    .matrix{border:1px solid rgba(218,220,224,.8);border-radius:28px;overflow:hidden;background:#fff;box-shadow:var(--s2)}.matrix-row{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}.matrix-row:last-child{border-bottom:0}.matrix-row>div{padding:18px;border-right:1px solid var(--line);font-size:14px}.matrix-row>div:last-child{border-right:0}.matrix-head{background:#f8fafd;font-weight:800;color:var(--ink)}.matrix strong{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}.matrix span{color:var(--muted)}
+
+    .cta{padding:84px 0 96px}.cta-box{position:relative;overflow:hidden;text-align:center;border-radius:34px;padding:clamp(42px,7vw,82px);background:linear-gradient(135deg,#1a73e8 0%,#4285f4 48%,#34a853 100%);color:#fff;box-shadow:var(--s3)}.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 18%,rgba(255,255,255,.18),transparent 28%),radial-gradient(circle at 86% 82%,rgba(255,255,255,.16),transparent 32%)}.cta-box>*{position:relative}.cta-box h2{font-size:clamp(30px,4vw,50px);line-height:1.15;margin:0;font-weight:800;letter-spacing:-1px}.cta-box p{max-width:760px;margin:18px auto 0;color:rgba(255,255,255,.92);font-size:17px}.cta-box .hero-cta{justify-content:center}.cta-box .btn-ghost{background:#fff;color:var(--blue);border-color:#fff}
+    footer{border-top:1px solid var(--line);background:#f8fafd;color:var(--muted);font-size:14px}.footer-in{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:30px 24px}
+
+    @media(max-width:980px){.hero-in,.dual{grid-template-columns:1fr}.workspace-board{min-height:auto}.template-grid{grid-template-columns:repeat(2,1fr)}.matrix-row{grid-template-columns:1fr}.matrix-row>div{border-right:0;border-bottom:1px solid var(--line)}.matrix-row>div:last-child{border-bottom:0}.nav-links{display:none}.nav-links.open{display:flex;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:22px;padding:10px;box-shadow:0 18px 48px rgba(15,23,42,.12)}.nav-links.open a{justify-content:flex-start}.nav-toggle{display:flex}}
+    @media(max-width:640px){.container{padding:0 18px}.navbar{top:10px;width:calc(100% - 24px);border-radius:24px}.nav-in{padding:8px 12px 8px 14px;min-height:58px}.brand span{display:none}.hero{padding:128px 0 58px}section{padding:66px 0}.template-grid{grid-template-columns:1fr}.stack-card{grid-template-columns:42px 1fr}.status{display:none}.footer-in{padding:24px 18px}}
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+      <a class="brand" href="#top" aria-label="Development Template Center"><b class="brand-mark">T</b><span>Development Template Center</span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#modes">Two Template Types</a>
+        <a href="#templates">Template Library</a>
+        <a href="#logic">Advanced Logic</a>
+        <a href="#compare">Selection Matrix</a>
+      </nav>
+      <div class="nav-actions"><a class="btn btn-primary" href="#templates">Browse Templates</a></div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-in">
+        <div>
+          <div class="eyebrow">From one project to multi-domain separate deployment</div>
+          <h1><span class="grad">Development templates</span> covering the full business delivery chain</h1>
+          <p class="hero-sub">For projects, frontend, backend services, AI Agents, websites, mini programs, low-code, no-code, data, GIS, model annotation and training, AIGC, and more, this template system is reusable, composable, and governable.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#modes">Understand Two Template Types</a>
+            <a class="btn btn-ghost btn-lg" href="#compare">View Selection Matrix</a>
+          </div>
+          <div class="hero-note"><span>✓</span>Project templates emphasize integrated, ready-to-use delivery; separate templates emphasize domain autonomy, independent deployment, and advanced orchestration.</div>
+        </div>
+        <div class="workspace-board" aria-label="Development template workspace diagram">
+          <div class="board-top"><div class="dots"><i></i><i></i><i></i></div><div class="board-chip">Template Workspace</div></div>
+          <div class="template-stack">
+            <article class="stack-card"><div class="stack-ic ic-blue">All</div><div><b>Project Template</b><small>Frontend, backend, database, gateway, CI/CD, and infrastructure collaborate in one project</small></div><span class="status s-blue">Integrated</span></article>
+            <article class="stack-card"><div class="stack-ic ic-green">Svc</div><div><b>Backend Service Template</b><small>APIs, jobs, messaging, permissions, observability, and runtime are released independently</small></div><span class="status s-green">Separate Deployment</span></article>
+            <article class="stack-card"><div class="stack-ic ic-purple">AI</div><div><b>AI Agent / AIGC Template</b><small>Prompts, tool calling, knowledge bases, evaluation, and generation workflows</small></div><span class="status s-purple">Intelligent Orchestration</span></article>
+            <article class="stack-card"><div class="stack-ic ic-cyan">Data</div><div><b>Data / GIS / Annotation & Training Template</b><small>Data pipelines, spatial services, annotation tasks, and closed-loop model training</small></div><span class="status s-blue">Specialized Domain</span></article>
+            <article class="stack-card"><div class="stack-ic ic-yellow">Low</div><div><b>Low-Code / No-Code Template</b><small>Forms, workflows, rules, page building, and automation extensions</small></div><span class="status s-green">Rapid Delivery</span></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="modes">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Template Modes</div>
+          <h2>Two template types: integrated project templates and separate deployment templates</h2>
+          <p>Both are templates, but their applicable stages and engineering logic are completely different: the former helps quickly start a complete business project, while the latter supports more complex, long-term, and specialized system evolution.</p>
+        </div>
+        <div class="dual">
+          <article class="mode-card blue">
+            <div class="mode-top"><div class="mode-no">01</div><h3>Project Template</h3></div>
+            <p>A project template places frontend, backend services, database, infrastructure, deployment scripts, configuration, and engineering conventions in one project. It is ideal for quickly generating a complete runnable project from 0 to 1.</p>
+            <ul class="check">
+              <li>Unified repository, dependencies, and startup commands reduce initial collaboration costs.</li>
+              <li>Built-in infrastructure descriptions such as database, cache, object storage, gateway, and CI/CD.</li>
+              <li>Suitable for prototype validation, small and medium-sized businesses, customer-specific projects, and teaching demos.</li>
+            </ul>
+            <div class="flow-line"><span>Single Project</span><span>Ready to Use</span><span>Full-Stack Loop</span><span>Rapid Delivery</span></div>
+          </article>
+          <article class="mode-card green">
+            <div class="mode-top"><div class="mode-no">02</div><h3>Separate Deployment Template</h3></div>
+            <p>Other template types focus more on advanced separate deployment logic: frontend, services, agents, data, GIS, training jobs, low-code engines, and more evolve independently by domain and combine into business systems through platform capabilities.</p>
+            <ul class="check">
+              <li>Each template maps to a specialized capability domain and can be independently released, scaled, and governed.</li>
+              <li>Suitable for large systems, platform products, multi-team collaboration, and long-term operations.</li>
+              <li>Composable capabilities are formed through APIs, events, permissions, data contracts, and service catalogs.</li>
+            </ul>
+            <div class="flow-line"><span>Multi-Project</span><span>Service Autonomy</span><span>Platform Orchestration</span><span>Long-Term Evolution</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="templates">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Template Library</div>
+          <h2>A template library from application delivery to intelligent productivity</h2>
+          <p>Templates are not simple scaffolds; they package engineering structures, domain best practices, deployment models, permission governance, and observability capabilities into reusable assets.</p>
+        </div>
+        <div class="pill-tabs"><span class="pill active">All Templates</span><span class="pill">App Development</span><span class="pill">Agents</span><span class="pill">Data & Spatial</span><span class="pill">Visual Building</span></div>
+        <div class="template-grid">
+          <article class="tpl-card blue"><div class="tpl-icon">Proj</div><h3>Project Template</h3><p>Frontend, backend, database, infrastructure, environment variables, and deployment pipelines all live in one project, suitable for quickly generating a complete business system.</p><div class="tags"><span>Full-stack</span><span>Infra</span><span>CI/CD</span></div></article>
+          <article class="tpl-card green"><div class="tpl-icon">FE</div><h3>Frontend Template</h3><p>For portals, consoles, operations backends, mobile H5, and component libraries, with built-in routing, state, permissions, themes, and build standards.</p><div class="tags"><span>Vue/React</span><span>UI</span><span>Auth</span></div></article>
+          <article class="tpl-card yellow"><div class="tpl-icon">Svc</div><h3>Backend Service Template</h3><p>Encapsulates REST / GraphQL / RPC, job scheduling, message queues, audit logs, permission checks, and health checks.</p><div class="tags"><span>API</span><span>Job</span><span>Queue</span></div></article>
+          <article class="tpl-card purple"><div class="tpl-icon">AI</div><h3>AI Agent Template</h3><p>Provides role settings, tool calling, memory, knowledge bases, workflows, evaluation, and safety boundaries to build operable agents.</p><div class="tags"><span>Agent</span><span>Tools</span><span>RAG</span></div></article>
+          <article class="tpl-card cyan"><div class="tpl-icon">Web</div><h3>Website Template</h3><p>Suitable for official sites, documentation sites, marketing pages, product pages, and content sites, emphasizing SEO, performance, content structure, and multi-end experience.</p><div class="tags"><span>SEO</span><span>Content</span><span>Static</span></div></article>
+          <article class="tpl-card green"><div class="tpl-icon">Mini</div><h3>Mini Program Template</h3><p>For WeChat, Alipay, and multi-end mini programs, with built-in login, payment, subscription messages, geolocation, and lightweight business workflows.</p><div class="tags"><span>Mini App</span><span>Pay</span><span>OpenAPI</span></div></article>
+          <article class="tpl-card red"><div class="tpl-icon">Low</div><h3>Low-Code Template</h3><p>Provides forms, lists, details, workflows, rules, reports, and extension plugins for rapid middle/back-office building and enterprise processes.</p><div class="tags"><span>Form</span><span>Flow</span><span>Plugin</span></div></article>
+          <article class="tpl-card yellow"><div class="tpl-icon">No</div><h3>No-Code Template</h3><p>Productizes data models, pages, permissions, and automated actions so non-developers can also configure business applications.</p><div class="tags"><span>No-code</span><span>Rules</span><span>Automation</span></div></article>
+          <article class="tpl-card blue"><div class="tpl-icon">Data</div><h3>Data Template</h3><p>Covers collection, cleaning, synchronization, metrics, visualization, data permissions, and quality validation to form reusable data asset pipelines.</p><div class="tags"><span>ETL</span><span>BI</span><span>Quality</span></div></article>
+          <article class="tpl-card cyan"><div class="tpl-icon">GIS</div><h3>GIS Template</h3><p>Provides map services, layer management, spatial queries, trajectory analysis, geofencing, and industry spatial data visualization capabilities.</p><div class="tags"><span>Map</span><span>Layer</span><span>Spatial</span></div></article>
+          <article class="tpl-card purple"><div class="tpl-icon">Train</div><h3>Model Annotation and Training Template</h3><p>Supports dataset management, annotation tasks, review flows, training jobs, model versions, evaluation reports, and release processes.</p><div class="tags"><span>Dataset</span><span>Train</span><span>Evaluate</span></div></article>
+          <article class="tpl-card red"><div class="tpl-icon">Gen</div><h3>AIGC Template</h3><p>For text, image, video, audio, code generation, and multimodal workflows, with built-in prompts, review, and generated asset management.</p><div class="tags"><span>Generate</span><span>Review</span><span>Assets</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="logic">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Advanced Logic</div>
+          <h2>The advanced engineering logic behind separate templates</h2>
+          <p>When templates move from a single project to multiple projects, platform-based methods are needed to manage dependencies, deployment, permissions, data contracts, and runtime governance.</p>
+        </div>
+        <div class="template-grid">
+          <article class="tpl-card blue"><div class="tpl-icon">API</div><h3>Contract First</h3><p>API schemas, event formats, data models, and permission declarations allow different templates to compose reliably.</p><div class="tags"><span>API</span><span>Event</span><span>Schema</span></div></article>
+          <article class="tpl-card green"><div class="tpl-icon">Gov</div><h3>Service Governance</h3><p>Each template is released independently while uniformly integrating registration, gateway, authentication, audit, rate limiting, canary, and observability systems.</p><div class="tags"><span>Gateway</span><span>Auth</span><span>Observe</span></div></article>
+          <article class="tpl-card yellow"><div class="tpl-icon">Ops</div><h3>Business Orchestration</h3><p>Workflows, task orchestration, agent scheduling, and message events combine distributed templates into end-to-end business capabilities.</p><div class="tags"><span>Workflow</span><span>Agent</span><span>Message</span></div></article>
+          <article class="tpl-card purple"><div class="tpl-icon">Run</div><h3>Continuous Operations</h3><p>After delivery, templates continuously accumulate metrics, logs, feedback, evaluations, and best practices to form evolvable platform assets.</p><div class="tags"><span>Metrics</span><span>Feedback</span><span>Version</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="compare">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Choose Template</div>
+          <h2>How to choose between an integrated project template and a separate deployment template</h2>
+          <p>Selection is not based on the template name, but on team size, business complexity, deployment boundaries, and future evolution paths.</p>
+        </div>
+        <div class="matrix" role="table" aria-label="Development template selection matrix">
+          <div class="matrix-row matrix-head" role="row"><div>Dimension</div><div>Project Template</div><div>Separate Deployment Template</div><div>Recommendation</div></div>
+          <div class="matrix-row" role="row"><div><strong>Startup Speed</strong><span>The first step from 0 to 1</span></div><div>Fastest: run one project directly</div><div>Requires confirming boundaries and dependencies first</div><div>Prioritize project templates for prototypes and small projects</div></div>
+          <div class="matrix-row" role="row"><div><strong>Team Collaboration</strong><span>Parallel work by multiple people and teams</span></div><div>Suitable for centralized collaboration in small teams</div><div>Suitable for multi-team autonomy by domain</div><div>The more teams involved, the more suitable separate templates become</div></div>
+          <div class="matrix-row" role="row"><div><strong>Deployment Governance</strong><span>Release, scaling, permissions, audit</span></div><div>Unified deployment with simpler governance</div><div>Independent deployment with stronger governance</div><div>Choose separate templates for production-grade complex systems</div></div>
+          <div class="matrix-row" role="row"><div><strong>Long-Term Evolution</strong><span>Versioning, reuse, platform assets</span></div><div>Suitable for iteration within a project</div><div>Suitable for accumulating reusable capabilities</div><div>Prioritize separate templates for platform products</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <div class="kicker" style="color:rgba(255,255,255,.86)">Template-first Development</div>
+          <h2>Accumulate capabilities with templates and compose business with the platform.</h2>
+          <p>Integrated project templates solve “quick start,” while separate deployment templates solve “continuous evolution.” When the two work together, development templates are no longer just scaffolds—they become organization-level engineering assets.</p>
+          <div class="hero-cta"><a class="btn btn-ghost btn-lg" href="#templates">Back to Template Library</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-in">
+      <a class="brand" href="#top"><b class="brand-mark">T</b><span>Development Template Center</span></a>
+      <span>© 2026 Development Template Workspace</span>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 8), { passive: true });
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    [...navLinks.querySelectorAll('a')].forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>

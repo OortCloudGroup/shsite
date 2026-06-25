@@ -1,0 +1,866 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OORT - PC Web Endpoint Distribution</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--platform:#1a73e8;--platform-bg:#e8f0fe}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#1a1a2e;line-height:1.6;overflow-x:hidden}
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--platform-bg) 0%,#fff 100%);overflow:hidden;padding:80px 20px}
+  .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.7;pointer-events:none}
+  .b1{width:600px;height:600px;background:var(--platform-bg);top:-150px;right:-100px}
+  .b2{width:500px;height:500px;background:#d4e4f7;bottom:-100px;left:-80px}
+  .hero-inner{position:relative;z-index:2;max-width:1100px;text-align:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(26,115,232,.12);color:var(--platform);font-size:14px;font-weight:600;padding:8px 20px;border-radius:40px;margin-bottom:24px;letter-spacing:.5px}
+  .eyebrow svg{width:18px;height:18px;fill:var(--platform)}
+  .hero-title{font-size:clamp(36px,5.5vw,64px);font-weight:800;line-height:1.15;margin-bottom:20px;color:#1a1a2e}
+  .grad{background:linear-gradient(135deg,var(--platform),#4285f4 45%,#1a73e8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero-subtitle{font-size:clamp(15px,1.8vw,18px);color:#555;max-width:720px;margin:0 auto 24px;line-height:1.75}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(26,115,232,.18);color:#444;font-size:13px;padding:10px 22px;border-radius:40px;box-shadow:0 2px 12px rgba(26,115,232,.08)}
+  .hero-badge span{display:flex;align-items:center;gap:4px}
+  .hero-badge span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--platform)}
+  .device-frame{margin-top:48px;max-width:960px;margin-left:auto;margin-right:auto}
+  .device-frame svg{width:100%;height:auto;filter:drop-shadow(0 20px 60px rgba(0,0,0,.12))}
+  .section{padding:100px 20px}
+  .section-inner{max-width:1100px;margin:0 auto}
+  .section-title{text-align:center;font-size:clamp(26px,3.5vw,40px);font-weight:700;margin-bottom:56px;color:#1a1a2e}
+  .overview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+  .overview-card{background:#fff;border:1px solid #e8ecf1;border-radius:16px;padding:32px 24px;text-align:center;transition:transform .25s,box-shadow .25s}
+  .overview-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(26,115,232,.1)}
+  .overview-icon{width:56px;height:56px;margin:0 auto 16px;background:var(--platform-bg);border-radius:14px;display:flex;align-items:center;justify-content:center}
+  .overview-icon svg{width:28px;height:28px;fill:var(--platform)}
+  .overview-card h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#1a1a2e}
+  .overview-card p{font-size:14px;color:#666}
+  .steps{display:flex;align-items:flex-start;justify-content:center;gap:0;flex-wrap:wrap;margin-top:48px}
+  .step{flex:1;min-width:200px;max-width:260px;text-align:center;padding:0 16px;position:relative}
+  .step-num{width:44px;height:44px;border-radius:50%;background:var(--platform);color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+  .step h4{font-size:16px;font-weight:600;margin-bottom:6px}
+  .step p{font-size:13px;color:#666}
+  .step-arrow{position:absolute;right:-12px;top:22px;color:#ccc;font-size:22px}
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+  .feature-card{background:linear-gradient(135deg,var(--platform-bg),#f5f8ff);border-radius:16px;padding:32px 24px;transition:transform .25s}
+  .feature-card:hover{transform:translateY(-3px)}
+  .feature-card h3{font-size:17px;font-weight:700;margin:12px 0 6px;color:#1a1a2e}
+  .feature-card p{font-size:14px;color:#555;line-height:1.6}
+  .feature-icon{width:48px;height:48px;border-radius:12px;background:var(--platform);display:flex;align-items:center;justify-content:center}
+  .feature-icon svg{width:24px;height:24px;fill:#fff}
+  .marketplace{background:linear-gradient(180deg,#f8faff 0%,#fff 100%)}
+  .marketplace-search{max-width:520px;margin:0 auto 40px;position:relative}
+  .marketplace-search input{width:100%;padding:14px 20px 14px 48px;border:2px solid #e0e4ea;border-radius:12px;font-size:15px;outline:none;transition:border .2s}
+  .marketplace-search input:focus{border-color:var(--platform)}
+  .marketplace-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;fill:#aaa}
+  .marketplace-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px;max-width:900px;margin:0 auto}
+  .app-card{background:#fff;border:1px solid #e8ecf1;border-radius:14px;overflow:hidden;transition:box-shadow .25s,transform .25s}
+  .app-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,115,232,.1)}
+  .app-thumb{height:120px;display:flex;align-items:center;justify-content:center;font-size:36px}
+  .app-thumb.t1{background:linear-gradient(135deg,#e8f0fe,#d4e4f7)}
+  .app-thumb.t2{background:linear-gradient(135deg,#fef3e8,#fde2c4)}
+  .app-thumb.t3{background:linear-gradient(135deg,#e8f5e9,#c8e6c9)}
+  .app-thumb.t4{background:linear-gradient(135deg,#f3e5f5,#e1bee7)}
+  .app-thumb.t5{background:linear-gradient(135deg,#e0f7fa,#b2ebf2)}
+  .app-thumb.t6{background:linear-gradient(135deg,#fce4ec,#f8bbd0)}
+  .app-info{padding:14px}
+  .app-info h4{font-size:14px;font-weight:600;margin-bottom:4px}
+  .app-info p{font-size:12px;color:#888}
+  .app-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:var(--platform-bg);color:var(--platform);font-weight:600;margin-top:6px}
+  .specs{background:#f8faff}
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+  .spec-item{background:#fff;border-radius:12px;padding:20px 24px;border-left:4px solid var(--platform)}
+  .spec-item h4{font-size:14px;font-weight:700;color:var(--platform);margin-bottom:6px}
+  .spec-item p{font-size:13px;color:#555;line-height:1.6}
+  .cta{text-align:center;background:linear-gradient(180deg,var(--platform-bg),#fff);padding:80px 20px}
+  .cta h2{font-size:clamp(26px,3.5vw,38px);font-weight:700;margin-bottom:16px}
+  .cta p{font-size:16px;color:#555;max-width:600px;margin:0 auto 32px;line-height:1.7}
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--platform);color:#fff;font-size:16px;font-weight:600;padding:14px 36px;border-radius:40px;text-decoration:none;transition:background .2s,transform .2s;border:none;cursor:pointer}
+  .cta-btn:hover{background:#1558b0;transform:translateY(-2px)}
+  .cta-btn svg{width:20px;height:20px;fill:#fff}
+  footer{text-align:center;padding:40px 20px;border-top:1px solid #e8ecf1}
+  .footer-tagline{font-size:20px;font-weight:700;color:var(--platform);margin-bottom:4px}
+  .footer-bot{font-size:13px;color:#999}
+  @media(max-width:768px){.step-arrow{display:none}.steps{flex-direction:column;align-items:center}}
+
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+        .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+
+  /* Page-specific navbar classes aligned with platform-ios.html. */
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:saturate(200%) blur(16px);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+  .navbar.scrolled{border-color:rgba(218,220,224,.7);box-shadow:0 1px 4px rgba(60,64,67,.08)}
+  .nav-in{max-width:1180px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:24px;width:100%}
+  .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:20px;text-decoration:none;color:#1a1a2e}
+  .nav-links{display:flex;gap:2px;margin-left:8px;align-items:center}
+  .nav-link{font-size:14px;color:#444;font-weight:500;padding:7px 12px;border-radius:8px;transition:all .2s;text-decoration:none;line-height:1.4}
+  .nav-link:hover{background:#f1f5fb;color:var(--platform)}
+  .nav-link.active{color:var(--platform);background:var(--platform-bg)}
+  .nav-acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:999px;text-decoration:none;font-weight:600;line-height:1.2;white-space:nowrap;transition:all .2s}
+  .btn-primary{background:var(--platform);color:#fff;border-color:var(--platform)}
+  .btn-primary:hover{background:#1558b0;border-color:#1558b0;transform:translateY(-1px)}
+  .btn-ghost{color:#1a1a2e;background:transparent;border-color:transparent}
+  .btn-ghost:hover{background:#f1f5fb;color:var(--platform)}
+  .btn-sm{min-height:auto;padding:7px 16px;font-size:13px}
+  .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+  .nav-toggle span{width:20px;height:2px;background:#1a1a2e;border-radius:2px;transition:.3s}
+</style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+      <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#overview" class="nav-link">Overview</a>
+        <a href="#distribution" class="nav-link">Dist Flow</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#marketplace" class="nav-link">Marketplace</a>
+      </nav>
+      <div class="nav-acts">
+        <a href="portal.html#platforms" class="btn btn-ghost btn-sm">← Back to Multi-Platform</a>
+        <a href="#distribution" class="btn btn-primary btn-sm">Explore Distribution Flow</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+
+<!-- Hero -->
+<section id="overview" class="hero">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">
+      <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+      PC Web Endpoint Distribution
+    </div>
+    <h1 class="hero-title">Distribute Applications to<br><span class="grad">Every Browser Window</span></h1>
+    <p class="hero-subtitle">Reach OORT App Marketplace instantly through direct URLs, PWA installation, and browser bookmarks with zero installation required. Compatible across browsers, with PWA offline caching, WebAssembly performance acceleration, and responsive design.</p>
+    <div class="hero-badge">
+      <span>Chrome</span>
+      <span>Edge</span>
+      <span>Firefox</span>
+      <span>Safari</span>
+      <span>PWA</span>
+      <span>Zero Install</span>
+    </div>
+
+    <!-- Device Frame: Browser Window -->
+    <div class="device-frame">
+      <svg viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="960" height="540" rx="12" fill="#fff" stroke="#e0e0e0" stroke-width="1.5"/>
+        <!-- Top Bar -->
+        <rect x="0" y="0" width="960" height="40" rx="12" fill="#f1f3f4"/>
+        <rect x="0" y="28" width="960" height="12" fill="#f1f3f4"/>
+        <!-- Traffic Lights -->
+        <circle cx="20" cy="20" r="6" fill="#ea4335"/>
+        <circle cx="38" cy="20" r="6" fill="#fbbc05"/>
+        <circle cx="56" cy="20" r="6" fill="#34a853"/>
+        <!-- URL Bar -->
+        <rect x="80" y="8" width="800" height="24" rx="12" fill="#fff" stroke="#dadce0" stroke-width="1"/>
+        <text x="310" y="25" font-size="12" fill="#5f6368" font-family="system-ui,sans-serif">https://oort.sh</text>
+        <circle cx="100" cy="20" r="5" fill="none" stroke="#9aa0a6" stroke-width="1.2"/>
+        <line x1="104" y1="24" x2="108" y2="28" stroke="#9aa0a6" stroke-width="1.2"/>
+        <!-- Main Area -->
+        <!-- Nav Bar -->
+        <rect x="0" y="40" width="960" height="48" fill="#fff" stroke="#e8e8e8" stroke-width=".5"/>
+        <text x="24" y="69" font-size="16" font-weight="700" fill="#1a73e8" font-family="system-ui">OORT</text>
+        <text x="260" y="69" font-size="13" fill="#555" font-family="system-ui">Marketplace</text>
+        <text x="340" y="69" font-size="13" fill="#555" font-family="system-ui">Developers</text>
+        <text x="420" y="69" font-size="13" fill="#555" font-family="system-ui">Docs</text>
+        <!-- Search -->
+        <rect x="520" y="52" width="300" height="28" rx="14" fill="#f1f3f4" stroke="none"/>
+        <text x="540" y="70" font-size="11" fill="#999" font-family="system-ui">Search apps...</text>
+        <!-- Avatar -->
+        <circle cx="870" cy="64" r="14" fill="#e8f0fe"/>
+        <text x="865" y="69" font-size="12" fill="#1a73e8" font-weight="600" font-family="system-ui">U</text>
+        <!-- App Grid -->
+        <!-- Row 1 -->
+        <rect x="40" y="110" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="50" y="120" width="190" height="100" rx="6" fill="url(#g1)"/>
+        <text x="60" y="245" font-size="13" font-weight="600" fill="#333" font-family="system-ui">Doc Editor</text>
+        <text x="60" y="262" font-size="11" fill="#999" font-family="system-ui">Online collaboration</text>
+        <rect x="60" y="268" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="66" y="280" font-size="9" fill="#1a73e8" font-family="system-ui">Productivity</text>
+
+        <rect x="270" y="110" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="280" y="120" width="190" height="100" rx="6" fill="url(#g2)"/>
+        <text x="290" y="245" font-size="13" font-weight="600" fill="#333" font-family="system-ui">Data Analytics</text>
+        <text x="290" y="262" font-size="11" fill="#999" font-family="system-ui">Visual reports</text>
+        <rect x="290" y="268" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="296" y="280" font-size="9" fill="#1a73e8" font-family="system-ui">Analytics</text>
+
+        <rect x="500" y="110" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="510" y="120" width="190" height="100" rx="6" fill="url(#g3)"/>
+        <text x="520" y="245" font-size="13" font-weight="600" fill="#333" font-family="system-ui">Project Mgmt</text>
+        <text x="520" y="262" font-size="11" fill="#999" font-family="system-ui">Agile collaboration</text>
+        <rect x="520" y="268" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="526" y="280" font-size="9" fill="#1a73e8" font-family="system-ui">Collab</text>
+
+        <rect x="730" y="110" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="740" y="120" width="190" height="100" rx="6" fill="url(#g4)"/>
+        <text x="750" y="245" font-size="13" font-weight="600" fill="#333" font-family="system-ui">Messaging</text>
+        <text x="750" y="262" font-size="11" fill="#999" font-family="system-ui">Team communication</text>
+        <rect x="750" y="268" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="756" y="280" font-size="9" fill="#1a73e8" font-family="system-ui">Comms</text>
+
+        <!-- Row 2 -->
+        <rect x="40" y="300" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="50" y="310" width="190" height="100" rx="6" fill="url(#g5)"/>
+        <text x="60" y="435" font-size="13" font-weight="600" fill="#333" font-family="system-ui">Cloud Storage</text>
+        <text x="60" y="452" font-size="11" fill="#999" font-family="system-ui">File management</text>
+        <rect x="60" y="458" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="66" y="470" font-size="9" fill="#1a73e8" font-family="system-ui">Storage</text>
+
+        <rect x="270" y="300" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="280" y="310" width="190" height="100" rx="6" fill="url(#g6)"/>
+        <text x="290" y="435" font-size="13" font-weight="600" fill="#333" font-family="system-ui">Mail Client</text>
+        <text x="290" y="452" font-size="11" fill="#999" font-family="system-ui">Smart inbox</text>
+        <rect x="290" y="458" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="296" y="470" font-size="9" fill="#1a73e8" font-family="system-ui">Mail</text>
+
+        <rect x="500" y="300" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="510" y="310" width="190" height="100" rx="6" fill="url(#g1)"/>
+        <text x="520" y="435" font-size="13" font-weight="600" fill="#333" font-family="system-ui">Scheduling</text>
+        <text x="520" y="452" font-size="11" fill="#999" font-family="system-ui">Smart planning</text>
+        <rect x="520" y="458" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="526" y="470" font-size="9" fill="#1a73e8" font-family="system-ui">Calendar</text>
+
+        <rect x="730" y="300" width="210" height="170" rx="10" fill="#f8faff" stroke="#e8ecf1" stroke-width=".8"/>
+        <rect x="740" y="310" width="190" height="100" rx="6" fill="url(#g3)"/>
+        <text x="750" y="435" font-size="13" font-weight="600" fill="#333" font-family="system-ui">API Gateway</text>
+        <text x="750" y="452" font-size="11" fill="#999" font-family="system-ui">API management</text>
+        <rect x="750" y="458" width="48" height="16" rx="8" fill="#e8f0fe"/>
+        <text x="756" y="470" font-size="9" fill="#1a73e8" font-family="system-ui">Dev</text>
+
+        <!-- Gradients for thumbnails -->
+        <defs>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e8f0fe"/><stop offset="100%" stop-color="#d4e4f7"/></linearGradient>
+          <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fef3e8"/><stop offset="100%" stop-color="#fde2c4"/></linearGradient>
+          <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e8f5e9"/><stop offset="100%" stop-color="#c8e6c9"/></linearGradient>
+          <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f3e5f5"/><stop offset="100%" stop-color="#e1bee7"/></linearGradient>
+          <linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#e0f7fa"/><stop offset="100%" stop-color="#b2ebf2"/></linearGradient>
+          <linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fce4ec"/><stop offset="100%" stop-color="#f8bbd0"/></linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Overview -->
+<section id="distribution" class="section">
+  <div class="section-inner">
+    <h2 class="section-title">PC Web: A Zero-Install Cross-Platform Foundation</h2>
+    <div class="overview-grid">
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+        </div>
+        <h3>Zero Install</h3>
+        <p>Open and use instantly through a direct URL</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+        </div>
+        <h3>PWA Offline</h3>
+        <p>Available through offline caching</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+        </div>
+        <h3>Cross-Browser</h3>
+        <p>Chrome / Edge / Firefox / Safari</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+        </div>
+        <h3>Responsive</h3>
+        <p>Adaptive screen layouts</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Distribution Steps -->
+<section id="features" class="section" style="background:#f8faff">
+  <div class="section-inner">
+    <h2 class="section-title">Distribution Flow</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Application Deployment</h4>
+        <p>Build applications as static assets and deploy them to an HTTPS server or CDN</p>
+        <span class="step-arrow">&rarr;</span>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>URL Publishing</h4>
+        <p>Configure domains and the PWA Manifest to generate shareable access links</p>
+        <span class="step-arrow">&rarr;</span>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>PWA Installation</h4>
+        <p>Users can install applications to the desktop for a native-like experience and offline capabilities</p>
+        <span class="step-arrow">&rarr;</span>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>User Access</h4>
+        <p>Launch applications through direct URLs, bookmarks, or installed PWAs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="marketplace" class="section">
+  <div class="section-inner">
+    <h2 class="section-title">Core Capabilities</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        </div>
+        <h3>Cross-Browser</h3>
+        <p>Broad compatibility with mainstream browsers including Chrome, Edge, Firefox, and Safari</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+        </div>
+        <h3>PWA Offline</h3>
+        <p>Service Worker caching keeps core features accessible even when the network is unavailable</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+        </div>
+        <h3>WebAssembly</h3>
+        <p>Use WASM to deliver near-native compute performance and accelerate complex business logic</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+        </div>
+        <h3>Responsive</h3>
+        <p>Viewport-adaptive layouts provide an optimal experience across different screen sizes</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marketplace -->
+<section class="section marketplace">
+  <div class="section-inner">
+    <h2 class="section-title">App Marketplace Experience in the Browser</h2>
+    <div class="marketplace-search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" placeholder="Search Web apps...">
+    </div>
+    <div class="marketplace-grid">
+      <div class="app-card">
+        <div class="app-thumb t1">&#128221;</div>
+        <div class="app-info"><h4>Document Editor</h4><p>Online collaborative editing</p><span class="app-tag">Productivity</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t2">&#128202;</div>
+        <div class="app-info"><h4>Data Analytics</h4><p>Visual reports</p><span class="app-tag">Analytics</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t3">&#128197;</div>
+        <div class="app-info"><h4>Project Management</h4><p>Agile collaboration</p><span class="app-tag">Collaboration</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t4">&#128172;</div>
+        <div class="app-info"><h4>Instant Messaging</h4><p>Team communication</p><span class="app-tag">Messaging</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t5">&#9729;&#65039;</div>
+        <div class="app-info"><h4>Cloud Storage</h4><p>File management</p><span class="app-tag">Storage</span></div>
+      </div>
+      <div class="app-card">
+        <div class="app-thumb t6">&#9993;&#65039;</div>
+        <div class="app-info"><h4>Mail Client</h4><p>Smart inbox</p><span class="app-tag">Mail</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tech Specs -->
+<section class="section specs">
+  <div class="section-inner">
+    <h2 class="section-title">Technical Specifications</h2>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <h4>Supported Browsers</h4>
+        <p>Chrome 90+ / Edge 90+ / Firefox 88+ / Safari 14+</p>
+      </div>
+      <div class="spec-item">
+        <h4>Development Languages</h4>
+        <p>JavaScript / TypeScript / WebAssembly</p>
+      </div>
+      <div class="spec-item">
+        <h4>Deployment Methods</h4>
+        <p>HTTPS static deployment / CDN distribution</p>
+      </div>
+      <div class="spec-item">
+        <h4>PWA Support</h4>
+        <p>Service Worker / Web App Manifest / Offline caching</p>
+      </div>
+      <div class="spec-item">
+        <h4>Security Requirements</h4>
+        <p>HTTPS enforcement / CSP / WebCrypto API</p>
+      </div>
+      <div class="spec-item">
+        <h4>Distribution Methods</h4>
+        <p>URL sharing / PWA installation / Browser bookmarks / Search engines</p>
+      </div>
+      <div class="spec-item">
+        <h4>Performance Capabilities</h4>
+        <p>WebAssembly, Web Worker, lazy loading, CDN acceleration</p>
+      </div>
+      <div class="spec-item">
+        <h4>Responsive</h4>
+        <p>Viewport adaptation / Touch optimization / Keyboard shortcuts</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>Start Web Endpoint Distribution</h2>
+  <p>Distribute your enterprise applications to every computer through the Web browser with zero installation and zero barriers, while taking advantage of the OORT platform's Web app capabilities.</p>
+  <a href="#" class="cta-btn">
+    <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>
+    Start Distribution
+  </a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-tagline">Zero install, cross-platform.</div>
+  <div class="footer-bot">PC Web Endpoint Distribution</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var navbar=document.getElementById("navbar");
+  function onScroll(){if(window.scrollY>8)navbar.classList.add("scrolled");else navbar.classList.remove("scrolled")}
+  window.addEventListener("scroll",onScroll,{passive:true});onScroll();
+
+  var toggle=document.getElementById("navToggle"),links=document.getElementById("navLinks");
+  if(toggle&&links){toggle.addEventListener("click",function(){links.classList.toggle("open")});links.addEventListener("click",function(e){if(e.target.classList.contains("nav-link"))links.classList.remove("open")})}
+
+  var sections=document.querySelectorAll("section[id]"),nm={};
+  document.querySelectorAll(".nav-link").forEach(function(link){var id=link.getAttribute("href").slice(1);nm[id]=link});
+  if("IntersectionObserver" in window&&sections.length){
+    var so=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.getAttribute("id");Object.keys(nm).forEach(function(k){nm[k].classList.toggle("active",k===id)})}})},{threshold:.3,rootMargin:"-80px 0px -40% 0px"});
+    sections.forEach(function(sec){so.observe(sec)});
+  }
+})();
+</script>
+</body>
+</html>

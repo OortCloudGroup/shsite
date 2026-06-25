@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OORT.sh - Build Your Private Global Deployment Infrastructure</title>
+    <meta name="description" content="Download OORT.sh, deploy it to your servers worldwide, and build your own private global deployment system. Ship your Vibe Coding results to production globally — through infrastructure you own and control.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">&#9678;</span>
+                <span class="logo-text">OORT.sh</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#deploy">Deploy</a>
+                <a href="#ai-studio">AI Studio</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#enterprise">Enterprise</a>
+                <a href="https://docs.oortcloudsmart.com" target="_blank">Docs</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="btn-login">Log In</a>
+                <a href="#" class="btn-primary">Download</a>
+            </div>
+            <button class="mobile-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+            <div class="grid-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Your Vibe Coding Bestie &mdash; Build Your Own Global Deploy System
+            </div>
+            <h1 class="hero-title">
+                Download. Install globally.<br>
+                <span class="gradient-text">Own your deployment infrastructure.</span>
+            </h1>
+            <p class="hero-subtitle">
+                Download OORT.sh and deploy it to your servers around the world. Instantly build a private global deployment system you fully own. Then ship your Vibe Coding creations &mdash; AI agents, web apps, APIs &mdash; to production worldwide with a single command, through infrastructure you control.
+            </p>
+            <div class="hero-actions">
+                <a href="#" class="btn-primary btn-large">
+                    Download OORT.sh
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#how-it-works" class="btn-secondary btn-large">See How It Works</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">Global Regions</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">50K+</span>
+                    <span class="stat-label">Deployments</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">99.9%</span>
+                    <span class="stat-label">Uptime SLA</span>
+                </div>
+            </div>
+        </div>
+        <!-- Terminal Preview -->
+        <div class="hero-terminal">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <span class="terminal-title">terminal</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">$</span>
+                        <span class="command">curl -fsSL oort.sh/install | bash</span>
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-muted">Installing OORT.sh platform...</span>
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-success">&#10003;</span> OORT.sh installed on us-east server
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-success">&#10003;</span> OORT.sh installed on eu-west server
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-success">&#10003;</span> OORT.sh installed on ap-southeast server
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-success">&#10003;</span> Private global deployment network ready
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-muted">---</span>
+                    </div>
+                    <div class="terminal-line" style="margin-top: 12px;">
+                        <span class="prompt">$</span>
+                        <span class="command">oort deploy --global</span>
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-success">&#10003;</span> Vibe Coding project detected (Next.js)
+                    </div>
+                    <div class="terminal-line output">
+                        <span class="text-purple">&#9654;</span> Deployed to 3 regions &mdash; <span class="text-link">https://myapp.oort.sh</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By / Logo Cloud -->
+    <section class="logos-section">
+        <div class="container">
+            <p class="logos-label">Deploy any framework globally through your own OORT.sh infrastructure</p>
+            <div class="logos-grid">
+                <div class="logo-item">Next.js</div>
+                <div class="logo-item">Nuxt</div>
+                <div class="logo-item">React</div>
+                <div class="logo-item">Vue</div>
+                <div class="logo-item">Python</div>
+                <div class="logo-item">Go</div>
+                <div class="logo-item">Rust</div>
+                <div class="logo-item">Node.js</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Everything you need to <span class="gradient-text">build your global deploy system</span></h2>
+                <p class="section-subtitle">Download OORT.sh, install it on your servers, and get a production-grade deployment platform. No Dockerfiles required, no YAML nightmares, no third-party dependencies.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Instant Deployments</h3>
+                    <p>Push to GitHub or run <code>oort deploy</code> from CLI. Auto-detect frameworks, build, and ship to production in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+                    </div>
+                    <h3>Any Language, Any Framework</h3>
+                    <p>Node.js, Python, Go, Rust, Java, Ruby, Elixir, and more. If it runs in a container, it runs on OORT.sh.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+                    </div>
+                    <h3>Auto-Scaling</h3>
+                    <p>Scale to zero when idle, scale up instantly under load. Pay only for what you use with per-second billing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Enterprise Security</h3>
+                    <p>SOC 2 compliant, private networking, secrets management, role-based access control, and audit logging built in.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.36-7.36l-1.41 1.41M6.05 17.95l-1.41 1.41m12.72 0l-1.41-1.41M6.05 6.05L4.64 4.64"/></svg>
+                    </div>
+                    <h3>AI Agent Hosting</h3>
+                    <p>Purpose-built for the AI era. Deploy AI agents, chatbots, MCP servers, and LLM-powered apps with production-grade reliability.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <h3>Managed Databases</h3>
+                    <p>One-click PostgreSQL, MySQL, Redis, and MongoDB. Automatic backups, point-in-time recovery, and private networking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
+                    </div>
+                    <h3>Global Multi-Region</h3>
+                    <p>Deploy to 30+ regions worldwide &mdash; US, Europe, Asia-Pacific, Middle East. Ultra-low latency with automatic SSL and custom domains everywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <h3>Download &amp; Build Your Own Infra</h3>
+                    <p>Download OORT.sh and install it on your servers across the world with a single command. Build a private global deployment system you fully control &mdash; no SaaS dependency, no vendor lock-in.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    </div>
+                    <h3>App Marketplace &amp; Unified Portal</h3>
+                    <p>An enterprise-grade capability Railway and Vercel don&apos;t offer. Publish, audit, distribute, upgrade, and retire apps across iOS, Android, HarmonyOS, OortCloud Desktop, and AxI desktop &mdash; all from one portal with fine-grained visibility &amp; access control by team, role, or org unit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deploy Section -->
+    <section class="deploy-section" id="deploy">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Deploy <span class="gradient-text">anything</span></h2>
+                <p class="section-subtitle">From AI agents to full-stack apps, your Vibe Coding results deploy globally through your own OORT.sh infrastructure.</p>
+            </div>
+            <div class="deploy-grid">
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#129302;</div>
+                    <h3>AI Agents</h3>
+                    <p>OpenClaw, custom agents, MCP servers, LangChain apps</p>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#128172;</div>
+                    <h3>Chatbots</h3>
+                    <p>ChatGPT plugins, custom bots, conversational AI</p>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#127760;</div>
+                    <h3>Web Apps</h3>
+                    <p>Next.js, Nuxt, React, Vue, Angular, Svelte</p>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#9881;</div>
+                    <h3>APIs & Backends</h3>
+                    <p>Express, FastAPI, Django, Spring Boot, Go services</p>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#128241;</div>
+                    <h3>Mobile Backends</h3>
+                    <p>uni-app, React Native, Flutter API services</p>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#128230;</div>
+                    <h3>Chrome Extensions</h3>
+                    <p>Extension backends, AxI tools, browser automation</p>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#128202;</div>
+                    <h3>Cron & Workers</h3>
+                    <p>Background jobs, scheduled tasks, data pipelines</p>
+                </div>
+                <div class="deploy-card">
+                    <div class="deploy-icon">&#128451;</div>
+                    <h3>Databases</h3>
+                    <p>PostgreSQL, MySQL, Redis, MongoDB, ClickHouse</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Build your global deploy system in <span class="gradient-text">3 steps</span></h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h3>Download OORT.sh</h3>
+                    <p>Download the OORT.sh platform package. One lightweight installer that contains everything you need to build your own deployment infrastructure.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h3>Install on Your Global Servers</h3>
+                    <p>Deploy OORT.sh to your servers across the world &mdash; any cloud, any data center, any region. One command per server builds your private global deployment network.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h3>Ship Globally with One Command</h3>
+                    <p>Your Vibe Coding projects, AI agents, and apps deploy instantly to your entire global network. No third-party platform dependency &mdash; you own the whole pipeline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Section -->
+    <section class="enterprise-section" id="enterprise">
+        <div class="container">
+            <div class="enterprise-grid">
+                <div class="enterprise-content">
+                    <div class="hero-badge">
+                        <span class="badge-dot"></span>
+                        Your Own Global Deployment System
+                    </div>
+                    <h2 class="section-title">Build a private <span class="gradient-text">worldwide deployment network</span></h2>
+                    <p class="section-subtitle">Download OORT.sh and install it on servers across the globe. You get a fully private, enterprise-grade global deployment system &mdash; no third-party SaaS dependency. Every Vibe Coding project you build deploys instantly to your own infrastructure, everywhere.</p>
+                    <ul class="enterprise-features">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.67 5L7.5 14.17 3.33 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Download once, install on unlimited servers worldwide
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.67 5L7.5 14.17 3.33 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Vibe Coding outputs deploy globally through YOUR infra
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.67 5L7.5 14.17 3.33 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Multi-cloud: AWS, GCP, Azure, bare-metal, or hybrid
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.67 5L7.5 14.17 3.33 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Zero vendor lock-in &mdash; you own the entire pipeline
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.67 5L7.5 14.17 3.33 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Data sovereignty &mdash; keep data in your jurisdiction
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.67 5L7.5 14.17 3.33 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Air-gapped &amp; on-premises for regulated industries
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.67 5L7.5 14.17 3.33 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            Unified portal, SSO, RBAC, audit trail &amp; app marketplace
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-primary btn-large">Download OORT.sh</a>
+                </div>
+                <div class="enterprise-visual">
+                    <div class="enterprise-card-stack">
+                        <div class="e-card e-card-1">
+                            <div class="e-card-header">Step 1: Download</div>
+                            <div class="e-card-body">curl -fsSL oort.sh/install | bash</div>
+                        </div>
+                        <div class="e-card e-card-2">
+                            <div class="e-card-header">Step 2: Install Globally</div>
+                            <div class="e-card-body">US / EU / APAC / Middle East / Africa</div>
+                        </div>
+                        <div class="e-card e-card-3">
+                            <div class="e-card-header">Step 3: Deploy Everything</div>
+                            <div class="e-card-body">Vibe Coding &rarr; Global Production in seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why teams choose <span class="gradient-text">OORT.sh</span></h2>
+                <p class="section-subtitle">The only platform you can download and install on your own servers to build a private global deployment system. No SaaS dependency.</p>
+            </div>
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="highlight">OORT.sh</th>
+                            <th>Railway</th>
+                            <th>Vercel</th>
+                            <th>Heroku</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>One-click deploy</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Full-stack (frontend + backend + DB)</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="partial">~</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                        </tr>
+                        <tr>
+                            <td>AI agent hosting</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Download &amp; build your own global deploy system</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Global multi-region (30+ regions)</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="partial">~</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="partial">~</span></td>
+                        </tr>
+                        <tr>
+                            <td>Air-gapped / on-premises deploy</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Data sovereignty (deploy in any jurisdiction)</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Built-in cloud IDE (AI Studio)</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                        </tr>
+                        <tr>
+                            <td>App marketplace & lifecycle mgmt</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                        </tr>
+                        <tr>
+                            <td>Per-second billing</td>
+                            <td class="highlight"><span class="check">&#10003;</span></td>
+                            <td><span class="check">&#10003;</span></td>
+                            <td><span class="partial">~</span></td>
+                            <td><span class="cross">&#10007;</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Simple, transparent <span class="gradient-text">pricing</span></h2>
+                <p class="section-subtitle">Download free. Build your global deployment infrastructure. Pay as you scale.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-tier">Free Trial</div>
+                    <div class="pricing-price">
+                        <span class="price-amount">$0</span>
+                    </div>
+                    <p class="pricing-desc">Perfect for trying things out</p>
+                    <ul class="pricing-features">
+                        <li>$5 free credit included</li>
+                        <li>No credit card required</li>
+                        <li>All core features</li>
+                        <li>Community support</li>
+                    </ul>
+                    <a href="#" class="btn-secondary btn-block">Get Started Free</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="pricing-tier">Pro</div>
+                    <div class="pricing-price">
+                        <span class="price-amount">$20</span>
+                        <span class="price-period">/seat/month</span>
+                    </div>
+                    <p class="pricing-desc">For teams shipping to production</p>
+                    <ul class="pricing-features">
+                        <li>Unlimited deployments</li>
+                        <li>Team collaboration</li>
+                        <li>Custom domains & SSL</li>
+                        <li>Priority support</li>
+                        <li>Advanced metrics & logs</li>
+                        <li>Auto-scaling</li>
+                    </ul>
+                    <a href="#" class="btn-primary btn-block">Start Pro Trial</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-tier">Enterprise</div>
+                    <div class="pricing-price">
+                        <span class="price-amount">Custom</span>
+                    </div>
+                    <p class="pricing-desc">For organizations needing compliance & control</p>
+                    <ul class="pricing-features">
+                        <li>Private / on-premises deployment</li>
+                        <li>Compliance certifications</li>
+                        <li>Dedicated support & SLA</li>
+                        <li>SSO & RBAC</li>
+                        <li>App marketplace</li>
+                        <li>Service bus & governance</li>
+                    </ul>
+                    <a href="#" class="btn-secondary btn-block">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OortCloud AI Studio Section -->
+    <section class="ai-studio-section" id="ai-studio">
+        <div class="container">
+            <div class="section-header">
+                <div class="hero-badge" style="margin: 0 auto 20px;">
+                    <span class="badge-dot"></span>
+                    Integrated Development Environment
+                </div>
+                <h2 class="section-title"><span class="gradient-text">OortCloud AI Studio</span></h2>
+                <p class="section-subtitle">A full-featured cloud IDE with AI-native development capabilities. Code, test, deploy, and operate &mdash; all in one place, from anywhere in the world.</p>
+            </div>
+            <div class="studio-showcase">
+                <div class="studio-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="terminal-title">OortCloud AI Studio</span>
+                    </div>
+                    <div class="studio-body">
+                        <div class="studio-sidebar">
+                            <div class="studio-sidebar-item active">Explorer</div>
+                            <div class="studio-sidebar-item">AI Chat</div>
+                            <div class="studio-sidebar-item">Terminal</div>
+                            <div class="studio-sidebar-item">Deploy</div>
+                            <div class="studio-sidebar-item">Logs</div>
+                        </div>
+                        <div class="studio-editor">
+                            <div class="studio-tab">app/api/agent/route.ts</div>
+                            <div class="studio-code">
+                                <span class="code-keyword">export async function</span> <span class="code-func">POST</span>(req: Request) {<br>
+                                &nbsp;&nbsp;<span class="code-keyword">const</span> { prompt } = <span class="code-keyword">await</span> req.json()<br>
+                                &nbsp;&nbsp;<span class="code-keyword">const</span> response = <span class="code-keyword">await</span> <span class="code-func">agent</span>.run(prompt)<br>
+                                &nbsp;&nbsp;<span class="code-keyword">return</span> Response.json(response)<br>
+                                }
+                            </div>
+                            <div class="studio-ai-hint">
+                                <span class="text-purple">AI</span> &nbsp;Suggesting: Add rate limiting middleware for production...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="studio-features-grid">
+                <div class="studio-feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h4>AI-Powered Coding</h4>
+                    <p>Integrated AI assistant for code generation, refactoring, and debugging. Supports Qoder CLI, Claude Code CLI, Codex CLI, and OpenClaw agents natively.</p>
+                </div>
+                <div class="studio-feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4"/></svg>
+                    </div>
+                    <h4>One-Click Deploy from IDE</h4>
+                    <p>Develop and deploy in one seamless flow. Push to Dev, Test, Production, or Backup environments without leaving the editor.</p>
+                </div>
+                <div class="studio-feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <h4>Templates & Scaffolding</h4>
+                    <p>Start from 200+ production-ready templates. Full-stack apps, AI agents, microservices, and industry-specific solutions ready to customize.</p>
+                </div>
+                <div class="studio-feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h4>Team Collaboration</h4>
+                    <p>Real-time co-editing, shared environments, code review workflows, and role-based access. Built for distributed teams worldwide.</p>
+                </div>
+                <div class="studio-feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+                    </div>
+                    <h4>VS Code Compatible</h4>
+                    <p>Full VS Code extension ecosystem support. Use your existing extensions, keybindings, and themes. Also available as a standalone desktop app.</p>
+                </div>
+                <div class="studio-feature">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <h4>Cloud + Edge Development</h4>
+                    <p>Develop cloud-native and edge applications side by side. Test locally, deploy globally. Supports Docker, K8s, and serverless targets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Developer Tools Section -->
+    <section class="devtools-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Built for <span class="gradient-text">Vibe Coding workflows</span></h2>
+                <p class="section-subtitle">Integrates with the AI coding tools you already use. Your creations ship to your global OORT.sh network instantly.</p>
+            </div>
+            <div class="devtools-grid">
+                <div class="devtool-card">
+                    <h4>CLI First</h4>
+                    <p>Deploy from terminal with <code>oort deploy</code>. Works with Qoder CLI, Claude Code, and Codex CLI &mdash; Vibe Coding results go live instantly.</p>
+                </div>
+                <div class="devtool-card">
+                    <h4>GitHub Integration</h4>
+                    <p>Auto-deploy on push to your own global OORT.sh network. Preview deployments for every PR. Branch-based environments.</p>
+                </div>
+                <div class="devtool-card">
+                    <h4>One-Command Install</h4>
+                    <p>Run <code>curl -fsSL oort.sh/install | bash</code> on any server to add it to your global deployment network. Build your infra in minutes.</p>
+                </div>
+                <div class="devtool-card">
+                    <h4>Multi-Cloud Support</h4>
+                    <p>Install OORT.sh on AWS, GCP, Azure, or bare-metal servers. Mix and match &mdash; same experience everywhere, all under your control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to own your global deployment infrastructure?</h2>
+                <p>Download OORT.sh, install it on your servers worldwide, and start deploying your Vibe Coding projects globally &mdash; through infrastructure you fully own and control.</p>
+                <div class="cta-actions">
+                    <a href="#" class="btn-primary btn-large">
+                        Download OORT.sh
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="#" class="btn-secondary btn-large">View Documentation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="nav-logo">
+                        <span class="logo-icon">&#9678;</span>
+                        <span class="logo-text">OORT.sh</span>
+                    </a>
+                    <p>Download and install on your own servers worldwide. Build a private global deployment system for your Vibe Coding projects &mdash; infrastructure you fully own.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <a href="#features">Features</a>
+                    <a href="#ai-studio">AI Studio</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#enterprise">Enterprise</a>
+                    <a href="#">Private Install</a>
+                    <a href="#">Changelog</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Developers</h4>
+                    <a href="#">Documentation</a>
+                    <a href="#">API Reference</a>
+                    <a href="#">CLI Guide</a>
+                    <a href="#">Status</a>
+                    <a href="#">Community</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 OORT.sh (OortCloud Smart). All rights reserved.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.02 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Discord">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

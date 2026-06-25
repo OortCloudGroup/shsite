@@ -1,0 +1,1297 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OORT.sh · Developer Docs | Programming Languages · Frameworks · Development Templates</title>
+    <meta name="description" content="OORT.sh Developer Docs — covering programming languages and mainstream frameworks such as JavaScript, TypeScript, Vue, Java, and Go, with 12+ ready-to-use development templates for projects, frontend, backend, AI Agents, mini programs, and more.">
+    <style>
+    :root{
+        --blue:#1a73e8;--blue-bg:#e8f0fe;--red:#ea4335;--red-bg:#fce8e6;
+        --yellow:#fbbc04;--yellow-bg:#fef7e0;--green:#34a853;--green-bg:#e6f4ea;
+        --purple:#9334e6;--purple-bg:#f3e8fd;--orange:#ea8600;--orange-bg:#fef7e0;
+        --ink:#202124;--ink-soft:#3c4043;--muted:#5f6368;--line:#dadce0;
+        --bg:#fff;--bg-soft:#f8f9fa;--dark:#202a3c;--code-bg:#1e1e2e;
+        --r:14px;--r-lg:20px;--r-xl:28px;
+        --s1:0 1px 3px rgba(60,64,67,.1),0 1px 2px rgba(60,64,67,.06);
+        --s2:0 1px 4px rgba(60,64,67,.12),0 4px 12px rgba(60,64,67,.08);
+        --s3:0 4px 16px rgba(60,64,67,.14),0 8px 28px rgba(60,64,67,.10);
+        --s4:0 8px 28px rgba(60,64,67,.18);
+        --t:.25s ease;--max:1200px;
+        --font:"Google Sans","Inter","Helvetica Neue","PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Arial,sans-serif;
+        --sidebar-w:220px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:80px}
+    body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}svg{display:block}
+    .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:500;line-height:1;padding:10px 22px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;transition:all var(--t);white-space:nowrap}
+    .btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+    .btn:active{transform:scale(.97)}
+    .btn-lg{padding:14px 32px;font-size:15px}
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:var(--s1)}
+    .btn-primary:hover{background:#1557b0;box-shadow:var(--s2);transform:translateY(-2px)}
+    .btn-outline{border-color:var(--line);color:var(--blue);background:#fff}
+    .btn-outline:hover{background:var(--blue-bg);border-color:var(--blue)}
+    .btn-ghost{color:var(--ink-soft);background:transparent;border-color:transparent}
+    .btn-ghost:hover{background:var(--bg-soft)}
+    .btn-white{background:#fff;color:var(--blue)}
+    .btn-white:hover{background:#f1f5ff;transform:translateY(-2px)}
+    .btn-ghost-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+    .btn-ghost-white:hover{background:rgba(255,255,255,.14);border-color:#fff}
+    .btn-sm{padding:7px 16px;font-size:13px}
+
+    /* Navbar */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:saturate(200%) blur(16px);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+    .navbar.scrolled{border-color:rgba(218,220,224,.7);box-shadow:0 1px 4px rgba(60,64,67,.08)}
+    .nav-in{max-width:var(--max);margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:24px}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:20px}
+    .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+    .brand-dot{color:var(--blue)}
+    .nav-links{display:flex;gap:2px;margin-left:8px}
+    .nav-link{font-size:14px;color:var(--ink-soft);font-weight:500;padding:7px 12px;border-radius:8px;transition:all .2s}
+    .nav-link:hover{background:var(--bg-soft);color:var(--blue)}
+    .nav-link.active{color:var(--blue);background:var(--blue-bg)}
+    .nav-acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+    .nav-toggle span{width:20px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+    /* Sidebar */
+    .page-layout{display:flex;gap:0;max-width:var(--max);margin:0 auto;padding:0 24px}
+    .sidebar{width:var(--sidebar-w);flex-shrink:0;position:sticky;top:80px;height:fit-self;max-height:calc(100vh - 100px);overflow-y:auto;padding:20px 0;display:none}
+    .sidebar.open{display:block}
+    .sidebar a{display:block;font-size:13.5px;color:var(--muted);padding:7px 16px;border-left:2px solid transparent;transition:all var(--t)}
+    .sidebar a:hover{color:var(--blue);background:rgba(26,115,232,.04)}
+    .sidebar a.active{color:var(--blue);border-left-color:var(--blue);font-weight:600;background:var(--blue-bg)}
+    .sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:16px 16px 6px;margin-top:8px}
+    .sidebar-title:first-child{margin-top:0}
+    .main-content{flex:1;min-width:0;padding-bottom:80px}
+
+    /* Hero */
+    .hero{padding:140px 0 80px;overflow:hidden;background:linear-gradient(180deg,#fff,#f8fafc);position:relative}
+    .hero-bg{position:absolute;inset:0;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.3}
+    .b1{width:500px;height:500px;background:#aecbfa;top:-140px;right:-100px}
+    .b2{width:380px;height:380px;background:#cce6d4;bottom:-120px;left:-80px}
+    .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);background:var(--blue-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px}
+    .eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(26,115,232,.15)}
+    .hero-title{font-size:48px;font-weight:700;letter-spacing:-1.5px;line-height:1.12}
+    .grad{background:linear-gradient(135deg,var(--blue),#4285f4 45%,var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:17px;color:var(--muted);margin:20px 0 28px;max-width:540px;line-height:1.7}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-code{position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--s4);border:1px solid rgba(218,220,224,.5)}
+    .code-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#2d2d3d}
+    .code-dot{width:12px;height:12px;border-radius:50%}
+    .code-dot.r{background:#ff5f57}.code-dot.y{background:#febc2e}.code-dot.g{background:#28c840}
+    .code-bar span{margin-left:8px;font-size:12px;color:#888;font-family:monospace}
+    .code-body{background:var(--code-bg);padding:20px;font-family:"Fira Code","Cascadia Code",Consolas,monospace;font-size:13px;line-height:1.7;color:#cdd6f4;overflow-x:auto}
+    .code-body .kw{color:#cba6f7}.code-body .fn{color:#89b4fa}.code-body .str{color:#a6e3a1}
+    .code-body .cm{color:#6c7086;font-style:italic}.code-body .ty{color:#f9e2af}
+    .code-body .op{color:#89dceb}.code-body .num{color:#fab387}
+
+    /* Sections */
+    .sec{padding:80px 0}
+    .sec-soft{background:linear-gradient(180deg,#f8f9fa,#fff)}
+    .sec-dark{background:linear-gradient(135deg,#202a3c,#2a3550)}
+    .sec-head{max-width:680px;margin:0 auto 48px;text-align:center}
+    .sec-title{font-size:36px;font-weight:700;letter-spacing:-.8px;line-height:1.18}
+    .sec-title.l{color:#fff}
+    .sec-desc{font-size:17px;color:var(--muted);margin-top:16px;line-height:1.65}
+    .sec-desc.l{color:#c4ccd8}
+
+    /* Tabs */
+    .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:28px;justify-content:center}
+    .tab{padding:9px 18px;border-radius:999px;font-size:14px;font-weight:500;color:var(--ink-soft);background:transparent;border:1px solid var(--line);cursor:pointer;transition:all var(--t)}
+    .tab:hover{background:var(--bg-soft);border-color:var(--blue)}
+    .tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    /* Lang card */
+    .lang-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--s1)}
+    .lang-head{padding:28px 32px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;border-bottom:1px solid var(--line)}
+    .lang-logo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff}
+    .lang-head h3{font-size:22px;font-weight:600}
+    .lang-head p{font-size:14px;color:var(--muted);margin-top:2px}
+    .lang-body{padding:28px 32px}
+    .lang-feats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+    .lang-feat{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink-soft)}
+    .lang-feat::before{content:"✓";flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--green-bg);color:var(--green);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+    .lang-scene{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .lang-scene span{font-size:12px;padding:5px 12px;border-radius:999px;background:var(--bg-soft);border:1px solid var(--line);color:var(--muted)}
+
+    /* Code block */
+    .code-block{background:var(--code-bg);border-radius:var(--r);padding:20px 24px;font-family:"Fira Code",Consolas,monospace;font-size:13px;line-height:1.7;color:#cdd6f4;overflow-x:auto;margin-top:20px}
+    .code-block .kw{color:#cba6f7}.code-block .fn{color:#89b4fa}.code-block .str{color:#a6e3a1}
+    .code-block .cm{color:#6c7086}.code-block .ty{color:#f9e2af}.code-block .num{color:#fab387}
+
+    /* Framework cards */
+    .fw-section{margin-bottom:40px}
+    .fw-section:last-child{margin-bottom:0}
+    .fw-section h3{font-size:18px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    .fw-section h3 .dot{width:10px;height:10px;border-radius:50%}
+    .fw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+    .fw{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r);padding:22px 20px;transition:transform var(--t),box-shadow var(--t)}
+    .fw:hover{transform:translateY(-4px);box-shadow:var(--s2)}
+    .fw h4{font-size:16px;font-weight:600;margin-bottom:6px}
+    .fw p{font-size:13px;color:var(--muted);line-height:1.55}
+    .fw-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .fw-tags span{font-size:11px;padding:3px 10px;border-radius:999px;background:var(--bg-soft);color:var(--muted)}
+
+    /* Template cards */
+    .tpl-group{margin-bottom:40px}
+    .tpl-group:last-child{margin-bottom:0}
+    .tpl-group>h3{font-size:18px;font-weight:600;margin-bottom:6px}
+    .tpl-group>p{font-size:14px;color:var(--muted);margin-bottom:18px}
+    .tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+    .tpl{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:24px;transition:transform var(--t),box-shadow var(--t);border-top:3px solid transparent}
+    .tpl:hover{transform:translateY(-5px);box-shadow:var(--s3)}
+    .tpl.fullstack{border-top-color:var(--blue)}
+    .tpl.separate{border-top-color:var(--green)}
+    .tpl-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+    .tpl h4{font-size:16px;font-weight:600;margin-bottom:6px}
+    .tpl p{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:12px}
+    .tpl-tags{display:flex;flex-wrap:wrap;gap:6px}
+    .tpl-tags span{font-size:11px;padding:3px 10px;border-radius:999px;background:var(--bg-soft);color:var(--muted)}
+
+    /* CTA */
+    .cta{padding:80px 0;background:linear-gradient(135deg,var(--blue),#4285f4);position:relative;overflow:hidden}
+    .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.1),transparent 60%);pointer-events:none}
+    .cta-in{position:relative;z-index:1;text-align:center;color:#fff}
+    .cta-in h2{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1.15}
+    .cta-in p{font-size:18px;margin:18px 0 32px;color:rgba(255,255,255,.9);max-width:560px;margin-inline:auto}
+    .cta-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    /* Footer */
+    .footer{background:var(--bg-soft);border-top:1px solid rgba(218,220,224,.5);padding:56px 0 32px}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+    .footer-brand p{font-size:13px;color:var(--muted);line-height:1.6}
+    .footer-brand .ft{margin-top:10px;color:var(--ink-soft);font-weight:500}
+    .footer-col h5{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:14px;text-transform:uppercase;letter-spacing:.3px}
+    .footer-col a{display:block;font-size:13.5px;color:var(--muted);padding:5px 0;transition:color var(--t)}
+    .footer-col a:hover{color:var(--blue)}
+    .footer-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px;padding-top:20px;border-top:1px solid rgba(218,220,224,.4);font-size:12px;color:var(--muted)}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.4,0,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    /* Mobile sidebar toggle */
+    .sidebar-toggle{display:none}
+    @media(max-width:900px){
+        .sidebar-toggle{display:inline-flex}
+        .sidebar{position:fixed;top:64px;left:0;bottom:0;z-index:90;background:#fff;box-shadow:var(--s3);padding:20px;transform:translateX(-100%);transition:transform var(--t)}
+        .sidebar.open{transform:translateX(0)}
+        .hero-in{grid-template-columns:1fr}
+        .hero-code{margin-top:24px}
+        .lang-head{grid-template-columns:1fr;text-align:center}
+        .lang-logo{margin:0 auto}
+        .lang-feats{grid-template-columns:1fr}
+        .footer-grid{grid-template-columns:1fr 1fr}
+        .hero-title{font-size:36px}
+        .sec-title{font-size:28px}
+        .sec{padding:64px 0}
+    }
+    @media(max-width:640px){
+        .nav-links{display:none}
+        .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;padding:12px 20px 16px;border-bottom:1px solid var(--line);box-shadow:var(--s2);gap:4px}
+        .nav-acts .btn-ghost{display:none}
+        .nav-toggle{display:flex}
+        .hero{padding:110px 0 60px}
+        .hero-title{font-size:30px}
+        .hero-sub{font-size:15.5px}
+        .tabs{gap:6px}
+        .tab{padding:7px 14px;font-size:13px}
+        .fw-grid,.tpl-grid{grid-template-columns:1fr}
+        .footer-grid{grid-template-columns:1fr}
+        .cta{padding:60px 0}
+        .cta-in h2{font-size:26px}
+    }
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+    
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-in">
+                        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+              <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#languages" class="nav-link">Languages</a>
+                <a href="#frameworks" class="nav-link">Frameworks</a>
+                <a href="#templates" class="nav-link">Templates</a>
+                <a href="#start" class="nav-link">Quick Start</a>
+            </nav>
+            <div class="nav-acts">
+<!--                 <button class="btn btn-ghost btn-sm sidebar-toggle" id="sidebarToggle" aria-label="Contents">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                </button>
+                <a href="index.html" class="btn btn-ghost btn-sm">← Back to Home</a> -->
+                <a href="#start" class="btn btn-primary btn-sm">Quick Start</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-title">Languages</div>
+        <a href="#lang-js">JavaScript</a>
+        <a href="#lang-ts">TypeScript</a>
+        <a href="#lang-vue">Vue</a>
+        <a href="#lang-nuxt">Nuxt</a>
+        <a href="#lang-next">Next.js</a>
+        <a href="#lang-java">Java Backend</a>
+        <a href="#lang-go">Go Backend</a>
+        <div class="sidebar-title">Frameworks</div>
+        <a href="#fw-frontend">Frontend Frameworks</a>
+        <a href="#fw-mobile">Mobile</a>
+        <a href="#fw-backend">Backend Frameworks</a>
+        <a href="#fw-ai">AI / ML</a>
+        <a href="#fw-data">Data / GIS</a>
+        <div class="sidebar-title">Templates</div>
+        <a href="#tpl-fullstack">Full-Stack Projects</a>
+        <a href="#tpl-separate">Separate Deployment</a>
+        <div class="sidebar-title">Quick Start</div>
+        <a href="#start">Choose a Tech Stack</a>
+    </aside>
+
+    <main id="top">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
+            <div class="container hero-in">
+                <div>
+                    <span class="eyebrow">Developer Docs</span>
+                    <h1 class="hero-title">From code to launch,<br><span class="grad">all in one place</span></h1>
+                    <p class="hero-sub">Covering programming languages and mainstream frameworks such as JavaScript, TypeScript, Vue, Nuxt, Next.js, Java, and Go, with 12+ ready-to-use development templates for projects, frontend, backend, AI Agents, mini programs, low-code, and more.</p>
+                    <div class="hero-cta">
+                        <a href="#templates" class="btn btn-primary btn-lg">Browse Templates</a>
+                        <a href="#languages" class="btn btn-outline btn-lg">View Languages</a>
+                    </div>
+                </div>
+                <div class="hero-code">
+                    <div class="code-bar">
+                        <span class="code-dot r"></span><span class="code-dot y"></span><span class="code-dot g"></span>
+                        <span>oort-app — main.ts</span>
+                    </div>
+                    <div class="code-body">
+<span class="cm">// OORT.sh Quick Start</span>
+<span class="kw">import</span> { <span class="ty">OortApp</span> } <span class="kw">from</span> <span class="str">'@oort/sdk'</span>
+
+<span class="kw">const</span> app = <span class="kw">new</span> <span class="fn">OortApp</span>({
+  name: <span class="str">'my-app'</span>,
+  services: [<span class="str">'auth'</span>, <span class="str">'storage'</span>, <span class="str">'bus'</span>],
+})
+
+app.<span class="fn">start</span>().<span class="fn">then</span>(() <span class="op">=></span> {
+  console.<span class="fn">log</span>(<span class="str">'🚀 OORT.sh is ready'</span>)
+})
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages -->
+        <section class="sec" id="languages">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Programming Languages</span>
+                    <h2 class="sec-title">Cover mainstream languages and fit your tech stack</h2>
+                    <p class="sec-desc">From frontend to backend, OORT.sh provides complete SDKs and documentation so every language can efficiently integrate platform capabilities.</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs reveal" id="langTabs">
+                    <button class="tab active" data-tab="js">JavaScript</button>
+                    <button class="tab" data-tab="ts">TypeScript</button>
+                    <button class="tab" data-tab="vue">Vue</button>
+                    <button class="tab" data-tab="nuxt">Nuxt</button>
+                    <button class="tab" data-tab="next">Next.js</button>
+                    <button class="tab" data-tab="java">Java</button>
+                    <button class="tab" data-tab="go">Go</button>
+                </div>
+
+                <div class="reveal">
+                    <!-- JavaScript -->
+                    <div class="tab-panel active" id="panel-js">
+                        <div class="lang-card">
+                            <div class="lang-head">
+                                <div class="lang-logo" style="background:#f7df1e;color:#000">JS</div>
+                                <div><h3>JavaScript</h3><p>Full ES2024+ feature support, asynchronous programming, and modular best practices</p></div>
+                            </div>
+                            <div class="lang-body">
+                                <div class="lang-feats">
+                                    <div class="lang-feat">ES2024 syntax support</div>
+                                    <div class="lang-feat">Async/Await asynchronous programming</div>
+                                    <div class="lang-feat">ES Modules modularization</div>
+                                    <div class="lang-feat">Complete OORT.js SDK wrapper</div>
+                                    <div class="lang-feat">WebSocket real-time communication</div>
+                                    <div class="lang-feat">Web Worker multithreading</div>
+                                </div>
+                                <div class="code-block">
+<span class="cm">// Quickly integrate OORT.sh</span>
+<span class="kw">import</span> { <span class="ty">OortClient</span> } <span class="kw">from</span> <span class="str">'@oort/js-sdk'</span>
+
+<span class="kw">const</span> client = <span class="kw">new</span> <span class="fn">OortClient</span>({
+  endpoint: <span class="str">'https://api.oort.sh'</span>,
+  token: localStorage.<span class="fn">getItem</span>(<span class="str">'token'</span>),
+})
+
+<span class="cm">// Call cloud services</span>
+<span class="kw">const</span> res = <span class="kw">await</span> client.services.workflow.<span class="fn">execute</span>({
+  templateId: <span class="str">'approval-flow'</span>,
+  data: { title: <span class="str">'Purchase request'</span> },
+})
+                                </div>
+                                <div class="lang-scene"><span>Best for: SPA apps</span><span>Rapid prototypes</span><span>Browser-side integration</span><span>Lightweight projects</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TypeScript -->
+                    <div class="tab-panel" id="panel-ts">
+                        <div class="lang-card">
+                            <div class="lang-head">
+                                <div class="lang-logo" style="background:#3178c6">TS</div>
+                                <div><h3>TypeScript</h3><p>Strong type system, generics and decorator support, deeply integrated with the OORT SDK</p></div>
+                            </div>
+                            <div class="lang-body">
+                                <div class="lang-feats">
+                                    <div class="lang-feat">Complete type definition files</div>
+                                    <div class="lang-feat">Generic API response types</div>
+                                    <div class="lang-feat">Decorator metadata injection</div>
+                                    <div class="lang-feat">Autocomplete and type checking</div>
+                                    <div class="lang-feat">OORT CLI code generation</div>
+                                    <div class="lang-feat">Unit test templates</div>
+                                </div>
+                                <div class="code-block">
+<span class="cm">// Type-safe calls with TypeScript + OORT.sh</span>
+<span class="kw">import</span> { <span class="ty">OortClient</span>, <span class="ty">WorkflowResult</span> } <span class="kw">from</span> <span class="str">'@oort/ts-sdk'</span>
+
+<span class="kw">interface</span> <span class="ty">ApprovalData</span> {
+  title: <span class="ty">string</span>
+  amount: <span class="ty">number</span>
+  approver: <span class="ty">string</span>
+}
+
+<span class="kw">const</span> client = <span class="kw">new</span> <span class="fn">OortClient</span>&lt;<span class="ty">ApprovalData</span>&gt;()
+<span class="kw">const</span> result: <span class="ty">WorkflowResult</span>&lt;<span class="ty">ApprovalData</span>&gt; =
+  <span class="kw">await</span> client.workflow.&lt;<span class="ty">ApprovalData</span>&gt;.<span class="fn">execute</span>({
+    templateId: <span class="str">'approval'</span>,
+    data: { title: <span class="str">'Purchase'</span>, amount: <span class="num">5000</span>, approver: <span class="str">'admin'</span> },
+  })
+                                </div>
+                                <div class="lang-scene"><span>Best for: medium-to-large projects</span><span>Enterprise applications</span><span>Type-safe scenarios</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vue -->
+                    <div class="tab-panel" id="panel-vue">
+                        <div class="lang-card">
+                            <div class="lang-head">
+                                <div class="lang-logo" style="background:#42b883;color:#fff">V</div>
+                                <div><h3>Vue 3</h3><p>Composition API + Pinia + Vue Router, seamlessly integrated with the OORT component library</p></div>
+                            </div>
+                            <div class="lang-body">
+                                <div class="lang-feats">
+                                    <div class="lang-feat">Vue 3 Composition API</div>
+                                    <div class="lang-feat">Pinia state management</div>
+                                    <div class="lang-feat">Vue Router integration</div>
+                                    <div class="lang-feat">OORT Vue component library</div>
+                                    <div class="lang-feat">Reactive data binding</div>
+                                    <div class="lang-feat">SSR support with Nuxt</div>
+                                </div>
+                                <div class="code-block">
+<span class="cm">// Vue 3 + OORT.sh component integration</span>
+<span class="kw">import</span> { <span class="fn">defineComponent</span>, <span class="fn">ref</span> } <span class="kw">from</span> <span class="str">'vue'</span>
+<span class="kw">import</span> { <span class="ty">OortForm</span>, <span class="ty">OortTable</span> } <span class="kw">from</span> <span class="str">'@oort/vue'</span>
+
+<span class="kw">export default</span> <span class="fn">defineComponent</span>({
+  <span class="fn">setup</span>() {
+    <span class="kw">const</span> data = <span class="fn">ref</span>([])
+    <span class="kw">const</span> loading = <span class="fn">ref</span>(<span class="kw">false</span>)
+
+    <span class="kw">const</span> <span class="fn">loadData</span> = <span class="kw">async</span> () <span class="op">=></span> {
+      loading.value = <span class="kw">true</span>
+      data.value = <span class="kw">await</span> oort.api.<span class="fn">query</span>(<span class="str">'users'</span>)
+      loading.value = <span class="kw">false</span>
+    }
+    <span class="kw">return</span> { data, loading, loadData }
+  },
+})
+                                </div>
+                                <div class="lang-scene"><span>Best for: admin dashboards</span><span>Data visualization</span><span>Form-driven apps</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nuxt -->
+                    <div class="tab-panel" id="panel-nuxt">
+                        <div class="lang-card">
+                            <div class="lang-head">
+                                <div class="lang-logo" style="background:#00dc82;color:#fff">N</div>
+                                <div><h3>Nuxt</h3><p>SSR/SSG server-side rendering, middleware and routing, seamlessly connected to OORT cloud services</p></div>
+                            </div>
+                            <div class="lang-body">
+                                <div class="lang-feats">
+                                    <div class="lang-feat">SSR / SSG / ISR rendering modes</div>
+                                    <div class="lang-feat">Server-side middleware integration</div>
+                                    <div class="lang-feat">File-based route generation</div>
+                                    <div class="lang-feat">OORT Nuxt Module</div>
+                                    <div class="lang-feat">SEO optimization support</div>
+                                    <div class="lang-feat">API Routes connected to OORT</div>
+                                </div>
+                                <div class="code-block">
+<span class="cm">// nuxt.config.ts</span>
+<span class="kw">export default</span> <span class="fn">defineNuxtConfig</span>({
+  modules: [<span class="str">'@oort/nuxt-module'</span>],
+  oort: {
+    endpoint: process.env.<span class="ty">OORT_API_URL</span>,
+    services: [<span class="str">'auth'</span>, <span class="str">'workflow'</span>, <span class="str">'storage'</span>],
+  },
+})
+
+<span class="cm">// server/api/oort-proxy.ts</span>
+<span class="kw">export default</span> <span class="fn">defineEventHandler</span>(<span class="kw">async</span> (event) <span class="op">=></span> {
+  <span class="kw">const</span> body = <span class="kw">await</span> <span class="fn">readBody</span>(event)
+  <span class="kw">return</span> <span class="fn">oort</span>.api.<span class="fn">post</span>(<span class="str">'/workflows'</span>, body)
+})
+                                </div>
+                                <div class="lang-scene"><span>Best for: corporate websites</span><span>E-commerce sites</span><span>SEO-focused apps</span><span>Content management platforms</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Next.js -->
+                    <div class="tab-panel" id="panel-next">
+                        <div class="lang-card">
+                            <div class="lang-head">
+                                <div class="lang-logo" style="background:#000">Nx</div>
+                                <div><h3>Next.js</h3><p>React server-side rendering, App Router architecture, and API Routes connected to OORT services</p></div>
+                            </div>
+                            <div class="lang-body">
+                                <div class="lang-feats">
+                                    <div class="lang-feat">App Router architecture</div>
+                                    <div class="lang-feat">Server Components</div>
+                                    <div class="lang-feat">API Routes middleware</div>
+                                    <div class="lang-feat">OORT Next.js SDK</div>
+                                    <div class="lang-feat">Dynamic/static route generation</div>
+                                    <div class="lang-feat">Edge Runtime support</div>
+                                </div>
+                                <div class="code-block">
+<span class="cm">// app/api/oort/route.ts</span>
+<span class="kw">import</span> { <span class="ty">NextRequest</span> } <span class="kw">from</span> <span class="str">'next/server'</span>
+<span class="kw">import</span> { <span class="ty">OortClient</span> } <span class="kw">from</span> <span class="str">'@oort/next-sdk'</span>
+
+<span class="kw">export async function</span> <span class="fn">POST</span>(req: <span class="ty">NextRequest</span>) {
+  <span class="kw">const</span> body = <span class="kw">await</span> req.<span class="fn">json</span>()
+  <span class="kw">const</span> client = <span class="kw">new</span> <span class="fn">OortClient</span>(process.env.<span class="ty">OORT_TOKEN</span>)
+  <span class="kw">const</span> result = <span class="kw">await</span> client.workflow.<span class="fn">start</span>(body)
+  <span class="kw">return</span> Response.<span class="fn">json</span>(result)
+}
+                                </div>
+                                <div class="lang-scene"><span>Best for: React ecosystem projects</span><span>SaaS apps</span><span>Full-stack web apps</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Java -->
+                    <div class="tab-panel" id="panel-java">
+                        <div class="lang-card">
+                            <div class="lang-head">
+                                <div class="lang-logo" style="background:#5382a1;color:#fff">J</div>
+                                <div><h3>Java Backend</h3><p>Spring Boot 3 microservice architecture, deeply integrated with the OORT Java SDK</p></div>
+                            </div>
+                            <div class="lang-body">
+                                <div class="lang-feats">
+                                    <div class="lang-feat">Spring Boot 3.x support</div>
+                                    <div class="lang-feat">Microservice architecture best practices</div>
+                                    <div class="lang-feat">OORT Spring Boot Starter</div>
+                                    <div class="lang-feat">Service registration and discovery</div>
+                                    <div class="lang-feat">Unified authentication and gateway</div>
+                                    <div class="lang-feat">Message queue integration</div>
+                                </div>
+                                <div class="code-block">
+<span class="cm">// Spring Boot + OORT.sh</span>
+<span class="kw">@SpringBootApplication</span>
+<span class="kw">@EnableOortServices</span>({<span class="str">"auth"</span>, <span class="str">"workflow"</span>, <span class="str">"storage"</span>})
+<span class="kw">public class</span> <span class="ty">Application</span> {
+  <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+    SpringApplication.<span class="fn">run</span>(<span class="ty">Application</span>.<span class="kw">class</span>, args);
+  }
+}
+
+<span class="cm">// Call the OORT workflow service</span>
+<span class="kw">@RestController</span>
+<span class="kw">@RequestMapping</span>(<span class="str">"/api"</span>)
+<span class="kw">public class</span> <span class="ty">WorkflowController</span> {
+  <span class="kw">@Autowired</span> <span class="ty">OortWorkflow</span> workflow;
+
+  <span class="kw">@PostMapping</span>(<span class="str">"/workflow"</span>)
+  <span class="kw">public</span> <span class="ty">Result</span> <span class="fn">start</span>(<span class="ty">@RequestBody</span> <span class="ty">WorkflowReq</span> req) {
+    <span class="kw">return</span> workflow.<span class="fn">execute</span>(req);
+  }
+}
+                                </div>
+                                <div class="lang-scene"><span>Best for: enterprise backends</span><span>Microservice architectures</span><span>High-concurrency systems</span><span>Government systems</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Go -->
+                    <div class="tab-panel" id="panel-go">
+                        <div class="lang-card">
+                            <div class="lang-head">
+                                <div class="lang-logo" style="background:#00add8;color:#fff">Go</div>
+                                <div><h3>Go Backend</h3><p>Gin/Echo high-concurrency frameworks with lightweight OORT Go SDK integration</p></div>
+                            </div>
+                            <div class="lang-body">
+                                <div class="lang-feats">
+                                    <div class="lang-feat">Gin / Echo framework support</div>
+                                    <div class="lang-feat">High-concurrency goroutine processing</div>
+                                    <div class="lang-feat">Lightweight OORT Go SDK integration</div>
+                                    <div class="lang-feat">Middleware chaining</div>
+                                    <div class="lang-feat">gRPC service calls</div>
+                                    <div class="lang-feat">Containerized deployment best practices</div>
+                                </div>
+                                <div class="code-block">
+<span class="cm">// Go + OORT.sh</span>
+<span class="kw">package</span> main
+
+<span class="kw">import</span> (
+  <span class="str">"github.com/oort/sdk-go"</span>
+  <span class="str">"github.com/gin-gonic/gin"</span>
+)
+
+<span class="kw">func</span> <span class="fn">main</span>() {
+  client := oort.<span class="fn">NewClient</span>(oort.Config{
+    Endpoint: <span class="str">"https://api.oort.sh"</span>,
+    Token:    os.<span class="fn">Getenv</span>(<span class="str">"OORT_TOKEN"</span>),
+  })
+
+  r := gin.<span class="fn">Default</span>()
+  r.<span class="fn">POST</span>(<span class="str">"/api/workflow"</span>, <span class="kw">func</span>(c *gin.Context) {
+    result, _ := client.Workflow.<span class="fn">Execute</span>(c.Request.Context(), req)
+    c.<span class="fn">JSON</span>(<span class="num">200</span>, result)
+  })
+  r.<span class="fn">Run</span>(<span class="str">":8080"</span>)
+}
+                                </div>
+                                <div class="lang-scene"><span>Best for: high-concurrency APIs</span><span>Microservice gateways</span><span>Real-time data processing</span><span>Cloud-native services</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Frameworks -->
+        <section class="sec sec-soft" id="frameworks">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Mainstream Frameworks</span>
+                    <h2 class="sec-title">Full-stack coverage, from frontend to AI framework ecosystems</h2>
+                    <p class="sec-desc">Mainstream development frameworks organized by category, with dedicated OORT.sh integration plans and documentation support for each framework.</p>
+                </div>
+
+                <div class="reveal">
+                    <!-- Frontend -->
+                    <div class="fw-section" id="fw-frontend">
+                        <h3><span class="dot" style="background:var(--blue)"></span>Frontend Frameworks</h3>
+                        <div class="fw-grid">
+                            <div class="fw"><h4>React</h4><p>A declarative UI component library with efficient virtual DOM rendering and a rich ecosystem.</p><div class="fw-tags"><span>Components</span><span>Virtual DOM</span><span>Hooks</span></div></div>
+                            <div class="fw"><h4>Vue 3</h4><p>A progressive framework with flexible Composition API patterns and a gentle learning curve.</p><div class="fw-tags"><span>Reactive</span><span>SFC</span><span>Composition API</span></div></div>
+                            <div class="fw"><h4>Angular</h4><p>An enterprise-grade full-stack framework with dependency injection, RxJS, and a complete CLI toolchain.</p><div class="fw-tags"><span>TypeScript</span><span>RxJS</span><span>Dependency Injection</span></div></div>
+                            <div class="fw"><h4>Svelte</h4><p>A compile-time framework with zero runtime overhead, excellent performance, and concise syntax.</p><div class="fw-tags"><span>Compile-time</span><span>Zero Runtime</span><span>Lightweight</span></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile -->
+                    <div class="fw-section" id="fw-mobile">
+                        <h3><span class="dot" style="background:var(--green)"></span>Mobile</h3>
+                        <div class="fw-grid">
+                            <div class="fw"><h4>Flutter</h4><p>Google's cross-platform UI framework, covering iOS, Android, and Web with one codebase.</p><div class="fw-tags"><span>Dart</span><span>Cross-platform</span><span>High-performance Rendering</span></div></div>
+                            <div class="fw"><h4>React Native</h4><p>React-based mobile development with native component rendering and hot update support.</p><div class="fw-tags"><span>JavaScript</span><span>Native Rendering</span><span>Hot Updates</span></div></div>
+                            <div class="fw"><h4>UniApp</h4><p>A Vue ecosystem cross-end framework that publishes one codebase to mini programs, H5, and apps.</p><div class="fw-tags"><span>Vue</span><span>Mini Programs</span><span>Multi-end</span></div></div>
+                            <div class="fw"><h4>Taro</h4><p>A React-style mini program framework supporting WeChat, Alipay, Baidu, and more.</p><div class="fw-tags"><span>React</span><span>Multi-end Mini Programs</span><span>TypeScript</span></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Backend -->
+                    <div class="fw-section" id="fw-backend">
+                        <h3><span class="dot" style="background:var(--orange)"></span>Backend Frameworks</h3>
+                        <div class="fw-grid">
+                            <div class="fw"><h4>Spring Boot</h4><p>The most popular Java ecosystem framework, with auto-configuration, a starter ecosystem, and microservice support.</p><div class="fw-tags"><span>Java</span><span>Auto Configuration</span><span>Microservices</span></div></div>
+                            <div class="fw"><h4>Gin</h4><p>A high-performance Go HTTP framework with middleware support and route grouping.</p><div class="fw-tags"><span>Go</span><span>High Performance</span><span>Middleware</span></div></div>
+                            <div class="fw"><h4>NestJS</h4><p>An enterprise-grade Node.js framework with dependency injection, modularization, and native TypeScript support.</p><div class="fw-tags"><span>TypeScript</span><span>Dependency Injection</span><span>Modular</span></div></div>
+                            <div class="fw"><h4>FastAPI</h4><p>A modern Python API framework with automatic documentation, type validation, and async support.</p><div class="fw-tags"><span>Python</span><span>Auto Docs</span><span>Async</span></div></div>
+                        </div>
+                    </div>
+
+                    <!-- AI/ML -->
+                    <div class="fw-section" id="fw-ai">
+                        <h3><span class="dot" style="background:var(--purple)"></span>AI / ML</h3>
+                        <div class="fw-grid">
+                            <div class="fw"><h4>LangChain</h4><p>An LLM application development framework with chain calls, tool calling, and memory management.</p><div class="fw-tags"><span>LLM</span><span>Chain</span><span>Agent</span></div></div>
+                            <div class="fw"><h4>LlamaIndex</h4><p>Private data indexing and retrieval-augmented generation (RAG) for knowledge base construction.</p><div class="fw-tags"><span>RAG</span><span>Indexing</span><span>Knowledge Base</span></div></div>
+                            <div class="fw"><h4>Ollama</h4><p>A local large-model runtime for one-click deployment of models such as Llama and Mistral.</p><div class="fw-tags"><span>Local Deployment</span><span>Multi-model</span><span>Lightweight</span></div></div>
+                            <div class="fw"><h4>HuggingFace</h4><p>The largest open-source model community, with the Transformers library, datasets, and model hosting.</p><div class="fw-tags"><span>Transformers</span><span>Model Community</span><span>Datasets</span></div></div>
+                        </div>
+                    </div>
+
+                    <!-- Data/GIS -->
+                    <div class="fw-section" id="fw-data">
+                        <h3><span class="dot" style="background:var(--red)"></span>Data / GIS</h3>
+                        <div class="fw-grid">
+                            <div class="fw"><h4>PostGIS</h4><p>A PostgreSQL spatial extension for geospatial data storage and spatial query analysis.</p><div class="fw-tags"><span>Spatial Database</span><span>Spatial Query</span><span>GIS</span></div></div>
+                            <div class="fw"><h4>GeoServer</h4><p>An open-source geospatial data server for publishing WMS/WFS standard map services.</p><div class="fw-tags"><span>Map Services</span><span>WMS</span><span>Open Source</span></div></div>
+                            <div class="fw"><h4>ECharts</h4><p>Baidu's open-source visualization library with rich chart types and smooth interactions.</p><div class="fw-tags"><span>Data Visualization</span><span>Charts</span><span>Interactive</span></div></div>
+                            <div class="fw"><h4>Mapbox GL</h4><p>A vector map rendering engine with custom styles and high-performance WebGL rendering.</p><div class="fw-tags"><span>Vector Maps</span><span>WebGL</span><span>Custom Styles</span></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Templates -->
+        <section class="sec" id="templates">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Development Templates</span>
+                    <h2 class="sec-title">12+ ready-to-use templates for every development scenario</h2>
+                    <p class="sec-desc">From integrated full-stack projects to advanced separately deployed services, from rapid low-code building to AI Agent development, covering every development model your team needs.</p>
+                </div>
+
+                <div class="reveal">
+                    <!-- Fullstack -->
+                    <div class="tpl-group" id="tpl-fullstack">
+                        <h3>Full-Stack Project Templates</h3>
+                        <p>Frontend, backend, and infrastructure in one project, ideal for small and medium projects that need fast startup and unified operations.</p>
+                        <div class="tpl-grid">
+                            <div class="tpl fullstack">
+                                <div class="tpl-ic" style="background:var(--blue-bg);color:var(--blue)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+                                </div>
+                                <h4>Project Template</h4>
+                                <p>An integrated frontend and backend project with frontend, backend, database, and deployment scripts included out of the box.</p>
+                                <div class="tpl-tags"><span>Vue/React</span><span>Spring Boot</span><span>Docker</span><span>CI/CD</span></div>
+                            </div>
+                            <div class="tpl fullstack">
+                                <div class="tpl-ic" style="background:var(--green-bg);color:var(--green)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                                </div>
+                                <h4>Website Template</h4>
+                                <p>Corporate website and landing page templates with responsive design, SEO optimization, and fast customization for launch.</p>
+                                <div class="tpl-tags"><span>Nuxt/Next</span><span>Tailwind</span><span>SEO</span><span>Responsive</span></div>
+                            </div>
+                            <div class="tpl fullstack">
+                                <div class="tpl-ic" style="background:var(--green-bg);color:var(--green)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                                </div>
+                                <h4>Mini Program Template</h4>
+                                <p>WeChat and Alipay mini program templates integrated with OORT terminal capabilities for rapid mobile app release.</p>
+                                <div class="tpl-tags"><span>UniApp</span><span>Taro</span><span>Face Scan</span><span>QR Scan</span></div>
+                            </div>
+                            <div class="tpl fullstack">
+                                <div class="tpl-ic" style="background:var(--yellow-bg);color:var(--orange)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                                </div>
+                                <h4>Low-Code Template</h4>
+                                <p>Form designer + workflow engine + data visualization for quickly building business systems through configuration.</p>
+                                <div class="tpl-tags"><span>Form Designer</span><span>Workflow Engine</span><span>Data Dashboard</span><span>Config-driven</span></div>
+                            </div>
+                            <div class="tpl fullstack">
+                                <div class="tpl-ic" style="background:var(--purple-bg);color:var(--purple)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                </div>
+                                <h4>No-Code Template</h4>
+                                <p>Drag-and-drop page building and zero-code app generation, ideal for business teams to quickly validate ideas.</p>
+                                <div class="tpl-tags"><span>Drag-and-drop</span><span>Visual</span><span>Zero Code</span><span>Rapid Validation</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Separate -->
+                    <div class="tpl-group" id="tpl-separate">
+                        <h3>Separate Deployment Templates</h3>
+                        <p>Each service is deployed and scaled independently, supporting more advanced microservice architectures and distributed logic.</p>
+                        <div class="tpl-grid">
+                            <div class="tpl separate">
+                                <div class="tpl-ic" style="background:var(--blue-bg);color:var(--blue)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                </div>
+                                <h4>Frontend Service</h4>
+                                <p>An independent frontend project supporting micro-frontend architecture, multi-app deployment, and CDN acceleration for static assets.</p>
+                                <div class="tpl-tags"><span>Micro Frontend</span><span>SPA/SSR</span><span>CDN</span><span>Independent Deployment</span></div>
+                            </div>
+                            <div class="tpl separate">
+                                <div class="tpl-ic" style="background:var(--orange-bg);color:var(--orange)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1" fill="currentColor"/><circle cx="6" cy="18" r="1" fill="currentColor"/></svg>
+                                </div>
+                                <h4>Backend Service</h4>
+                                <p>RESTful APIs and microservices with service registration and discovery, load balancing, circuit breaking, and degradation.</p>
+                                <div class="tpl-tags"><span>RESTful</span><span>Microservices</span><span>Service Mesh</span><span>High Availability</span></div>
+                            </div>
+                            <div class="tpl separate">
+                                <div class="tpl-ic" style="background:var(--purple-bg);color:var(--purple)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 014 4c0 1.95-2 4-4 6-2-2-4-4.05-4-6a4 4 0 014-4z"/><path d="M12 12v10"/><path d="M8 18h8"/><circle cx="12" cy="6" r="1" fill="currentColor"/></svg>
+                                </div>
+                                <h4>AI Agent</h4>
+                                <p>An intelligent agent template supporting conversational interaction, tool calling, knowledge retrieval, and autonomous reasoning.</p>
+                                <div class="tpl-tags"><span>LLM</span><span>Conversation</span><span>Tool Calling</span><span>RAG</span></div>
+                            </div>
+                            <div class="tpl separate">
+                                <div class="tpl-ic" style="background:var(--blue-bg);color:var(--blue)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                                </div>
+                                <h4>Data Service</h4>
+                                <p>Data analysis, ETL, and visualization with support for real-time data streams, batch processing, and chart display.</p>
+                                <div class="tpl-tags"><span>ETL</span><span>Real-time Streams</span><span>Data Dashboard</span><span>Batch Processing</span></div>
+                            </div>
+                            <div class="tpl separate">
+                                <div class="tpl-ic" style="background:var(--green-bg);color:var(--green)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                </div>
+                                <h4>GIS Service</h4>
+                                <p>Geographic information systems for spatial data management, map service publishing, and spatial analysis computation.</p>
+                                <div class="tpl-tags"><span>Spatial Data</span><span>Map Services</span><span>Spatial Analysis</span><span>PostGIS</span></div>
+                            </div>
+                            <div class="tpl separate">
+                                <div class="tpl-ic" style="background:var(--purple-bg);color:var(--purple)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 014 4v2a4 4 0 01-8 0V6a4 4 0 014-4z"/><path d="M16 14H8a4 4 0 00-4 4v2h16v-2a4 4 0 00-4-4z"/><circle cx="12" cy="6" r="1" fill="currentColor"/></svg>
+                                </div>
+                                <h4>Model Annotation and Training</h4>
+                                <p>An AI model training pipeline integrating data annotation, model training, evaluation, and deployment.</p>
+                                <div class="tpl-tags"><span>Data Annotation</span><span>Model Training</span><span>Evaluation</span><span>Deployment</span></div>
+                            </div>
+                            <div class="tpl separate">
+                                <div class="tpl-ic" style="background:var(--red-bg);color:var(--red)">
+                                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                </div>
+                                <h4>AIGC Template</h4>
+                                <p>AI content generation for one-click text, image, and video generation, integrated with a multi-model capability foundation.</p>
+                                <div class="tpl-tags"><span>Text Generation</span><span>Image Generation</span><span>Video</span><span>Multi-model</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta" id="start">
+            <div class="container cta-in reveal">
+                <h2>Choose your tech stack and start a project in 5 minutes</h2>
+                <p>Start from a template. OORT.sh has prepared complete project structures, documentation, and sample code for you. No need to start from scratch—focus on your business logic.</p>
+                <div class="cta-acts">
+                    <a href="#templates" class="btn btn-white btn-lg">Choose a Template</a>
+                    <a href="#languages" class="btn btn-ghost-white btn-lg">View Full Docs</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                                <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+                  <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+                </a>
+                <p>Developer deployment platform OORT.sh<br>Developer Docs · Programming Languages · Frameworks · Templates</p>
+                <p class="ft">Providing powerful frontend and backend support for developers.</p>
+            </div>
+            <div class="footer-col"><h5>Developer Docs</h5><a href="#languages">Languages</a><a href="#frameworks">Frameworks</a><a href="#templates">Templates</a><a href="#start">Quick Start</a></div>
+            <div class="footer-col"><h5>Resources</h5><a href="#">API Reference</a><a href="#">Sample Code</a><a href="#">SDK Docs</a><a href="#">Changelog</a></div>
+            <div class="footer-col"><h5>Community</h5><a href="#">GitHub</a><a href="#">Tech Forum</a><a href="#">FAQ</a><a href="#">Contact Us</a></div>
+        </div>
+        <div class="container footer-bot">
+            <span>© 2026 OORT.sh · Developer Deployment Platform</span>
+            <span>Developer Docs · From code to launch, all in one place</span>
+        </div>
+    </footer>
+
+    <script>
+    (function(){
+        "use strict";
+        // Navbar scroll
+        var navbar=document.getElementById("navbar");
+        function onScroll(){if(window.scrollY>8)navbar.classList.add("scrolled");else navbar.classList.remove("scrolled")}
+        window.addEventListener("scroll",onScroll,{passive:true});onScroll();
+
+        // Mobile nav
+        var toggle=document.getElementById("navToggle"),links=document.getElementById("navLinks");
+        if(toggle&&links){toggle.addEventListener("click",function(){links.classList.toggle("open")});links.addEventListener("click",function(e){if(e.target.classList.contains("nav-link"))links.classList.remove("open")})}
+
+        // Sidebar toggle
+        var sidebar=document.getElementById("sidebar"),sideToggle=document.getElementById("sidebarToggle");
+        if(sideToggle&&sidebar){sideToggle.addEventListener("click",function(){sidebar.classList.toggle("open")});sidebar.addEventListener("click",function(e){if(e.target.tagName==="A")sidebar.classList.remove("open")})}
+
+        // Tabs
+        var tabContainer=document.getElementById("langTabs");
+        if(tabContainer){
+            tabContainer.addEventListener("click",function(e){
+                if(!e.target.classList.contains("tab"))return;
+                var tab=e.target,target=tab.getAttribute("data-tab");
+                tabContainer.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active")});
+                tab.classList.add("active");
+                document.querySelectorAll(".tab-panel").forEach(function(p){p.classList.remove("active")});
+                document.getElementById("panel-"+target).classList.add("active");
+            });
+        }
+
+        // Reveal
+        var reveals=document.querySelectorAll(".reveal");
+        if("IntersectionObserver" in window){
+            var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");ro.unobserve(e.target)}})},{threshold:.08,rootMargin:"0px 0px -20px 0px"});
+            reveals.forEach(function(el){ro.observe(el)});
+        }else{reveals.forEach(function(el){el.classList.add("in")})}
+
+        // Sidebar scroll spy
+        var sidebarLinks=document.querySelectorAll(".sidebar a");
+        var sections=[];
+        sidebarLinks.forEach(function(link){
+            var id=link.getAttribute("href").slice(1);
+            var sec=document.getElementById(id);
+            if(sec)sections.push({id:id,el:sec,link:link});
+        });
+        if("IntersectionObserver" in window&&sections.length){
+            var so=new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if(e.isIntersecting){
+                        var id=e.target.getAttribute("id");
+                        sidebarLinks.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+id)});
+                    }
+                });
+            },{threshold:.3,rootMargin:"-80px 0px -60% 0px"});
+            sections.forEach(function(s){so.observe(s.el)});
+        }
+
+        // Nav scroll spy
+        var navLinks=document.querySelectorAll(".nav-link");
+        var mainSections=[];
+        navLinks.forEach(function(link){
+            var id=link.getAttribute("href").slice(1);
+            var sec=document.getElementById(id);
+            if(sec)mainSections.push({id:id,el:sec,link:link});
+        });
+        if("IntersectionObserver" in window&&mainSections.length){
+            var mo=new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if(e.isIntersecting){
+                        var id=e.target.getAttribute("id");
+                        navLinks.forEach(function(l){l.classList.toggle("active",l.getAttribute("href")==="#"+id)});
+                    }
+                });
+            },{threshold:.2,rootMargin:"-80px 0px -50% 0px"});
+            mainSections.forEach(function(s){mo.observe(s.el)});
+        }
+    })();
+    </script>
+</body>
+</html>

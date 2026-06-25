@@ -1,0 +1,1147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OORT.sh · Unified Portal and App Marketplace | Enterprise App Operations System</title>
+    <meta name="description" content="OORT.sh Unified Portal and App Marketplace — centrally manage the full mobile app lifecycle, fine-grained visibility authorization, and a unified multi-endpoint entry. This unique enterprise capability is not available on platforms such as Railway and Vercel.">
+    <style>
+    :root{
+        --blue:#1a73e8;--blue-bg:#e8f0fe;--red:#ea4335;--red-bg:#fce8e6;
+        --yellow:#fbbc04;--yellow-bg:#fef7e0;--green:#34a853;--green-bg:#e6f4ea;
+        --purple:#9334e6;--purple-bg:#f3e8fd;--orange:#ea8600;--orange-bg:#fef7e0;
+        --ink:#202124;--ink-soft:#3c4043;--muted:#5f6368;--line:#dadce0;
+        --bg:#fff;--bg-soft:#f8f9fa;--dark:#202a3c;
+        --r:14px;--r-lg:20px;--r-xl:28px;
+        --s1:0 1px 3px rgba(60,64,67,.1),0 1px 2px rgba(60,64,67,.06);
+        --s2:0 1px 4px rgba(60,64,67,.12),0 4px 12px rgba(60,64,67,.08);
+        --s3:0 4px 16px rgba(60,64,67,.14),0 8px 28px rgba(60,64,67,.10);
+        --s4:0 8px 28px rgba(60,64,67,.18);
+        --t:.25s ease;--max:1200px;
+        --font:"Google Sans","Inter","Helvetica Neue","PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Arial,sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:80px}
+    body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}svg{display:block}
+    .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:500;line-height:1;padding:10px 22px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;transition:all var(--t);white-space:nowrap}
+    .btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+    .btn:active{transform:scale(.97)}
+    .btn-lg{padding:14px 32px;font-size:15px}
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:var(--s1)}
+    .btn-primary:hover{background:#1557b0;box-shadow:var(--s2);transform:translateY(-2px)}
+    .btn-outline{border-color:var(--line);color:var(--blue);background:#fff}
+    .btn-outline:hover{background:var(--blue-bg);border-color:var(--blue)}
+    .btn-ghost{color:var(--ink-soft);background:transparent;border-color:transparent}
+    .btn-ghost:hover{background:var(--bg-soft)}
+    .btn-white{background:#fff;color:var(--blue)}
+    .btn-white:hover{background:#f1f5ff;transform:translateY(-2px)}
+    .btn-ghost-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+    .btn-ghost-white:hover{background:rgba(255,255,255,.14);border-color:#fff}
+    .btn-sm{padding:7px 16px;font-size:13px}
+
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:saturate(200%) blur(16px);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+    .navbar.scrolled{border-color:rgba(218,220,224,.7);box-shadow:0 1px 4px rgba(60,64,67,.08)}
+    .nav-in{max-width:var(--max);margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:24px}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:20px}
+    .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+    .brand-dot{color:var(--blue)}
+    .nav-links{display:flex;gap:2px;margin-left:8px}
+    .nav-link{font-size:14px;color:var(--ink-soft);font-weight:500;padding:7px 12px;border-radius:8px;transition:all .2s}
+    .nav-link:hover{background:var(--bg-soft);color:var(--blue)}
+    .nav-link.active{color:var(--blue);background:var(--blue-bg)}
+    .nav-acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+    .nav-toggle span{width:20px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+    .hero{padding:140px 0 80px;overflow:hidden;background:linear-gradient(180deg,#fff,#f8fafc);position:relative}
+    .hero-bg{position:absolute;inset:0;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.3}
+    .b1{width:500px;height:500px;background:#aecbfa;top:-140px;right:-100px}
+    .b2{width:380px;height:380px;background:#cce6d4;bottom:-120px;left:-80px}
+    .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);background:var(--blue-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px}
+    .eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(26,115,232,.15)}
+    .eyebrow-l{color:#aecbfa;background:rgba(174,203,250,.12)}
+    .eyebrow-l::before{background:#aecbfa;box-shadow:0 0 0 3px rgba(174,203,250,.2)}
+    .hero-title{font-size:48px;font-weight:700;letter-spacing:-1.5px;line-height:1.12}
+    .grad{background:linear-gradient(135deg,var(--blue),#4285f4 45%,var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:17px;color:var(--muted);margin:20px 0 28px;max-width:560px;line-height:1.7}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;color:var(--muted)}
+    .hero-badge svg{color:var(--yellow)}
+
+    /* Hero showcase — unified portal */
+    .showcase{position:relative;width:100%;max-width:520px;margin:0 auto;perspective:1500px}
+    .sc-window{position:relative;background:#fff;border:1px solid rgba(218,220,224,.7);border-radius:18px;box-shadow:var(--s4);overflow:hidden;z-index:2;transform:rotateY(-7deg) rotateX(3deg);transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+    .showcase:hover .sc-window{transform:rotateY(0) rotateX(0)}
+    .sc-bar{display:flex;align-items:center;gap:8px;padding:11px 14px;background:linear-gradient(180deg,#fbfcfe,#eef2f8);border-bottom:1px solid var(--line)}
+    .sc-dots{display:flex;gap:6px}
+    .sc-dots i{width:11px;height:11px;border-radius:50%}
+    .sc-dots i:nth-child(1){background:#ff5f57}
+    .sc-dots i:nth-child(2){background:#febc2e}
+    .sc-dots i:nth-child(3){background:#28c840}
+    .sc-url{flex:1;display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:11px;color:var(--muted);margin-left:6px}
+    .sc-url svg{width:11px;height:11px;color:var(--green);flex-shrink:0}
+    .sc-body{display:grid;grid-template-columns:62px 1fr;min-height:248px}
+    .sc-side{background:var(--bg-soft);border-right:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:13px}
+    .sc-logo{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--blue),#4285f4);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;box-shadow:0 4px 10px rgba(26,115,232,.3)}
+    .sc-side i{width:26px;height:8px;border-radius:999px;background:#e4e7ec}
+    .sc-side i.on{width:26px;height:26px;border-radius:8px;background:var(--blue-bg);border:1px solid rgba(26,115,232,.3)}
+    .sc-main{padding:16px 18px}
+    .sc-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .sc-h b{font-size:13px;font-weight:600}
+    .sc-h span{font-size:10px;color:var(--green);background:var(--green-bg);padding:2px 9px;border-radius:999px;font-weight:500}
+    .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .sc-app{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
+    .sc-app:hover{border-color:rgba(26,115,232,.35);box-shadow:var(--s1);transform:translateY(-2px)}
+    .sc-app .ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff}
+    .sc-app small{font-size:9.5px;color:var(--muted)}
+    /* floating phone */
+    .sc-phone{position:absolute;right:-20px;bottom:-32px;width:126px;height:252px;background:#202a3c;border-radius:26px;padding:7px;box-shadow:var(--s4);z-index:3;transform:rotate(5deg);transition:transform .55s cubic-bezier(.4,0,.2,1)}
+    .showcase:hover .sc-phone{transform:rotate(0)}
+    .sc-phone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:36px;height:4px;border-radius:999px;background:rgba(255,255,255,.28)}
+    .sc-pscreen{background:linear-gradient(165deg,#eef3ff,#fff);width:100%;height:100%;border-radius:20px;padding:24px 12px 14px;display:flex;flex-direction:column;gap:9px}
+    .sc-pscreen b{font-size:10px;font-weight:600;color:var(--ink)}
+    .sc-pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .sc-pgrid i{aspect-ratio:1;border-radius:9px}
+    .sc-ptab{margin-top:auto;display:flex;justify-content:space-around;align-items:center;padding-top:8px;border-top:1px solid rgba(0,0,0,.06)}
+    .sc-ptab i{width:18px;height:4px;border-radius:999px;background:#d4d8e0}
+    .sc-ptab i.on{background:var(--blue);width:18px}
+    /* floating chips */
+    .sc-chip{position:absolute;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--s3);padding:9px 13px;display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:500;color:var(--ink-soft);z-index:4;white-space:nowrap}
+    .sc-chip svg{width:15px;height:15px;flex-shrink:0}
+    .sc-chip-1{top:-20px;left:-14px;animation:scFloat1 5s ease-in-out infinite}
+    .sc-chip-2{bottom:30px;left:-38px;animation:scFloat2 6.5s ease-in-out infinite}
+    @keyframes scFloat1{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+    @keyframes scFloat2{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+    .sec{padding:80px 0}
+    .sec-soft{background:linear-gradient(180deg,#f8f9fa,#fff)}
+    .sec-dark{background:linear-gradient(135deg,#202a3c,#2a3550)}
+    .sec-head{max-width:680px;margin:0 auto 48px;text-align:center}
+    .sec-title{font-size:36px;font-weight:700;letter-spacing:-.8px;line-height:1.18}
+    .sec-title.l{color:#fff}
+    .sec-desc{font-size:17px;color:var(--muted);margin-top:16px;line-height:1.65}
+    .sec-desc.l{color:#c4ccd8}
+
+    /* Portal features */
+    .portal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .portal-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:28px 22px;text-align:center;transition:transform var(--t),box-shadow var(--t)}
+    .portal-card:hover{transform:translateY(-5px);box-shadow:var(--s3)}
+    .portal-ic{width:52px;height:52px;border-radius:14px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+    .portal-card h3{font-size:17px;font-weight:600;margin-bottom:8px}
+    .portal-card p{font-size:13.5px;color:var(--muted);line-height:1.55}
+
+    /* App marketplace mock */
+    .marketplace{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--s2)}
+    .mp-header{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px}
+    .mp-search{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:8px 16px}
+    .mp-search svg{color:var(--muted);flex-shrink:0}
+    .mp-search input{border:none;background:transparent;outline:none;font-size:14px;color:var(--ink);width:100%;font-family:var(--font)}
+    .mp-search input::placeholder{color:var(--muted)}
+    .mp-tabs{display:flex;gap:4px}
+    .mp-tab{font-size:13px;padding:6px 14px;border-radius:999px;color:var(--muted);cursor:pointer;transition:all var(--t)}
+    .mp-tab.active{background:var(--blue);color:#fff}
+    .mp-body{padding:24px}
+    .mp-section{margin-bottom:24px}
+    .mp-section:last-child{margin-bottom:0}
+    .mp-section h4{font-size:15px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .mp-section h4 .dot{width:8px;height:8px;border-radius:50%}
+    .mp-apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+    .mp-app{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r);border:1px solid var(--line);transition:all var(--t)}
+    .mp-app:hover{border-color:rgba(26,115,232,.3);box-shadow:var(--s1)}
+    .mp-app-ic{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
+    .mp-app-info{min-width:0}
+    .mp-app-info b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mp-app-info span{font-size:12px;color:var(--muted)}
+    .mp-app-stars{display:flex;gap:1px;margin-top:2px}
+    .mp-app-stars svg{width:12px;height:12px}
+    .mp-install{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;background:var(--blue-bg);color:var(--blue);border:none;cursor:pointer;transition:all var(--t);white-space:nowrap;flex-shrink:0}
+    .mp-install:hover{background:var(--blue);color:#fff}
+
+    /* Lifecycle */
+    .lifecycle{max-width:1100px;margin:0 auto;position:relative}
+    .lifecycle::before{content:"";position:absolute;inset:-32px 16px auto;height:220px;background:radial-gradient(circle at 18% 35%,rgba(26,115,232,.14),transparent 34%),radial-gradient(circle at 82% 28%,rgba(147,52,230,.11),transparent 34%);pointer-events:none;filter:blur(2px)}
+    .lc-panel{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(248,250,252,.92));border:1px solid rgba(218,220,224,.72);border-radius:28px;padding:30px;box-shadow:var(--s3);overflow:hidden}
+    .lc-panel::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,115,232,.06),transparent 42%,rgba(52,168,83,.06));pointer-events:none}
+    .lc-top{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:26px}
+    .lc-top h3{font-size:20px;font-weight:700;letter-spacing:-.2px}
+    .lc-top p{font-size:13.5px;color:var(--muted);margin-top:3px}
+    .lc-status{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--green-bg);color:var(--green);font-size:13px;font-weight:600;white-space:nowrap}
+    .lc-status i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(52,168,83,.12)}
+    .lc-flow{position:relative;z-index:1;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+    .lc-flow::before{content:"";position:absolute;top:47px;left:8%;right:8%;height:4px;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--yellow),var(--orange),var(--green),var(--purple),var(--red));opacity:.24}
+    .lc-step{position:relative;min-height:218px;padding:16px 14px 14px;background:#fff;border:1px solid rgba(218,220,224,.74);border-radius:20px;box-shadow:var(--s1);transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
+    .lc-step:hover{transform:translateY(-6px);box-shadow:var(--s3);border-color:rgba(26,115,232,.26)}
+    .lc-step::before{content:attr(data-step);position:absolute;top:12px;right:12px;font-size:11px;font-weight:700;color:rgba(95,99,104,.45);letter-spacing:.5px}
+    .lc-dot{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;border:1px solid;transition:all var(--t);box-shadow:0 10px 24px rgba(60,64,67,.10)}
+    .lc-step:hover .lc-dot{transform:scale(1.06) rotate(-2deg)}
+    .lc-dot svg{width:25px;height:25px}
+    .lc-step h4{font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-.1px}
+    .lc-step p{font-size:12.5px;color:var(--muted);line-height:1.5;min-height:38px}
+    .lc-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+    .lc-meta span{font-size:11px;font-weight:600;padding:4px 8px;border-radius:999px;background:var(--bg-soft);color:var(--muted)}
+    .lc-arrow{position:absolute;top:38px;right:-21px;z-index:3;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;color:var(--blue);border:1px solid rgba(26,115,232,.18);box-shadow:var(--s1)}
+    .lc-step:last-child .lc-arrow{display:none}
+    .lc-bottom{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .lc-note{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.72);border:1px solid rgba(218,220,224,.6)}
+    .lc-note b{font-size:13.5px;display:block;margin-bottom:2px}
+    .lc-note span{font-size:12px;color:var(--muted);line-height:1.45}
+    .lc-note-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+    .lc-s1 .lc-dot{background:var(--blue-bg);border-color:rgba(26,115,232,.25);color:var(--blue)}
+    .lc-s2 .lc-dot{background:var(--yellow-bg);border-color:rgba(251,188,4,.35);color:var(--orange)}
+    .lc-s3 .lc-dot{background:var(--orange-bg);border-color:rgba(234,134,0,.28);color:var(--orange)}
+    .lc-s4 .lc-dot{background:var(--green-bg);border-color:rgba(52,168,83,.25);color:var(--green)}
+    .lc-s5 .lc-dot{background:var(--purple-bg);border-color:rgba(147,52,230,.24);color:var(--purple)}
+    .lc-s6 .lc-dot{background:var(--red-bg);border-color:rgba(234,67,53,.22);color:var(--red)}
+
+    /* Visibility */
+    .vis-demo{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
+    .vis-role{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--s1)}
+    .vis-role-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+    .vis-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff}
+    .vis-role-head h4{font-size:14px;font-weight:600}
+    .vis-role-head span{font-size:12px;color:var(--muted)}
+    .vis-role-body{padding:14px 18px}
+    .vis-app{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;margin-bottom:6px}
+    .vis-app:last-child{margin-bottom:0}
+    .vis-app-ic{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;flex-shrink:0}
+    .vis-app span{font-size:13px;font-weight:500}
+    .vis-app .badge{margin-left:auto;font-size:10px;padding:2px 8px;border-radius:999px;font-weight:600}
+    .badge-ok{background:var(--green-bg);color:var(--green)}
+    .badge-no{background:var(--bg-soft);color:var(--muted)}
+
+    .vis-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px;max-width:900px;margin-inline:auto}
+    .vis-feat{text-align:center;padding:20px 16px}
+    .vis-feat .vf-ic{width:40px;height:40px;border-radius:10px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
+    .vis-feat h5{font-size:14px;font-weight:600;margin-bottom:4px}
+    .vis-feat p{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+    /* Multi-platform */
+    .platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .plat-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:28px 24px;text-align:center;transition:transform var(--t),box-shadow var(--t);display:block}
+    .plat-card:hover{transform:translateY(-5px);box-shadow:var(--s3)}
+    a.plat-card{text-decoration:none;color:inherit}
+    .plat-ic{width:56px;height:56px;border-radius:16px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+    .plat-card h3{font-size:17px;font-weight:600;margin-bottom:4px}
+    .plat-card .plat-sub{font-size:13px;color:var(--muted);margin-bottom:12px}
+    .plat-features{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+    .plat-features span{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--bg-soft);color:var(--muted)}
+
+    .advantage{max-width:700px;margin:40px auto 0;background:linear-gradient(135deg,var(--blue-bg),#f0f4ff);border:1px solid rgba(26,115,232,.15);border-radius:var(--r-xl);padding:32px;text-align:center}
+    .advantage h3{font-size:18px;font-weight:600;color:var(--blue);margin-bottom:8px}
+    .advantage p{font-size:15px;color:var(--ink-soft);line-height:1.65}
+
+    /* CTA */
+    .cta{padding:80px 0;background:linear-gradient(135deg,var(--blue),#4285f4);position:relative;overflow:hidden}
+    .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.1),transparent 60%);pointer-events:none}
+    .cta-in{position:relative;z-index:1;text-align:center;color:#fff}
+    .cta-in h2{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1.15}
+    .cta-in p{font-size:18px;margin:18px 0 32px;color:rgba(255,255,255,.9);max-width:560px;margin-inline:auto;line-height:1.6}
+    .cta-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    .footer{background:var(--bg-soft);border-top:1px solid rgba(218,220,224,.5);padding:56px 0 32px}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+    .footer-brand p{font-size:13px;color:var(--muted);line-height:1.6}
+    .footer-brand .ft{margin-top:10px;color:var(--ink-soft);font-weight:500}
+    .footer-col h5{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:14px;text-transform:uppercase;letter-spacing:.3px}
+    .footer-col a{display:block;font-size:13.5px;color:var(--muted);padding:5px 0;transition:color var(--t)}
+    .footer-col a:hover{color:var(--blue)}
+    .footer-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px;padding-top:20px;border-top:1px solid rgba(218,220,224,.4);font-size:12px;color:var(--muted)}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.4,0,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    @media(max-width:900px){
+        .hero-in{grid-template-columns:1fr}
+        .showcase{max-width:460px;margin-top:44px}
+        .sc-window{transform:none}
+        .sc-phone{transform:rotate(4deg)}
+        .portal-grid{grid-template-columns:repeat(2,1fr)}
+        .lc-panel{padding:24px}
+        .lc-top{align-items:flex-start;flex-direction:column}
+        .lc-flow{grid-template-columns:repeat(2,1fr)}
+        .lc-flow::before{display:none}
+        .lc-arrow{display:none!important}
+        .lc-bottom{grid-template-columns:1fr}
+        .vis-demo{grid-template-columns:1fr}
+        .vis-feats{grid-template-columns:repeat(2,1fr)}
+        .platform-grid{grid-template-columns:repeat(2,1fr)}
+        .footer-grid{grid-template-columns:1fr 1fr}
+        .hero-title{font-size:36px}
+        .sec-title{font-size:28px}
+        .sec{padding:64px 0}
+    }
+    @media(max-width:640px){
+        .nav-links{display:none}
+        .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;padding:12px 20px 16px;border-bottom:1px solid var(--line);box-shadow:var(--s2);gap:4px}
+        .nav-acts .btn-ghost{display:none}
+        .nav-toggle{display:flex}
+        .hero{padding:110px 0 60px}
+        .hero-title{font-size:30px}
+        .hero-sub{font-size:15.5px}
+        .portal-grid,.platform-grid{grid-template-columns:1fr}
+        .mp-apps{grid-template-columns:1fr}
+        .lc-panel{padding:18px;border-radius:22px}
+        .lc-flow{grid-template-columns:1fr}
+        .vis-feats{grid-template-columns:1fr}
+        .footer-grid{grid-template-columns:1fr}
+        .cta{padding:60px 0}
+        .cta-in h2{font-size:26px}
+    }
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+    
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+    </style>
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="nav-in">
+                        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+              <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#portal" class="nav-link">Unified Portal</a>
+                <a href="#marketplace" class="nav-link">Marketplace</a>
+                <a href="#lifecycle" class="nav-link">Full Lifecycle</a>
+                <a href="#visibility" class="nav-link">Visibility Mgmt</a>
+                <a href="#platforms" class="nav-link">Multi-Endpoint</a>
+            </nav>
+            <div class="nav-acts">
+                <a href="#platforms" class="btn btn-primary btn-sm">Explore Multi-Endpoint Coverage</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <main id="top">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
+            <div class="container hero-in">
+                <div>
+                    <span class="eyebrow">Unique Enterprise Capability</span>
+                    <h1 class="hero-title">Unified Portal and App Marketplace<br><span class="grad">Make App Operations More Efficient</span></h1>
+                    <p class="hero-sub">The developer deployment platform OORT.sh provides App Marketplace and Unified Portal capabilities on the front end, centrally manages mobile applications, supports full lifecycle management from application to delisting, and provides fine-grained visibility authorization — a unique enterprise capability not available on platforms such as Railway and Vercel.</p>
+                    <div class="hero-cta">
+                        <a href="#marketplace" class="btn btn-primary btn-lg">Explore App Marketplace</a>
+                        <a href="#platforms" class="btn btn-outline btn-lg">View Multi-Endpoint Coverage</a>
+                    </div>
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg>
+                        Enterprise app operations capabilities not available on Railway / Vercel
+                    </div>
+                </div>
+                <div class="showcase" aria-hidden="true">
+                    <!-- Browser window: unified portal -->
+                    <div class="sc-window">
+                        <div class="sc-bar">
+                            <div class="sc-dots"><i></i><i></i><i></i></div>
+                            <div class="sc-url">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                                portal.oort.sh
+                            </div>
+                        </div>
+                        <div class="sc-body">
+                            <div class="sc-side">
+                                <div class="sc-logo">O</div>
+                                <i class="on"></i><i></i><i></i><i></i>
+                            </div>
+                            <div class="sc-main">
+                                <div class="sc-h"><b>My Apps</b><span>● Unified access enabled</span></div>
+                                <div class="sc-grid">
+                                    <div class="sc-app"><span class="ic" style="background:var(--blue)">📊</span><small>Data Dashboard</small></div>
+                                    <div class="sc-app"><span class="ic" style="background:var(--green)">💬</span><small>Collaboration</small></div>
+                                    <div class="sc-app"><span class="ic" style="background:var(--red)">📁</span><small>File Center</small></div>
+                                    <div class="sc-app"><span class="ic" style="background:var(--purple)">🎥</span><small>Video Meeting</small></div>
+                                    <div class="sc-app"><span class="ic" style="background:var(--orange)">📋</span><small>Approval Flow</small></div>
+                                    <div class="sc-app"><span class="ic" style="background:var(--blue)">🗓️</span><small>Schedule</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Floating phone -->
+                    <div class="sc-phone">
+                        <div class="sc-pscreen">
+                            <b>App Marketplace</b>
+                            <div class="sc-pgrid">
+                                <i style="background:var(--blue)"></i><i style="background:var(--green)"></i><i style="background:var(--red)"></i>
+                                <i style="background:var(--purple)"></i><i style="background:var(--orange)"></i><i style="background:var(--yellow)"></i>
+                            </div>
+                            <div class="sc-ptab"><i class="on"></i><i></i><i></i></div>
+                        </div>
+                    </div>
+                    <!-- Floating chips -->
+                    <div class="sc-chip sc-chip-1">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        Fine-Grained Visibility Authorization
+                    </div>
+                    <div class="sc-chip sc-chip-2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                        Unified Multi-Endpoint Entry
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unified Portal -->
+        <section class="sec" id="portal">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Unified Portal</span>
+                    <h2 class="sec-title">One Entry Point for All Applications and Services</h2>
+                    <p class="sec-desc">The Unified Portal brings scattered application entries into one place, delivering unified access, operations, and presentation while enabling centralized app entry management and unified identity authentication.</p>
+                </div>
+                <div class="portal-grid reveal">
+                    <div class="portal-card">
+                        <div class="portal-ic" style="background:var(--blue-bg);color:var(--blue)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                        </div>
+                        <h3>Unified Entry</h3>
+                        <p>Aggregate multiple application entries so users can access all authorized apps after one login.</p>
+                    </div>
+                    <div class="portal-card">
+                        <div class="portal-ic" style="background:var(--red-bg);color:var(--red)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+                        </div>
+                        <h3>Unified Identity</h3>
+                        <p>Connect account, organization, and role systems so single sign-on works across the entire platform.</p>
+                    </div>
+                    <div class="portal-card">
+                        <div class="portal-ic" style="background:var(--green-bg);color:var(--green)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+                        </div>
+                        <h3>Unified Experience</h3>
+                        <p>Consistent visual style and interaction patterns reduce the user learning curve.</p>
+                    </div>
+                    <div class="portal-card">
+                        <div class="portal-ic" style="background:var(--yellow-bg);color:var(--orange)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                        </div>
+                        <h3>Unified Operations</h3>
+                        <p>A centralized app operations center with one-stop data dashboards and user analytics.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Marketplace -->
+        <section class="sec sec-soft" id="marketplace">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">App Marketplace</span>
+                    <h2 class="sec-title">A Unified Entry for App Search, Download, Installation, and Reviews</h2>
+                    <p class="sec-desc">The desktop or mobile portal client provides an App Marketplace entry, giving users a one-stop experience for app discovery and installation.</p>
+                </div>
+                <div class="marketplace reveal">
+                    <div class="mp-header">
+                        <div class="mp-search">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" placeholder="Search apps..." readonly>
+                        </div>
+                        <div class="mp-tabs">
+                            <span class="mp-tab active">All</span>
+                            <span class="mp-tab">Office</span>
+                            <span class="mp-tab">Collaboration</span>
+                            <span class="mp-tab">Government</span>
+                        </div>
+                    </div>
+                    <div class="mp-body">
+                        <div class="mp-section">
+                            <h4><span class="dot" style="background:var(--blue)"></span>Recommended Apps</h4>
+                            <div class="mp-apps">
+                                <div class="mp-app"><div class="mp-app-ic" style="background:var(--blue)">📊</div><div class="mp-app-info"><b>Data Dashboard</b><span>Data analytics and visualization</span><div class="mp-app-stars"><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg></div></div><button class="mp-install">Install</button></div>
+                                <div class="mp-app"><div class="mp-app-ic" style="background:var(--green)">💬</div><div class="mp-app-info"><b>Instant Messaging</b><span>Team collaboration and messaging</span><div class="mp-app-stars"><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#dadce0"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg></div></div><button class="mp-install">Install</button></div>
+                                <div class="mp-app"><div class="mp-app-ic" style="background:var(--red)">📁</div><div class="mp-app-info"><b>Cloud Drive Service</b><span>Cloud storage and file collaboration</span><div class="mp-app-stars"><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#fbbc04"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg><svg viewBox="0 0 20 20" width="12" height="12" fill="#dadce0"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg></div></div><button class="mp-install">Install</button></div>
+                            </div>
+                        </div>
+                        <div class="mp-section">
+                            <h4><span class="dot" style="background:var(--green)"></span>Government Apps</h4>
+                            <div class="mp-apps">
+                                <div class="mp-app"><div class="mp-app-ic" style="background:var(--purple)">📋</div><div class="mp-app-info"><b>Ticketing System</b><span>Ticket routing and approval</span></div><button class="mp-install">Install</button></div>
+                                <div class="mp-app"><div class="mp-app-ic" style="background:var(--orange)">🗓️</div><div class="mp-app-info"><b>Schedule Management</b><span>Meeting and task scheduling</span></div><button class="mp-install">Install</button></div>
+                                <div class="mp-app"><div class="mp-app-ic" style="background:var(--green)">🔐</div><div class="mp-app-info"><b>E-Signature</b><span>Digital signing and verification</span></div><button class="mp-install">Install</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lifecycle -->
+        <section class="sec" id="lifecycle">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Full Lifecycle Management</span>
+                    <h2 class="sec-title">Controllable and Traceable from Application to Delisting</h2>
+                    <p class="sec-desc">Manage the full lifecycle of mobile applications, including application, listing, review, release, upgrade, and delisting, with clear status and traceable actions at every stage.</p>
+                </div>
+                <div class="lifecycle reveal">
+                    <div class="lc-panel">
+                        <div class="lc-top">
+                            <div>
+                                <h3>Application Distribution Workflow Orchestration</h3>
+                                <p>Connect admission, review, distribution, upgrade, and retirement loops for developers, administrators, and end users.</p>
+                            </div>
+                            <div class="lc-status"><i></i> Real-time full-chain status synchronization</div>
+                        </div>
+                        <div class="lc-flow">
+                            <div class="lc-step lc-s1" data-step="01">
+                                <div class="lc-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15l3-3 3 3"/></svg></div>
+                                <h4>Application Admission</h4><p>Developers submit app information, packages, and distribution scope.</p>
+                                <div class="lc-meta"><span>Data Validation</span><span>Version Registration</span></div>
+                                <div class="lc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+                            </div>
+                            <div class="lc-step lc-s2" data-step="02">
+                                <div class="lc-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                                <h4>Compliance Check</h4><p>Automatically inspect permissions, signatures, security policies, and metadata.</p>
+                                <div class="lc-meta"><span>Security Scan</span><span>Rule Match</span></div>
+                                <div class="lc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+                            </div>
+                            <div class="lc-step lc-s3" data-step="03">
+                                <div class="lc-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+                                <h4>Multi-Level Review</h4><p>Administrators approve by organization, app type, and risk level.</p>
+                                <div class="lc-meta"><span>Approval Flow</span><span>Audit Trail</span></div>
+                                <div class="lc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+                            </div>
+                            <div class="lc-step lc-s4" data-step="04">
+                                <div class="lc-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+                                <h4>Targeted Distribution</h4><p>Publish precisely by department, role, endpoint, and canary strategy.</p>
+                                <div class="lc-meta"><span>Visibility</span><span>Multi-Endpoint Sync</span></div>
+                                <div class="lc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+                            </div>
+                            <div class="lc-step lc-s5" data-step="05">
+                                <div class="lc-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+                                <h4>Version Upgrade</h4><p>Support incremental updates, forced upgrades, rollback, and expanded canary rollout.</p>
+                                <div class="lc-meta"><span>Canary Release</span><span>One-Click Rollback</span></div>
+                                <div class="lc-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></div>
+                            </div>
+                            <div class="lc-step lc-s6" data-step="06">
+                                <div class="lc-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14"/></svg></div>
+                                <h4>Delisting and Archiving</h4><p>Handle app retirement, user notifications, data archiving, and audit retention.</p>
+                                <div class="lc-meta"><span>Retirement Notice</span><span>Archive Traceability</span></div>
+                            </div>
+                        </div>
+                        <div class="lc-bottom">
+                            <div class="lc-note"><div class="lc-note-ic" style="background:var(--blue-bg);color:var(--blue)">📌</div><div><b>Visible Process</b><span>Every node records status, owner, time, and result.</span></div></div>
+                            <div class="lc-note"><div class="lc-note-ic" style="background:var(--green-bg);color:var(--green)">🔐</div><div><b>Controllable Policies</b><span>Distribution policies and visibility authorization work together to prevent unauthorized use.</span></div></div>
+                            <div class="lc-note"><div class="lc-note-ic" style="background:var(--purple-bg);color:var(--purple)">🧾</div><div><b>Traceable Audits</b><span>The entire process from application to delisting is logged to meet enterprise compliance requirements.</span></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visibility Management -->
+        <section class="sec sec-soft" id="visibility">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Visibility Management</span>
+                    <h2 class="sec-title">Fine-Grained App Authorization by Department and Role</h2>
+                    <p class="sec-desc">Fine-grained application visibility management supports visibility and availability authorization by department, role attributes, and other dimensions, ensuring the right people see the right applications.</p>
+                </div>
+                <div class="vis-demo reveal">
+                    <div class="vis-role">
+                        <div class="vis-role-head">
+                            <div class="vis-avatar" style="background:var(--blue)">A</div>
+                            <div><h4>Administrator</h4><span>Full permissions</span></div>
+                        </div>
+                        <div class="vis-role-body">
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--blue)">📊</div><span>Data Dashboard</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--green)">💬</div><span>Instant Messaging</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--red)">📁</div><span>Cloud Drive Service</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--purple)">📋</div><span>Ticketing System</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--orange)">🔧</div><span>System Settings</span><span class="badge badge-ok">Visible</span></div>
+                        </div>
+                    </div>
+                    <div class="vis-role">
+                        <div class="vis-role-head">
+                            <div class="vis-avatar" style="background:var(--green)">B</div>
+                            <div><h4>Business User</h4><span>Department-level permissions</span></div>
+                        </div>
+                        <div class="vis-role-body">
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--blue)">📊</div><span>Data Dashboard</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--green)">💬</div><span>Instant Messaging</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--red)">📁</div><span>Cloud Drive Service</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--purple)">📋</div><span>Ticketing System</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--orange)">🔧</div><span>System Settings</span><span class="badge badge-no">Hidden</span></div>
+                        </div>
+                    </div>
+                    <div class="vis-role">
+                        <div class="vis-role-head">
+                            <div class="vis-avatar" style="background:var(--muted)">G</div>
+                            <div><h4>Guest</h4><span>Basic permissions</span></div>
+                        </div>
+                        <div class="vis-role-body">
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--blue)">📊</div><span>Data Dashboard</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--green)">💬</div><span>Instant Messaging</span><span class="badge badge-ok">Visible</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--red)">📁</div><span>Cloud Drive Service</span><span class="badge badge-no">Hidden</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--purple)">📋</div><span>Ticketing System</span><span class="badge badge-no">Hidden</span></div>
+                            <div class="vis-app"><div class="vis-app-ic" style="background:var(--orange)">🔧</div><span>System Settings</span><span class="badge badge-no">Hidden</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="vis-feats reveal">
+                    <div class="vis-feat"><div class="vf-ic" style="background:var(--blue-bg);color:var(--blue)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><h5>Department Isolation</h5><p>Isolate application visibility by department</p></div>
+                    <div class="vis-feat"><div class="vf-ic" style="background:var(--green-bg);color:var(--green)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h5>Role Matching</h5><p>Automatically match available applications based on role attributes</p></div>
+                    <div class="vis-feat"><div class="vf-ic" style="background:var(--purple-bg);color:var(--purple)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h5>Permission Tiers</h5><p>Multi-level permission system with app-level control</p></div>
+                    <div class="vis-feat"><div class="vf-ic" style="background:var(--orange-bg);color:var(--orange)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div><h5>Dynamic Authorization</h5><p>Adjust authorization policies in real time with immediate effect</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-platform -->
+        <section class="sec" id="platforms">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Multi-Endpoint Coverage</span>
+                    <h2 class="sec-title">Full Endpoint Foundation, Managed Once and Synced Everywhere</h2>
+                    <p class="sec-desc">The developer deployment platform OORT.sh provides endpoint foundations for mobile iOS, Android, HarmonyOS, as well as desktop OortCloud Desktop and AxI Desktop, enabling unified cross-endpoint application management and distribution.</p>
+                </div>
+                <div class="platform-grid reveal">
+                    <a href="platform-ios.html" class="plat-card">
+                        <div class="plat-ic" style="background:#000;color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                        </div>
+                        <h3>iOS</h3>
+                        <p class="plat-sub">Apple mobile endpoint foundation</p>
+                        <div class="plat-features"><span>iPhone</span><span>iPad</span><span>Native Experience</span><span>App Store</span></div>
+                    </a>
+                    <a href="platform-android.html" class="plat-card">
+                        <div class="plat-ic" style="background:#3ddc84;color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                        </div>
+                        <h3>Android</h3>
+                        <p class="plat-sub">Google mobile endpoint foundation</p>
+                        <div class="plat-features"><span>Phone</span><span>Tablet</span><span>Broad Compatibility</span><span>Flexible Deployment</span></div>
+                    </a>
+                    <a href="platform-harmony.html" class="plat-card">
+                        <div class="plat-ic" style="background:var(--blue);color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/><circle cx="12" cy="6" r="1" fill="currentColor"/></svg>
+                        </div>
+                        <h3>HarmonyOS</h3>
+                        <p class="plat-sub">HarmonyOS endpoint foundation</p>
+                        <div class="plat-features"><span>Distributed</span><span>IoE Connectivity</span><span>Native Security</span><span>Self-Controlled</span></div>
+                    </a>
+                    <a href="platform-desktop.html" class="plat-card">
+                        <div class="plat-ic" style="background:var(--purple);color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+                        </div>
+                        <h3>OortCloud Desktop</h3>
+                        <p class="plat-sub">OORT dedicated desktop endpoint</p>
+                        <div class="plat-features"><span>Windows</span><span>macOS</span><span>Linux</span><span>App Marketplace</span></div>
+                    </a>
+                    <a href="platform-axi.html" class="plat-card">
+                        <div class="plat-ic" style="background:var(--orange);color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h4"/></svg>
+                        </div>
+                        <h3>AxI Desktop</h3>
+                        <p class="plat-sub">AxI unified desktop foundation</p>
+                        <div class="plat-features"><span>Cross-Platform</span><span>Unified Portal</span><span>App Entry</span><span>Notifications</span></div>
+                    </a>
+                    <a href="platform-claw.html" class="plat-card">
+                        <div class="plat-ic" style="background:#e74c3c;color:#fff">
+                            <svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <ellipse cx="14" cy="16" rx="7" ry="5"/>
+                                <path d="M7 14c-2-3-4-5-2-7s4 0 4 2"/>
+                                <path d="M21 14c2-3 4-5 2-7s-4 0-4 2"/>
+                                <circle cx="11" cy="15" r="1" fill="currentColor"/>
+                                <circle cx="17" cy="15" r="1" fill="currentColor"/>
+                                <path d="M10 21v3"/><path d="M14 21v3"/><path d="M18 21v3"/>
+                                <path d="M9 11c0-2 1-3 2-3"/><path d="M19 11c0-2-1-3-2-3"/>
+                            </svg>
+                        </div>
+                        <h3>OortClaw Local Shrimp</h3>
+                        <p class="plat-sub">Localized deployment endpoint foundation</p>
+                        <div class="plat-features"><span>Local Deployment</span><span>Private Cloud</span><span>Data Security</span><span>Low Latency</span></div>
+                    </a>
+                    <a href="platform-web.html" class="plat-card">
+                        <div class="plat-ic" style="background:var(--blue);color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+                        </div>
+                        <h3>PC Web</h3>
+                        <p class="plat-sub">Browser-based Web applications</p>
+                        <div class="plat-features"><span>Chrome</span><span>Edge</span><span>Safari</span><span>Firefox</span></div>
+                    </a>
+                    <a href="platform-miniprogram.html" class="plat-card">
+                        <div class="plat-ic" style="background:var(--green);color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/><path d="M9 6h6"/><path d="M9 10h6"/></svg>
+                        </div>
+                        <h3>Mini Program</h3>
+                        <p class="plat-sub">WeChat / Alipay Mini Programs</p>
+                        <div class="plat-features"><span>WeChat Mini Program</span><span>Alipay</span><span>Lightweight</span><span>Instant Use</span></div>
+                    </a>
+                    <a href="platform-h5.html" class="plat-card">
+                        <div class="plat-ic" style="background:var(--purple);color:#fff">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/><circle cx="12" cy="6" r="1" fill="currentColor"/><path d="M8 14h8"/></svg>
+                        </div>
+                        <h3>Mobile Web</h3>
+                        <p class="plat-sub">H5 mobile Web applications</p>
+                        <div class="plat-features"><span>Mobile Browser</span><span>Responsive</span><span>PWA</span><span>Cross-Platform</span></div>
+                    </a>
+                </div>
+                <div class="advantage reveal">
+                    <h3>Unique Enterprise Capability</h3>
+                    <p>Full lifecycle management, fine-grained visibility authorization, and unified multi-endpoint distribution for the Unified Portal and App Marketplace — these unique enterprise capabilities are not available on deployment platforms such as Railway and Vercel. OORT.sh truly supports the entire chain from development to operations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta" id="cta">
+            <div class="container cta-in reveal">
+                <h2>Build Your Enterprise App Operations System</h2>
+                <p>From Unified Portal to App Marketplace, from full lifecycle management to fine-grained visibility authorization, OORT.sh provides unique enterprise capabilities not available on Railway and Vercel.</p>
+                <div class="cta-acts">
+                    <a href="index.html" class="btn btn-white btn-lg">Explore More Platform Capabilities</a>
+                    <a href="#top" class="btn btn-ghost-white btn-lg">Book a Product Demo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                                <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+                  <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+                </a>
+                <p>Developer Deployment Platform OORT.sh<br>Unified Portal · App Marketplace · Full Lifecycle Management</p>
+                <p class="ft">An enterprise app operations system supporting the full chain from development to operations.</p>
+            </div>
+            <div class="footer-col"><h5>Platform Capabilities</h5><a href="index.html#architecture">Platform Architecture</a><a href="index.html#integration">Cloud Capabilities</a><a href="index.html#bus">Service Bus</a><a href="index.html#apps">Application Capabilities</a></div>
+            <div class="footer-col"><h5>Developer Support</h5><a href="dev.html#languages">Programming Languages</a><a href="dev.html#frameworks">Mainstream Frameworks</a><a href="dev.html#templates">Development Templates</a><a href="dev.html#start">Quick Start</a></div>
+            <div class="footer-col"><h5>Get Started</h5><a href="#platforms">Multi-Endpoint Coverage</a><a href="#visibility">Visibility Management</a><a href="#cta">Book a Demo</a><a href="#cta">Contact Us</a></div>
+        </div>
+        <div class="container footer-bot">
+            <span>© 2026 OORT.sh · Developer Deployment Platform</span>
+            <span>Unique Enterprise Capabilities · Not Available on Railway / Vercel</span>
+        </div>
+    </footer>
+
+    <script>
+    (function(){
+        "use strict";
+        var navbar=document.getElementById("navbar");
+        function onScroll(){if(window.scrollY>8)navbar.classList.add("scrolled");else navbar.classList.remove("scrolled")}
+        window.addEventListener("scroll",onScroll,{passive:true});onScroll();
+
+        var toggle=document.getElementById("navToggle"),links=document.getElementById("navLinks");
+        if(toggle&&links){toggle.addEventListener("click",function(){links.classList.toggle("open")});links.addEventListener("click",function(e){if(e.target.classList.contains("nav-link"))links.classList.remove("open")})}
+
+        var reveals=document.querySelectorAll(".reveal");
+        if("IntersectionObserver" in window){
+            var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");ro.unobserve(e.target)}})},{threshold:.08,rootMargin:"0px 0px -20px 0px"});
+            reveals.forEach(function(el){ro.observe(el)});
+        }else{reveals.forEach(function(el){el.classList.add("in")})}
+
+        var sections=document.querySelectorAll("main section[id]"),nm={};
+        document.querySelectorAll(".nav-link").forEach(function(link){var id=link.getAttribute("href").slice(1);nm[id]=link});
+        if("IntersectionObserver" in window&&sections.length){
+            var so=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.getAttribute("id");Object.keys(nm).forEach(function(k){nm[k].classList.toggle("active",k===id)})}})},{threshold:.3,rootMargin:"-80px 0px -40% 0px"});
+            sections.forEach(function(sec){so.observe(sec)});
+        }
+    })();
+    </script>
+</body>
+</html>

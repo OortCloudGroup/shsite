@@ -1,0 +1,1034 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="介绍在 OORT.sh 支撑下，AI Vibe Coding 时代业务系统从设计、开发到部署上线的变化与最佳实践。" />
+  <title>OORT.sh｜AI 时代业务系统设计与部署新范式</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f8f9fa;
+      --bg-soft-2: #f1f3f4;
+      --ink: #202124;
+      --ink-2: #3c4043;
+      --muted: #5f6368;
+      --line: #e8eaed;
+      --blue: #1a73e8;
+      --blue-dark: #1557b0;
+      --green: #34a853;
+      --yellow: #fbbc04;
+      --red: #ea4335;
+      --blue-soft: #e8f0fe;
+      --green-soft: #e6f4ea;
+      --yellow-soft: #fef7e0;
+      --red-soft: #fce8e6;
+      --shadow-sm: 0 1px 2px rgba(60,64,67,.1), 0 1px 3px rgba(60,64,67,.08);
+      --shadow-md: 0 1px 3px rgba(60,64,67,.12), 0 4px 8px rgba(60,64,67,.1);
+      --shadow-lg: 0 2px 6px rgba(60,64,67,.12), 0 8px 24px rgba(60,64,67,.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Google Sans", "Google Sans Text", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.6;
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* ---------- Nav ---------- */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      color: var(--ink);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      background: conic-gradient(from 90deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+    }
+    .brand b { font-weight: 500; }
+    .brand .sh { color: var(--blue); font-weight: 700; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: var(--ink-2);
+      font-size: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      transition: background .2s ease, color .2s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links a.active { background: var(--bg-soft-2); color: var(--blue); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 11px 22px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--blue-dark); box-shadow: var(--shadow-md); }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--blue);
+      border-color: var(--line);
+    }
+    .btn.ghost:hover { background: var(--blue-soft); box-shadow: none; }
+
+    .btn.text {
+      background: transparent;
+      color: var(--blue);
+      padding: 11px 8px;
+    }
+    .btn.text:hover { background: transparent; box-shadow: none; text-decoration: none; color: var(--blue-dark); }
+    .btn.text::after { content: "→"; transition: transform .2s ease; }
+    .btn.text:hover::after { transform: translateX(4px); }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      padding: 80px 0 64px;
+      background:
+        radial-gradient(circle at 88% 0%, var(--blue-soft) 0%, transparent 42%),
+        radial-gradient(circle at 6% 22%, var(--green-soft) 0%, transparent 30%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .spark {
+      width: 18px; height: 18px;
+      display: inline-block;
+      background: conic-gradient(from 0deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+      -webkit-mask: radial-gradient(circle at 50% 50%, transparent 30%, #000 31%) ;
+      border-radius: 50%;
+    }
+
+    h1, h2, h3 { line-height: 1.15; margin: 0; color: var(--ink); font-weight: 500; }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 60px);
+      letter-spacing: -1.5px;
+      max-width: 640px;
+    }
+    h1 .hl { color: var(--blue); }
+    h1 .hl-g { color: var(--green); }
+
+    .hero p.lead {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 1.6vw, 20px);
+      max-width: 600px;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; align-items: center; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+    .chip {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink-2);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ---------- Hero visual ---------- */
+    .visual {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+    .visual-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-soft);
+    }
+    .dots { display: flex; gap: 6px; }
+    .dots span { width: 11px; height: 11px; border-radius: 50%; }
+    .dots span:nth-child(1){ background: var(--red); }
+    .dots span:nth-child(2){ background: var(--yellow); }
+    .dots span:nth-child(3){ background: var(--green); }
+    .visual-top small { color: var(--muted); margin-left: 6px; font-size: 13px; }
+
+    .deploy-flow { padding: 18px; display: grid; gap: 12px; }
+    .flow-card {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: #fff;
+      transition: box-shadow .2s ease, transform .2s ease;
+    }
+    .flow-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .flow-icon {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 14px; color: #fff;
+    }
+    .fi-blue { background: var(--blue); }
+    .fi-green { background: var(--green); }
+    .fi-yellow { background: var(--yellow); color: #5f4b00; }
+    .fi-red { background: var(--red); }
+    .flow-card strong { display: block; font-size: 15px; font-weight: 600; color: var(--ink); }
+    .flow-card small { color: var(--muted); font-size: 13px; }
+    .status { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+    .st-green { background: var(--green-soft); color: var(--green); }
+    .st-blue { background: var(--blue-soft); color: var(--blue); }
+    .st-yellow { background: var(--yellow-soft); color: #b06000; }
+
+    /* ---------- Sections ---------- */
+    section { padding: 88px 0; }
+    section.soft { background: var(--bg-soft); }
+
+    .section-head { max-width: 760px; margin: 0 auto 52px; text-align: center; }
+    .section-head.left { margin-left: 0; text-align: left; }
+    .section-kicker {
+      display: inline-block;
+      color: var(--blue);
+      font-weight: 600;
+      letter-spacing: .06em;
+      font-size: 13px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    h2 { font-size: clamp(28px, 3.4vw, 44px); letter-spacing: -1px; }
+    .section-head p { margin: 18px 0 0; color: var(--muted); font-size: 18px; }
+
+    .grid { display: grid; gap: 24px; }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid.cols-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 28px;
+      transition: box-shadow .25s ease, transform .25s ease;
+    }
+    .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .card h3 { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    .card p { color: var(--muted); margin: 0; font-size: 15px; }
+
+    .icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+    .ic-blue { background: var(--blue-soft); color: var(--blue); }
+    .ic-green { background: var(--green-soft); color: var(--green); }
+    .ic-yellow { background: var(--yellow-soft); color: #b06000; }
+    .ic-red { background: var(--red-soft); color: var(--red); }
+
+    /* ---------- Quote ---------- */
+    .quote-block {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, var(--blue-soft), var(--green-soft));
+      padding: clamp(28px, 5vw, 60px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    .quote-block::after {
+      content: "20%";
+      position: absolute;
+      right: 36px; bottom: -28px;
+      font-size: clamp(80px, 15vw, 180px);
+      line-height: .8;
+      font-weight: 800;
+      color: rgba(26,115,232,.1);
+      letter-spacing: -6px;
+    }
+    .quote-block p { position: relative; z-index: 1; margin: 0; font-size: clamp(20px, 2.4vw, 30px); line-height: 1.5; color: var(--ink); font-weight: 500; }
+    .quote-block .note { margin-top: 20px; color: var(--ink-2); font-size: 16px; font-weight: 400; }
+
+    /* ---------- Split / steps ---------- */
+    .split { display: grid; grid-template-columns: .85fr 1.15fr; gap: 44px; align-items: start; }
+
+    .sticky-note { position: sticky; top: 96px; }
+    .sticky-note h2 { margin-top: 12px; }
+    .sticky-note p { color: var(--muted); margin-top: 16px; font-size: 17px; }
+    .big-number { font-size: 64px; line-height: 1; font-weight: 700; color: var(--blue); letter-spacing: -3px; }
+
+    .timeline { display: grid; gap: 18px; }
+    .step {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 18px;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: #fff;
+      transition: box-shadow .2s ease;
+    }
+    .step:hover { box-shadow: var(--shadow-md); }
+    .step-no {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      color: #fff; font-weight: 700; font-size: 18px;
+      background: var(--blue);
+    }
+    .step:nth-child(2) .step-no { background: var(--green); }
+    .step:nth-child(3) .step-no { background: var(--yellow); color: #5f4b00; }
+    .step h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .step p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    /* ---------- Compare ---------- */
+    .compare { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .compare-panel { border-radius: var(--radius-lg); border: 1px solid var(--line); background: #fff; overflow: hidden; }
+    .compare-panel h3 { padding: 22px 26px; border-bottom: 1px solid var(--line); font-size: 20px; font-weight: 600; }
+    .compare-panel.bad h3 { background: var(--red-soft); color: var(--red); }
+    .compare-panel.good h3 { background: var(--green-soft); color: var(--green); }
+    .compare-panel ul { list-style: none; padding: 12px 26px 26px; margin: 0; }
+    .compare-panel li { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--ink-2); display: flex; gap: 12px; font-size: 15px; }
+    .compare-panel li:last-child { border-bottom: 0; }
+    .bad li::before { content: "✕"; color: var(--red); font-weight: 700; }
+    .good li::before { content: "✓"; color: var(--green); font-weight: 700; }
+
+    /* ---------- Practice ---------- */
+    .practice-list { display: grid; gap: 16px; counter-reset: practice; }
+    .practice-item {
+      counter-increment: practice;
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      transition: box-shadow .2s ease;
+    }
+    .practice-item:hover { box-shadow: var(--shadow-md); }
+    .practice-item::before {
+      content: counter(practice, decimal-leading-zero);
+      width: 56px; height: 56px;
+      display: grid; place-items: center;
+      border-radius: 14px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-weight: 700; font-size: 18px;
+    }
+    .practice-item h3 { font-size: 19px; font-weight: 600; margin-bottom: 6px; }
+    .practice-item p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    /* ---------- CTA ---------- */
+    .cta { padding: 96px 0; }
+    .cta-box {
+      text-align: center;
+      border-radius: var(--radius-xl);
+      padding: clamp(40px, 7vw, 80px);
+      background: linear-gradient(135deg, var(--blue) 0%, #4285f4 60%, #1557b0 100%);
+      color: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+    .cta-box::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 12% 20%, rgba(255,255,255,.16), transparent 30%), radial-gradient(circle at 88% 80%, rgba(255,255,255,.12), transparent 32%);
+    }
+    .cta-box > * { position: relative; }
+    .cta-box h2 { color: #fff; max-width: 860px; margin: 0 auto; }
+    .cta-box p { max-width: 740px; margin: 20px auto 0; color: rgba(255,255,255,.9); font-size: 18px; }
+    .cta-box .hero-actions { justify-content: center; margin-top: 34px; }
+    .cta-box .btn { background: #fff; color: var(--blue); }
+    .cta-box .btn:hover { background: #f1f3f4; }
+    .cta-box .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+    .cta-box .btn.ghost:hover { background: rgba(255,255,255,.12); }
+
+    /* ---------- Footer ---------- */
+    footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--muted); font-size: 14px; background: var(--bg-soft); }
+    .footer-grid { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+    /* ---------- Reveal / to-top ---------- */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .to-top {
+      position: fixed;
+      right: 22px; bottom: 22px;
+      width: 48px; height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--blue);
+      display: grid; place-items: center;
+      cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transform: translateY(10px);
+      transition: .25s ease;
+      box-shadow: var(--shadow-md);
+      font-size: 18px;
+      z-index: 60;
+    }
+    .to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .nav-links { display: none; }
+      .hero-grid, .split { grid-template-columns: 1fr; }
+      .grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .compare { grid-template-columns: 1fr; }
+      .sticky-note { position: relative; top: auto; }
+      .section-head.left { text-align: left; }
+    }
+    @media (max-width: 640px) {
+      .container, .nav-inner { width: calc(100% - 32px); }
+      section { padding: 60px 0; }
+      .hero { padding: 56px 0 48px; }
+      .grid.cols-2, .grid.cols-3, .grid.cols-4 { grid-template-columns: 1fr; }
+      .practice-item, .step { grid-template-columns: 1fr; }
+      .practice-item::before, .step-no { width: 48px; height: 48px; }
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+    /* ===== Benchmark white pill navigation sync (same as platform-ios floating nav) ===== */
+    :root {
+      --benchmark-nav-bg: rgba(255, 255, 255, .94);
+      --benchmark-nav-line: rgba(218, 225, 235, .92);
+      --benchmark-nav-text: #182337;
+      --benchmark-nav-muted: #5f6f86;
+      --benchmark-nav-brand: #0f172a;
+      --benchmark-nav-accent: #1a73e8;
+      --benchmark-nav-accent-2: #44b7ff;
+      --benchmark-nav-hover: rgba(26, 115, 232, .08);
+      --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+    }
+
+    html { scroll-padding-top: 112px; }
+    body { padding-top: 0 !important; }
+    .btn-primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .btn-primary:hover{background:var(--blue-dark);box-shadow:var(--shadow-md)}
+    .btn-ghost{color:var(--ink-2);background:transparent;border-color:transparent}
+    .btn-ghost:hover{background:var(--bg-soft);box-shadow:none}
+    .btn-sm{padding:7px 16px;font-size:13px}
+
+    body > header.navbar {
+      position: fixed !important;
+      top: 18px !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+      max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+      z-index: 1000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0 !important;
+      min-height: 64px !important;
+      padding: 0 !important;
+      border: 1px solid var(--benchmark-nav-line) !important;
+      border-radius: 999px !important;
+      background: var(--benchmark-nav-bg) !important;
+      backdrop-filter: saturate(180%) blur(22px) !important;
+      -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+      box-shadow: var(--benchmark-nav-shadow) !important;
+      overflow: visible !important;
+    }
+    body > header.navbar.scrolled {
+      border-color: rgba(203, 213, 225, .98) !important;
+      box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+    }
+    body > header.navbar .nav-in {
+      width: 100% !important;
+      max-width: none !important;
+      min-height: 64px !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 10px 14px 10px 18px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 18px !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: inherit !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+    }
+    body > header.navbar .brand {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      color: var(--benchmark-nav-brand) !important;
+      font-size: 16px !important;
+      font-weight: 800 !important;
+      letter-spacing: .2px !important;
+      line-height: 1 !important;
+      white-space: nowrap !important;
+      min-height: 42px !important;
+      flex: 0 0 auto !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    body > header.navbar .brand-logo {
+      display: block !important;
+      width: auto !important;
+      height: 51px !important;
+      object-fit: contain !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    body > header.navbar .nav-links {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      flex: 1 1 auto !important;
+      margin: 0 !important;
+      color: var(--benchmark-nav-muted) !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      overflow-x: auto !important;
+      scrollbar-width: none !important;
+    }
+    body > header.navbar .nav-links::-webkit-scrollbar { display: none; }
+    body > header.navbar .nav-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: var(--benchmark-nav-muted) !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      line-height: 1 !important;
+      min-height: 38px !important;
+      padding: 0 13px !important;
+      border-radius: 999px !important;
+      transition: color .22s ease, background .22s ease, transform .22s ease !important;
+      white-space: nowrap !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+    body > header.navbar .nav-link:hover,
+    body > header.navbar .nav-link.active {
+      color: var(--benchmark-nav-accent) !important;
+      background: var(--benchmark-nav-hover) !important;
+      transform: translateY(-1px) !important;
+    }
+    body > header.navbar .nav-acts {
+      margin-left: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      flex: 0 0 auto !important;
+    }
+    body > header.navbar .nav-acts .btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      min-height: 42px !important;
+      border: 1px solid rgba(26, 115, 232, .16) !important;
+      border-radius: 999px !important;
+      padding: 0 17px !important;
+      background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+      color: #ffffff !important;
+      font-size: 14px !important;
+      font-weight: 800 !important;
+      box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+      white-space: nowrap !important;
+    }
+    body > header.navbar .nav-acts .btn:hover {
+      transform: translateY(-2px) !important;
+      filter: saturate(1.08) !important;
+      box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border: 1px solid var(--benchmark-nav-line) !important;
+      background: #ffffff !important;
+      color: var(--benchmark-nav-text) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+    }
+    .nav-toggle span { width:20px;height:2px;background:var(--benchmark-nav-text)!important;border-radius:2px;transition:.3s }
+
+    .hero{padding-top:158px}
+
+    @media (max-width: 980px) {
+      .hero-grid, .split { grid-template-columns: 1fr; }
+      .grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+      .compare { grid-template-columns: 1fr; }
+      .sticky-note { position: relative; top: auto; }
+      .section-head.left { text-align: left; }
+    }
+    @media (max-width: 980px) {
+      body > header.navbar {
+        top: 10px !important;
+        width: min(100% - 24px, var(--max, 1180px)) !important;
+        max-width: min(100% - 24px, var(--max, 1180px)) !important;
+        border-radius: 24px !important;
+      }
+      body > header.navbar .nav-in {
+        min-height: 58px !important;
+        padding: 8px 12px 8px 14px !important;
+      }
+      body > header.navbar .nav-links { display: none !important; }
+      body > header.navbar .nav-links.open {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        position: absolute !important;
+        top: calc(100% + 10px) !important;
+        left: 0 !important;
+        right: 0 !important;
+        padding: 10px !important;
+        border: 1px solid var(--benchmark-nav-line) !important;
+        border-radius: 22px !important;
+        background: #ffffff !important;
+        box-shadow: var(--benchmark-nav-shadow) !important;
+      }
+      body > header.navbar .nav-links.open a {
+        min-height: 42px !important;
+        justify-content: flex-start !important;
+        padding: 0 14px !important;
+      }
+      .nav-toggle{display:flex}
+    }
+    @media (max-width: 640px) {
+      html { scroll-padding-top: 90px; }
+      .container { width: calc(100% - 32px); }
+      section { padding: 60px 0; }
+      .hero { padding:128px 0 48px; }
+      .grid.cols-2, .grid.cols-3, .grid.cols-4 { grid-template-columns: 1fr; }
+      .practice-item, .step { grid-template-columns: 1fr; }
+      .practice-item::before, .step-no { width: 48px; height: 48px; }
+    }
+</style>
+</head>
+<body id="top">
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+      <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="页面导航">
+        <a href="#why" class="nav-link">为什么</a>
+        <a href="#change" class="nav-link">设计变化</a>
+        <a href="#workflow" class="nav-link">新流程</a>
+        <a href="#capability" class="nav-link">平台能力</a>
+        <a href="#practice" class="nav-link">最佳实践</a>
+        <a href="#private" class="nav-link">私有化</a>
+      </nav>
+      <div class="nav-acts">
+        <a class="btn btn-primary btn-sm" href="#workflow">免费开始</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <header class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="spark"></span> AI 时代的开发者部署平台 · Vibe Coding 闺蜜</div>
+          <h1>更高效的<span class="hl">业务软件</span>构建方式，从设计到<span class="hl-g">部署上线</span></h1>
+          <p class="lead">在 OORT.sh 的支撑下，AI Vibe Coding 生成的页面、服务与 Agent 不再停留在 Demo。它们可以连接权限、业务系统、合规要求与私有化部署，进入真正可运行、可运营、可复用的生产环境。</p>
+          <div class="hero-actions">
+            <a class="btn" href="#workflow">免费开始</a>
+            <a class="btn text" href="#why">理解平台哲学</a>
+          </div>
+          <div class="chips" aria-label="平台关键词">
+            <span class="chip">托管应用</span>
+            <span class="chip">托管服务</span>
+            <span class="chip">应用市场</span>
+            <span class="chip">服务目录</span>
+            <span class="chip">OortCloud AI Studio</span>
+            <span class="chip">私有化方案</span>
+          </div>
+        </div>
+
+        <div class="visual reveal" aria-label="OORT.sh 部署控制台示意">
+          <div class="visual-top">
+            <div class="dots"><span></span><span></span><span></span></div>
+            <small>oort.sh / production-ready workspace</small>
+          </div>
+          <div class="deploy-flow">
+            <div class="flow-card">
+              <div class="flow-icon fi-blue">AI</div>
+              <div><strong>Vibe Coding 成果</strong><small>原型、页面、接口、Agent 快速生成</small></div>
+              <span class="status st-green">就绪</span>
+            </div>
+            <div class="flow-card">
+              <div class="flow-icon fi-green">S</div>
+              <div><strong>服务目录与基础服务</strong><small>认证、消息、存储、任务、网关可复用</small></div>
+              <span class="status st-blue">已绑定</span>
+            </div>
+            <div class="flow-card">
+              <div class="flow-icon fi-yellow">P</div>
+              <div><strong>权限、业务与合规嵌入</strong><small>组织角色、业务数据、审计与私有化约束</small></div>
+              <span class="status st-yellow">已加固</span>
+            </div>
+            <div class="flow-card">
+              <div class="flow-icon fi-red">↗</div>
+              <div><strong>托管部署与持续迭代</strong><small>应用托管、服务托管、观测、升级、回滚</small></div>
+              <span class="status st-green">运行中</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="why" class="soft">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">为什么</div>
+          <h2>为什么还要一直开发应用支撑平台？</h2>
+          <p>因为平台不是一个固定名字，而是一种面向真实需求持续演进的工具体系。需求会长期存在，产品只是某个阶段、某个场景、某种技术条件下的解决方案。</p>
+        </div>
+
+        <div class="quote-block reveal">
+          <p>历时四年，应用支撑平台最多完成了最初构想的 20%。但这并不是失败，而是说明真正的问题远比一个产品形态更大：产品从来不具有唯一性和永久性，需求却一直摆在那里。</p>
+          <div class="note">工具的价值不在名字，而在“拿在手里”的使用感：是否好用、是否省力、是否能让业务系统更快进入可运行状态。</div>
+        </div>
+
+        <div class="grid cols-4" style="margin-top: 24px;">
+          <article class="card reveal">
+            <div class="icon ic-blue">◌</div>
+            <h3>需求长期存在</h3>
+            <p>满足同一类领域需求，可以由不同产品完成。产品变，需求不变，平台要服务的是需求本身。</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon ic-green">⌁</div>
+            <h3>受制于场景</h3>
+            <p>政务、企业、行业客户的组织、权限、流程、合规差异，会不断重塑产品边界。</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon ic-yellow">✦</div>
+            <h3>受制于技术</h3>
+            <p>AI Agent、Vibe Coding、云原生、私有化部署等技术变化，会不断带来更好的解法。</p>
+          </article>
+          <article class="card reveal">
+            <div class="icon ic-red">↻</div>
+            <h3>体验决定价值</h3>
+            <p>任何笔都可以写字，但好笔让人愿意一直用。平台也是工具，必须持续追求好用。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="change">
+      <div class="container split">
+        <div class="sticky-note reveal">
+          <div class="big-number">02</div>
+          <h2>OORT.sh 带来的两大变化</h2>
+          <p>OORT.sh 的价值不是让业务设计消失，而是让业务设计从“单点软件构思”升级为“可部署、可集成、可治理的平台化工程”。</p>
+        </div>
+        <div class="timeline">
+          <article class="step reveal">
+            <div class="step-no">01</div>
+            <div>
+              <h3>从设计一款应用，到设计一个可组合的业务系统</h3>
+              <p>过去常常先想页面、功能和数据库；在 OORT.sh 下，要更早识别业务对象、角色权限、可复用服务、运行环境和部署边界。应用不再孤立存在，而是在托管应用、托管服务、服务目录与基础服务之间组合。</p>
+            </div>
+          </article>
+          <article class="step reveal">
+            <div class="step-no">02</div>
+            <div>
+              <h3>从完成代码，到完成可生产交付</h3>
+              <p>AI Vibe Coding 能快速生成成果，但“上生产”意味着接入复杂权限体系、业务系统、审计合规、安装部署和运维监控。OORT.sh 把深厚工程能力产品化，让部署、托管、复用、治理成为默认路径。</p>
+            </div>
+          </article>
+          <article class="step reveal">
+            <div class="step-no">03</div>
+            <div>
+              <h3>从临时项目经验，到沉淀最佳实践</h3>
+              <p>每一次应用部署、服务开发、私有化交付，都可以沉淀成模板、组件、服务目录、应用市场和开发者社区经验，反过来提升下一款业务软件的设计效率。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" class="soft">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">新流程</div>
+          <h2>从设计一款软件，到部署上线的新流程</h2>
+          <p>最佳实践不是“先让 AI 写完所有代码”，而是把业务意图、工程结构、权限合规和部署运行同步纳入设计。</p>
+        </div>
+        <div class="grid cols-3">
+          <article class="card reveal"><div class="icon ic-blue">1</div><h3>定义业务意图</h3><p>先识别业务对象、角色、流程、数据边界、合规要求和上线场景，而不是先画页面。</p></article>
+          <article class="card reveal"><div class="icon ic-green">2</div><h3>AI 协作生成原型</h3><p>通过 AI Vibe Coding 快速生成页面、交互、接口草案和业务脚本，让需求尽快可视化。</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">3</div><h3>服务与数据建模</h3><p>拆分应用服务、公共服务、数据模型和外部集成点，识别哪些能力应进入服务目录。</p></article>
+          <article class="card reveal"><div class="icon ic-red">4</div><h3>嵌入权限与合规</h3><p>把组织、身份、角色、审计、数据权限和业务规则作为设计的一部分，而不是上线前补丁。</p></article>
+          <article class="card reveal"><div class="icon ic-blue">5</div><h3>托管应用与服务</h3><p>通过 OORT.sh 将应用、接口、数据库、模型服务和基础服务纳入统一托管与运行视图。</p></article>
+          <article class="card reveal"><div class="icon ic-green">6</div><h3>部署、观测、迭代</h3><p>围绕配置、日志、监控、升级、回滚和私有化交付形成闭环，让软件持续进化。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capability">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">平台能力</div>
+          <h2>包含你需要的所有能力，以及你可能会喜欢的其他能力</h2>
+          <p>OORT.sh 把复杂技术产品化，把开发、托管、服务、市场、目录、社区、云能力与私有化方案放在同一个平台语境里。</p>
+        </div>
+        <div class="grid cols-4">
+          <article class="card reveal"><div class="icon ic-blue">▣</div><h3>托管应用</h3><p>承载 Web、后台、轻应用、AI 生成应用，让成果具备稳定运行入口。</p></article>
+          <article class="card reveal"><div class="icon ic-green">◫</div><h3>托管服务</h3><p>将数据库、队列、接口、模型等服务型能力纳入统一托管与生命周期管理。</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">⚙</div><h3>服务开发</h3><p>把公共能力沉淀为可复用服务，减少重复建设，让后续应用站在已有能力上。</p></article>
+          <article class="card reveal"><div class="icon ic-red">✎</div><h3>应用开发</h3><p>支撑业务应用从原型、工程结构到部署配置的连续开发过程。</p></article>
+          <article class="card reveal"><div class="icon ic-green">▤</div><h3>应用市场</h3><p>让应用可发布、可发现、可安装、可复用，形成产品与场景之间的连接。</p></article>
+          <article class="card reveal"><div class="icon ic-blue">☷</div><h3>服务目录</h3><p>让基础能力可查找、可申请、可治理，帮助团队知道“已有能力在哪里”。</p></article>
+          <article class="card reveal"><div class="icon ic-red">◆</div><h3>基础服务</h3><p>认证、消息、存储、日志、任务、网关等通用能力，为业务系统提供底座。</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">☁</div><h3>基础云能力</h3><p>运行、网络、资源、弹性、监控等能力，支撑应用从开发环境进入生产环境。</p></article>
+          <article class="card reveal"><div class="icon ic-blue">AI</div><h3>OortCloud AI Studio</h3><p>作为开发者与 AI 协作的入口，把想法、提示词、原型和工程化连接起来。</p></article>
+          <article class="card reveal"><div class="icon ic-green">◎</div><h3>开发者社区</h3><p>沉淀模板、组件、经验与最佳实践，让平台能力在真实使用中成长。</p></article>
+          <article class="card reveal"><div class="icon ic-yellow">↧</div><h3>安装部署方案</h3><p>解决用户安装、部署、升级、交付难题，让复杂技术变成可交付产品。</p></article>
+          <article class="card reveal"><div class="icon ic-red">盾</div><h3>私有化方案</h3><p>面向企业、政务与行业客户，适配权限体系、业务系统和合规要求。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="practice" class="soft">
+      <div class="container split">
+        <div class="section-head left reveal" style="margin-bottom:0;">
+          <div class="section-kicker">最佳实践</div>
+          <h2>设计业务软件的最佳实践：从一开始就面向生产</h2>
+          <p>AI 让“生成”变快，但 OORT.sh 让“落地”变稳。真正的最佳实践，是把需求、工程、部署与运营设计在同一张图里。</p>
+        </div>
+        <div class="practice-list">
+          <article class="practice-item reveal"><div><h3>不要先设计页面，先设计业务对象</h3><p>明确人、事、物、组织、流程、状态、权限和约束，再让页面承载这些业务结构。</p></div></article>
+          <article class="practice-item reveal"><div><h3>不要把每个项目都做成孤岛</h3><p>提前识别认证、通知、审批、文件、日志、任务、报表等公共能力，优先沉淀为服务。</p></div></article>
+          <article class="practice-item reveal"><div><h3>AI 生成代码必须进入工程规范</h3><p>把 AI 生成成果纳入目录结构、接口规范、权限模型、配置管理、测试和部署流水线。</p></div></article>
+          <article class="practice-item reveal"><div><h3>上线前就要想清楚安装部署</h3><p>面向生产的设计必须包含环境变量、依赖服务、数据迁移、升级、回滚和私有化交付。</p></div></article>
+          <article class="practice-item reveal"><div><h3>所有服务都要可观测、可治理</h3><p>日志、指标、告警、审计、访问控制和运行边界，是业务系统长期可用的基础。</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">前后对比</div>
+          <h2>传统方式与 OORT.sh 支撑方式的差异</h2>
+        </div>
+        <div class="compare">
+          <div class="compare-panel bad reveal">
+            <h3>传统项目式交付</h3>
+            <ul>
+              <li>原型可能很快，但上线依赖大量人工协调。</li>
+              <li>服务散落在不同项目中，复用困难。</li>
+              <li>权限、合规、审计经常后置处理。</li>
+              <li>部署脚本、环境配置和安装文档容易失控。</li>
+              <li>一次项目经验难以沉淀为下一次的效率。</li>
+            </ul>
+          </div>
+          <div class="compare-panel good reveal">
+            <h3>OORT.sh 支撑的平台化交付</h3>
+            <ul>
+              <li>原型、应用、服务、部署在统一平台语境中协同。</li>
+              <li>公共能力进入服务目录，成为可治理资产。</li>
+              <li>权限体系、业务系统和合规要求更早进入设计。</li>
+              <li>托管应用与托管服务减少重复部署成本。</li>
+              <li>应用市场、社区与最佳实践让经验持续复利。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="private" class="soft">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">私有化</div>
+          <h2>真正“上生产”，一定要面对权限、业务系统与合规</h2>
+          <p>AI Agent 和 Vibe Coding 成果要进入企业与行业场景，不只是部署一个应用地址，而是接入组织权限、数据边界、业务流程、审计要求和私有化环境。</p>
+        </div>
+        <div class="grid cols-3">
+          <article class="card reveal"><div class="icon ic-blue">身</div><h3>复杂权限体系</h3><p>身份、组织、角色、岗位、数据权限与操作审计，决定业务软件能否进入真实组织。</p></article>
+          <article class="card reveal"><div class="icon ic-green">链</div><h3>业务系统接入</h3><p>新应用要与既有系统、数据接口、流程引擎和基础服务连接，而不是另起炉灶。</p></article>
+          <article class="card reveal"><div class="icon ic-red">规</div><h3>合规与私有化</h3><p>面向政企和行业客户，部署位置、网络边界、数据安全和升级机制都是产品的一部分。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box reveal">
+          <div class="section-kicker" style="color:rgba(255,255,255,.85)">OORT.sh for AI Builders</div>
+          <h2>让 AI 时代的开发成果，真正成为可部署、可运营、可复用的业务生产力。</h2>
+          <p>产品会迭代，名字会变化，技术会更新；但让工具更好用、让业务更快落地、让开发者更接近生产环境，这件事值得持续投入。没有执念，何谈人生。</p>
+          <div class="hero-actions">
+            <a class="btn" href="#workflow">重新查看流程</a>
+            <a class="btn ghost" href="#capability">查看平台能力</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+            <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+
+      <div>AI 时代的开发者部署平台，是 Vibe Coding 闺蜜。</div>
+      <div>© 2026 OORT.sh Business Design Narrative</div>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="返回顶部">↑</button>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinksWrap = document.getElementById('navLinks');
+    const navLinks = [...document.querySelectorAll('.nav-links a')];
+    const reveals = [...document.querySelectorAll('.reveal')];
+    const toTop = document.querySelector('.to-top');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    const activeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      });
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: 0.01 });
+    document.querySelectorAll('section[id]').forEach(section => activeObserver.observe(section));
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 8);
+      toTop.classList.toggle('show', window.scrollY > 700);
+    }, { passive: true });
+    navbar.classList.toggle('scrolled', window.scrollY > 8);
+    navToggle.addEventListener('click', () => navLinksWrap.classList.toggle('open'));
+    navLinks.forEach(link => link.addEventListener('click', () => navLinksWrap.classList.remove('open')));
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>
+

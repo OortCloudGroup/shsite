@@ -1,0 +1,932 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="OortCloud AI Studio: an AI engineering development platform for enterprise privatization, offline R&D, and real production delivery, covering CLI tool matrices, multi-environment deployment, AI Agents, low-code, data, GIS, model training, and AIGC capabilities." />
+  <title>OortCloud AI Studio | Enterprise AI Engineering Development to Production Delivery Loop</title>
+  <style>
+    :root {
+      --blue: #1a73e8;
+      --blue-dark: #1557b0;
+      --green: #34a853;
+      --yellow: #fbbc04;
+      --red: #ea4335;
+      --purple: #9334e6;
+      --teal: #12b5cb;
+      --ink: #202124;
+      --ink-2: #3c4043;
+      --muted: #5f6368;
+      --line: #e8eaed;
+      --soft: #f8fafd;
+      --soft-2: #f1f3f4;
+      --card: #ffffff;
+      --blue-soft: #e8f0fe;
+      --green-soft: #e6f4ea;
+      --yellow-soft: #fef7e0;
+      --red-soft: #fce8e6;
+      --purple-soft: #f3e8fd;
+      --teal-soft: #e4f7fa;
+      --shadow-sm: 0 1px 2px rgba(60,64,67,.12), 0 1px 3px rgba(60,64,67,.08);
+      --shadow-md: 0 2px 6px rgba(60,64,67,.13), 0 6px 16px rgba(60,64,67,.10);
+      --shadow-lg: 0 4px 10px rgba(60,64,67,.14), 0 18px 46px rgba(60,64,67,.14);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: #fff; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: "Google Sans", "Google Sans Text", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:saturate(200%) blur(16px);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+    .navbar.scrolled{border-color:rgba(218,220,224,.7);box-shadow:0 1px 4px rgba(60,64,67,.08)}
+    .nav-in{max-width:var(--max);margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:24px}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:20px;color:var(--ink);white-space:nowrap}
+    .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+    .brand-dot{color:var(--blue)}
+    .brand-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:800;letter-spacing:-.03em;background:conic-gradient(from 100deg,var(--blue),var(--green),var(--yellow),var(--red),var(--purple),var(--blue));box-shadow:0 8px 22px rgba(26,115,232,.22)}
+    .brand span span{color:var(--blue)}
+    .nav-links{display:flex;gap:2px;margin-left:8px;align-items:center;flex:1;justify-content:center}
+    .nav-link,.nav-links a{font-size:14px;color:var(--ink-2);font-weight:500;padding:7px 12px;border-radius:8px;transition:all .2s;white-space:nowrap}
+    .nav-link:hover,.nav-link.active,.nav-links a:hover,.nav-links a.active{background:var(--soft-2);color:var(--blue)}
+    .nav-acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+    .nav-toggle span{width:20px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 15px;
+      transition: .2s ease;
+      white-space: nowrap;
+    }
+    .btn-sm { min-height: auto; padding: 7px 16px; font-size: 13px; }
+    .btn.primary { color: #fff; background: var(--blue); box-shadow: 0 8px 20px rgba(26,115,232,.24); }
+    .btn.primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn.ghost { color: var(--blue); border-color: var(--line); background: #fff; }
+    .btn.ghost:hover { background: var(--blue-soft); border-color: #c9dafc; }
+    .btn.text { color: var(--blue); padding: 0 6px; }
+    .btn.text::after { content: "→"; transition: transform .2s ease; }
+    .btn.text:hover::after { transform: translateX(4px); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 84% 4%, rgba(26,115,232,.16), transparent 34%),
+        radial-gradient(circle at 7% 20%, rgba(52,168,83,.12), transparent 28%),
+        linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    }
+    .hero-inner {
+      padding: 84px 0 72px;
+      display: grid;
+      grid-template-columns: 1.03fr .97fr;
+      align-items: center;
+      gap: 58px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.82);
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .spark { width: 18px; height: 18px; border-radius: 50%; background: conic-gradient(from 20deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue)); }
+    h1, h2, h3 { margin: 0; line-height: 1.15; color: var(--ink); font-weight: 600; }
+    h1 { font-size: clamp(40px, 5.4vw, 66px); letter-spacing: -2.2px; max-width: 700px; }
+    h1 .blue { color: var(--blue); }
+    h1 .green { color: var(--green); }
+    .lead { margin: 24px 0 0; max-width: 650px; color: var(--muted); font-size: clamp(17px, 1.55vw, 20px); }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; align-items: center; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .pill-chip { border: 1px solid var(--line); background: #fff; color: var(--ink-2); border-radius: 999px; padding: 7px 13px; font-size: 13px; box-shadow: var(--shadow-sm); }
+
+    .studio-window {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: #fff;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      transform: rotate(.5deg);
+    }
+    .window-top { height: 56px; display: flex; align-items: center; gap: 8px; padding: 0 18px; border-bottom: 1px solid var(--line); background: var(--soft); }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot.red { background: var(--red); } .dot.yellow { background: var(--yellow); } .dot.green { background: var(--green); }
+    .window-top small { color: var(--muted); margin-left: 8px; }
+    .window-body { padding: 22px; display: grid; gap: 14px; }
+    .cmd {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 14px;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      gap: 13px;
+      align-items: center;
+      transition: .2s ease;
+    }
+    .cmd:hover { transform: translateX(3px); box-shadow: var(--shadow-md); }
+    .cmd-icon { width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; color: #fff; font-weight: 800; }
+    .cmd:nth-child(1) .cmd-icon { background: var(--blue); }
+    .cmd:nth-child(2) .cmd-icon { background: var(--green); }
+    .cmd:nth-child(3) .cmd-icon { background: var(--purple); }
+    .cmd:nth-child(4) .cmd-icon { background: var(--red); }
+    .cmd strong { display: block; font-size: 15px; }
+    .cmd small { color: var(--muted); font-size: 12px; }
+    .status { font-size: 12px; color: var(--green); background: var(--green-soft); padding: 4px 9px; border-radius: 999px; font-weight: 700; }
+
+    section { padding: 88px 0; }
+    section.soft { background: var(--soft); }
+    .section-head { max-width: 830px; margin: 0 auto 50px; text-align: center; }
+    .section-head.left { text-align: left; margin-left: 0; }
+    .kicker { color: var(--blue); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; margin-bottom: 13px; display: inline-block; }
+    h2 { font-size: clamp(28px, 3.5vw, 45px); letter-spacing: -1.2px; }
+    .section-head p { margin: 18px 0 0; color: var(--muted); font-size: 18px; }
+    .grid { display: grid; gap: 24px; }
+    .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 28px;
+      transition: box-shadow .24s ease, transform .24s ease;
+    }
+    .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .icon { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 22px; margin-bottom: 18px; }
+    .ic-blue { background: var(--blue-soft); color: var(--blue); }
+    .ic-green { background: var(--green-soft); color: var(--green); }
+    .ic-yellow { background: var(--yellow-soft); color: #9b6500; }
+    .ic-red { background: var(--red-soft); color: var(--red); }
+    .ic-purple { background: var(--purple-soft); color: var(--purple); }
+    .ic-teal { background: var(--teal-soft); color: #087987; }
+    .card h3 { font-size: 20px; margin-bottom: 9px; }
+    .card p { color: var(--muted); margin: 0; font-size: 15px; }
+
+    .tool-cloud { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .tool {
+      min-height: 58px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+      color: var(--ink-2);
+      font-weight: 650;
+    }
+    .tool::before { content: "$"; width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; color: #fff; background: var(--blue); font-size: 13px; }
+    .tool:nth-child(2)::before { background: var(--green); }
+    .tool:nth-child(3)::before { background: var(--purple); }
+    .tool:nth-child(4)::before { background: var(--red); }
+    .tool:nth-child(5)::before { background: var(--yellow); color: #5f4b00; }
+    .tool:nth-child(6)::before { background: var(--teal); }
+    .tool:nth-child(7)::before { background: #111827; }
+    .tool:nth-child(8)::before { background: var(--blue-dark); }
+
+    .flow { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+    .flow-step { position: relative; border: 1px solid var(--line); border-radius: var(--radius-md); background: #fff; padding: 22px; }
+    .flow-step:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); transition: .2s ease; }
+    .no { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #fff; background: var(--blue); font-weight: 800; margin-bottom: 14px; }
+    .flow-step:nth-child(2) .no { background: var(--teal); }
+    .flow-step:nth-child(3) .no { background: var(--purple); }
+    .flow-step:nth-child(4) .no { background: var(--yellow); color: #5f4b00; }
+    .flow-step:nth-child(5) .no { background: var(--green); }
+    .flow-step:nth-child(6) .no { background: var(--red); }
+    .flow-step h3 { font-size: 16px; margin-bottom: 6px; }
+    .flow-step p { color: var(--muted); font-size: 13px; margin: 0; }
+
+    .matrix-wrap { border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: #fff; box-shadow: var(--shadow-sm); }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 880px; font-size: 14px; }
+    th, td { padding: 15px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    thead th { background: var(--soft); color: var(--ink); font-weight: 700; font-size: 13px; }
+    tbody tr:hover { background: #fbfcff; }
+    tbody tr:last-child td { border-bottom: 0; }
+    td:first-child { font-weight: 700; color: var(--ink); }
+    .mark { display: inline-flex; align-items: center; border-radius: 999px; padding: 3px 9px; font-size: 12px; font-weight: 700; background: var(--green-soft); color: var(--green); }
+    .mark.strict { background: var(--red-soft); color: var(--red); }
+    .mark.mid { background: var(--yellow-soft); color: #9b6500; }
+    .mark.low { background: var(--blue-soft); color: var(--blue); }
+
+    .cap-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+    .cap { border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 18px; min-height: 116px; }
+    .cap b { display: block; margin-bottom: 6px; }
+    .cap span { display: block; color: var(--muted); font-size: 13px; }
+
+    .split { display: grid; grid-template-columns: .86fr 1.14fr; gap: 44px; align-items: start; }
+    .sticky { position: sticky; top: 96px; }
+    .sticky p { color: var(--muted); font-size: 17px; margin: 17px 0 0; }
+    .advantage { display: grid; grid-template-columns: 54px 1fr; gap: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px; background: #fff; margin-bottom: 16px; }
+    .advantage:hover { box-shadow: var(--shadow-md); }
+    .badge { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; font-size: 24px; background: var(--blue-soft); color: var(--blue); }
+    .advantage:nth-child(2) .badge { background: var(--green-soft); color: var(--green); }
+    .advantage:nth-child(3) .badge { background: var(--purple-soft); color: var(--purple); }
+    .advantage:nth-child(4) .badge { background: var(--yellow-soft); color: #9b6500; }
+    .advantage h3 { font-size: 19px; margin-bottom: 7px; }
+    .advantage p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    .cta { padding: 96px 0; }
+    .cta-box { position: relative; overflow: hidden; border-radius: var(--radius-xl); text-align: center; color: #fff; background: linear-gradient(135deg, var(--blue), #4285f4 54%, var(--blue-dark)); padding: clamp(42px, 7vw, 82px); }
+    .cta-box::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 12% 20%, rgba(255,255,255,.17), transparent 30%), radial-gradient(circle at 85% 80%, rgba(255,255,255,.12), transparent 34%); }
+    .cta-box > * { position: relative; }
+    .cta-box h2 { color: #fff; max-width: 850px; margin: 0 auto; }
+    .cta-box p { color: rgba(255,255,255,.9); max-width: 790px; margin: 20px auto 0; font-size: 18px; }
+    .cta-box .hero-actions { justify-content: center; }
+    .cta-box .btn.primary { background: #fff; color: var(--blue); box-shadow: none; }
+    .cta-box .btn.ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.55); }
+
+    footer { border-top: 1px solid var(--line); padding: 34px 0; color: var(--muted); font-size: 14px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+
+    @media (max-width: 980px) {
+      .nav-links { display: none; }
+      .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;padding:12px 20px 16px;border-bottom:1px solid var(--line);box-shadow:var(--shadow-md);gap:4px}
+      .nav-acts .btn.ghost{display:none}
+      .nav-toggle{display:flex}
+      .hero-inner, .split { grid-template-columns: 1fr; }
+      .studio-window { transform: none; }
+      .cols-3, .cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow { grid-template-columns: repeat(3, 1fr); }
+      .cap-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sticky { position: static; }
+    }
+    @media (max-width: 640px) {
+      .container { width: min(100% - 32px, var(--max)); }
+      .hero-inner { padding: 62px 0 54px; gap: 36px; }
+      section { padding: 64px 0; }
+      .cols-2, .cols-3, .cols-4, .flow, .cap-list { grid-template-columns: 1fr; }
+      .cmd { grid-template-columns: 42px 1fr; }
+      .status { grid-column: 2; width: max-content; }
+      h1 { letter-spacing: -1.4px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+    </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+            <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Page navigation">
+        <a href="#tools" class="nav-link">CLI Tools</a>
+        <a href="#loop" class="nav-link">R&D Loop</a>
+        <a href="#matrix" class="nav-link">Environment Matrix</a>
+        <a href="#capabilities" class="nav-link">Development Capabilities</a>
+        <a href="#advantages" class="nav-link">Key Advantages</a>
+      </nav>
+      <div class="nav-acts">
+        <a class="btn ghost btn-sm" href="#cta">Explore Solution</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Menu" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <header class="hero" id="top">
+    <div class="container hero-inner">
+      <div>
+        <div class="eyebrow"><span class="spark"></span> Enterprise Privatization · Offline AI Coding · Real Production Delivery</div>
+        <h1>Bring AI-assisted engineering development to the <span class="blue">enterprise production frontline</span>.</h1>
+        <p class="lead">OortCloud AI Studio is built for complex enterprise R&D systems. It provides unified access to CLI tools such as OortCode, ClawCode, Qoder, Codex, Gemini, OpenCode, and ClaudeCode, creating an AI engineering loop from requirements, code, testing, deployment, and operations to continuous evolution.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#loop">View Loop Capabilities</a>
+          <a class="btn text" href="#matrix">Explore Multi-Environment Matrix</a>
+        </div>
+        <div class="hero-pills" aria-label="Core features">
+          <span class="pill-chip">Privately Deployed LLMs</span>
+          <span class="pill-chip">Pure Offline Development</span>
+          <span class="pill-chip">Complex Permission / Business / Compliance Integration</span>
+          <span class="pill-chip">DEV → PROD → COB</span>
+        </div>
+      </div>
+      <div class="studio-window" aria-label="OortCloud AI Studio workspace preview">
+        <div class="window-top"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><small>ai-studio.enterprise.local</small></div>
+        <div class="window-body">
+          <div class="cmd"><span class="cmd-icon">OC</span><div><strong>OortCode Orchestrates Enterprise Requirements</strong><small>Reads specifications, permissions, interfaces, and production constraints to generate executable engineering tasks</small></div><span class="status">Ready</span></div>
+          <div class="cmd"><span class="cmd-icon">AI</span><div><strong>Multi-CLI Agent Collaborative Development</strong><small>Unified governance for Codex / Gemini / ClaudeCode / Qoder / OpenCode and more</small></div><span class="status">Online</span></div>
+          <div class="cmd"><span class="cmd-icon">CI</span><div><strong>Testing, Auditing, Artifacts, and Release</strong><small>Automatically completes unit tests, scans, reviews, images, pipelines, and rollback strategies</small></div><span class="status">Passed</span></div>
+          <div class="cmd"><span class="cmd-icon">PR</span><div><strong>Production Delivery and Continuous Operations</strong><small>Multi-environment approvals, canary release, monitoring, COB continuity assurance, and knowledge accumulation</small></div><span class="status">Prod</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="tools">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">CLI Tool Matrix</span>
+        <h2>Unify mainstream AI coding CLIs so every tool serves enterprise engineering standards.</h2>
+        <p>More than a simple chat assistant, it connects multiple models, CLIs, Agents, repositories, and enterprise knowledge bases into one secure workspace.</p>
+      </div>
+      <div class="tool-cloud" aria-label="AI CLI tool list">
+        <span class="tool">OortCode</span>
+        <span class="tool">ClawCode</span>
+        <span class="tool">Qoder</span>
+        <span class="tool">Codex</span>
+        <span class="tool">Gemini</span>
+        <span class="tool">OpenCode</span>
+        <span class="tool">ClaudeCode</span>
+        <span class="tool">More Enterprise In-House CLIs</span>
+      </div>
+      <div class="grid cols-3" style="margin-top:32px">
+        <article class="card"><div class="icon ic-blue">⌘</div><h3>Unified Entry Point</h3><p>Launch, audit, and assign CLI Agents from the same portal, avoiding scattered model and repository access across teams.</p></article>
+        <article class="card"><div class="icon ic-green">🔐</div><h3>Secure Isolation</h3><p>Supports deployment in intranets, private networks, offline zones, and confidential zones, controlling tool invocation boundaries by project, role, and data domain.</p></article>
+        <article class="card"><div class="icon ic-purple">🧭</div><h3>Standardized Outputs</h3><p>Turns requirements, designs, code, tests, documentation, deployment scripts, and runbooks into enterprise-grade templates.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="soft" id="loop">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Engineering Loop</span>
+        <h2>From AI-assisted engineering development to a true production delivery loop.</h2>
+        <p>Covers requirement breakdown, coding, review, testing, artifacts, deployment, operations, and retrospectives, enabling AI outputs to enter existing enterprise R&D, compliance, and production systems.</p>
+      </div>
+      <div class="flow">
+        <article class="flow-step"><div class="no">1</div><h3>Requirements & Knowledge</h3><p>Read business rules, interface specifications, permission matrices, historical tickets, and project templates.</p></article>
+        <article class="flow-step"><div class="no">2</div><h3>AI Coding</h3><p>Multiple CLI Agents collaboratively generate code, scripts, pages, Agents, and test cases.</p></article>
+        <article class="flow-step"><div class="no">3</div><h3>Quality Gates</h3><p>Automatically execute reviews, unit tests, integration tests, security scans, and compliance checks.</p></article>
+        <article class="flow-step"><div class="no">4</div><h3>Artifact Delivery</h3><p>Generate images, Helm charts, configurations, migration scripts, release packages, and rollback plans.</p></article>
+        <article class="flow-step"><div class="no">5</div><h3>Multi-Environment Release</h3><p>Perform approvals, canary releases, and tracking across DEV/SIT/UAT/STAGING/PROD/COB.</p></article>
+        <article class="flow-step"><div class="no">6</div><h3>Operations Retrospective</h3><p>Feed alerts, logs, defects, and production experience back into prompts, templates, and knowledge assets.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="matrix">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Deployment Matrix</span>
+        <h2>DEV / SIT / UAT / STAGING / PROD / COB multi-deployment environment matrix.</h2>
+        <p>Brings AI-generated outputs into enterprise-standard release pipelines and adapts to permissions, data, approvals, networks, and continuity requirements across environments.</p>
+      </div>
+      <div class="matrix-wrap">
+        <div class="table-scroll">
+          <table aria-label="Multi-deployment environment matrix">
+            <thead>
+              <tr><th>Environment</th><th>Goal</th><th>AI Studio Capability</th><th>Control Focus</th><th>Applicable Targets</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>DEV</td><td>Fast individual/team development</td><td><span class="mark low">Flexible</span> CLI Agents, template projects, offline dependency cache</td><td>Branch standards, code style, sensitive data masking</td><td>Projects, frontend, backend services, AI Agents</td></tr>
+              <tr><td>SIT</td><td>System integration validation</td><td><span class="mark">Integrated</span> API joint debugging, mock data, automated testing</td><td>API contracts, service dependencies, test sample desensitization</td><td>Websites, mini programs, low-code, no-code</td></tr>
+              <tr><td>UAT</td><td>Business acceptance and process confirmation</td><td><span class="mark mid">Acceptance</span> Business scripts, permission roles, acceptance reports</td><td>Business loops, approval chains, role isolation</td><td>Complex permissions, business rules, regulatory processes</td></tr>
+              <tr><td>STAGING</td><td>Pre-production rehearsal</td><td><span class="mark mid">Staging</span> Canary strategies, configuration comparison, release prechecks</td><td>Production consistency, rollback strategy, performance baseline</td><td>Microservices, data, GIS, AIGC applications</td></tr>
+              <tr><td>PROD</td><td>Real production operation</td><td><span class="mark strict">Production</span> Release approvals, monitoring alerts, change audits</td><td>Stability, security compliance, observability, emergency response</td><td>Enterprise core business, public portals, mobile endpoints</td></tr>
+              <tr><td>COB</td><td>Business continuity assurance</td><td><span class="mark">Continuity</span> Backup, disaster recovery, drills, incident retrospectives</td><td>RTO/RPO, DR switchover, production experience feedback</td><td>Critical systems, emergency command, long-term operations projects</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="soft" id="capabilities">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Development Capabilities</span>
+        <h2>A complete capability map from enterprise project R&D to AI-native applications.</h2>
+        <p>It supports both traditional engineering delivery and productized implementation for AI Agents, model training, data governance, GIS, and AIGC scenarios.</p>
+      </div>
+      <div class="cap-list">
+        <div class="cap"><b>Project Engineering</b><span>Unified management of requirements, tasks, code, tests, documents, and deliverables</span></div>
+        <div class="cap"><b>Frontend Development</b><span>Web, admin consoles, portals, visualization dashboards, and component libraries</span></div>
+        <div class="cap"><b>Backend Services</b><span>Microservices, APIs, gateways, task scheduling, messaging, and integration</span></div>
+        <div class="cap"><b>AI Agent</b><span>Enterprise Agents, tool invocation, process orchestration, and permission control</span></div>
+        <div class="cap"><b>Websites</b><span>Official sites, product pages, content sites, internationalization, and SEO adaptation</span></div>
+        <div class="cap"><b>Mini Programs</b><span>Mobile lightweight apps, government-enterprise business entries, field operations, and approvals</span></div>
+        <div class="cap"><b>Low-Code</b><span>Forms, workflows, reports, business objects, and extension scripts</span></div>
+        <div class="cap"><b>No-Code</b><span>Configuration-based app building, template reuse, and business-user collaboration</span></div>
+        <div class="cap"><b>Data</b><span>Data access, governance, analysis, desensitization, metrics, and data services</span></div>
+        <div class="cap"><b>GIS</b><span>Map services, spatial data, trajectories, grids, and one-map applications</span></div>
+        <div class="cap"><b>Model Labeling & Training</b><span>Data labeling, training tasks, evaluation, deployment, and model iteration</span></div>
+        <div class="cap"><b>AIGC</b><span>Text, images, videos, knowledge Q&A, and content generation workflows</span></div>
+        <div class="cap"><b>Private LLMs</b><span>Local models, enterprise knowledge bases, intranet inference, and resource scheduling</span></div>
+        <div class="cap"><b>Pure Offline Development</b><span>Offline code repositories, dependencies, models, and audit trails</span></div>
+        <div class="cap"><b>Production Operations</b><span>Monitoring, logs, alerts, inspections, rollback, and COB drills</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="advantages">
+    <div class="container split">
+      <div class="sticky">
+        <span class="kicker">Enterprise Templates & Advantages</span>
+        <h2>Enterprise templates and key advantages: productizing complex technologies.</h2>
+        <p>The value of OortCloud AI Studio goes beyond “generating code”. It enables AI-generated outputs to integrate into real enterprise environments: complex permissions, complex business, compliance audits, multi-environment deployment, installation delivery, and long-term operations.</p>
+      </div>
+      <div>
+        <article class="advantage"><div class="badge">🚀</div><div><h3>True Production Readiness</h3><p>Built-in gates, approvals, quality checks, artifacts, and rollback templates from requirements to release make AI development outputs acceptable, deployable, and operable.</p></div></article>
+        <article class="advantage"><div class="badge">🏢</div><div><h3>Integration with Complex Permission / Business / Compliance Systems</h3><p>Adapts to organizations, roles, data domains, approval flows, audit logs, security compliance, internal/external network isolation, and existing enterprise systems.</p></div></article>
+        <article class="advantage"><div class="badge">📦</div><div><h3>Productize Complex Technologies</h3><p>Packages models, Agents, engineering frameworks, deployment scripts, operations runbooks, and best practices into reusable templates to reduce team replication costs.</p></div></article>
+        <article class="advantage"><div class="badge">🛠</div><div><h3>Solve Installation and Deployment Challenges</h3><p>Supports private LLM deployment, offline packages, intranet image repositories, environment checks, dependency governance, and one-click delivery to reduce onsite implementation risks.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="soft">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Private & Offline AI</span>
+        <h2>Supports both private LLM deployment and pure offline development.</h2>
+        <p>For government, finance, energy, public security, transportation, manufacturing, and other scenarios with high data security and network isolation requirements, AI Studio can run independently on enterprise intranets.</p>
+      </div>
+      <div class="grid cols-4">
+        <article class="card"><div class="icon ic-blue">🧠</div><h3>Private Models</h3><p>Connect local LLMs, proprietary models, and enterprise knowledge bases to protect code, documents, and business data.</p></article>
+        <article class="card"><div class="icon ic-green">🔌</div><h3>Offline Dependencies</h3><p>Unified distribution of offline packages, images, plugins, CLI tools, and engineering templates for closed networks.</p></article>
+        <article class="card"><div class="icon ic-yellow">📋</div><h3>Audit Trails</h3><p>Record Agent operations, model calls, code changes, approvals, and deployment processes to meet compliance requirements.</p></article>
+        <article class="card"><div class="icon ic-red">🛡</div><h3>Security Boundaries</h3><p>Reduce AI development risks through project isolation, permission control, sensitive information detection, and network policies.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Build a private, offline-capable, auditable, production-ready AI Studio for enterprises.</h2>
+        <p>Upgrade AI coding from an individual productivity tool into an enterprise engineering capability platform, helping teams turn complex business, deployment, and compliance requirements into repeatable productized delivery capabilities.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#tools">View Tool Matrix</a>
+          <a class="btn ghost" href="#advantages">Explore Key Advantages</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 OortCloud AI Studio. Enterprise AI Engineering Platform.</div>
+      <div>Private LLM · Offline Development · Production Delivery</div>
+    </div>
+  </footer>
+  <script>
+    (function(){
+      "use strict";
+      var navbar = document.getElementById("navbar");
+      var navToggle = document.getElementById("navToggle");
+      var navLinks = document.getElementById("navLinks");
+      var links = Array.prototype.slice.call(document.querySelectorAll(".nav-link"));
+
+      function syncNavbarState(){
+        if(navbar) navbar.classList.toggle("scrolled", window.scrollY > 8);
+      }
+      window.addEventListener("scroll", syncNavbarState, { passive: true });
+      syncNavbarState();
+
+      if(navToggle && navLinks){
+        navToggle.addEventListener("click", function(){
+          var isOpen = navLinks.classList.toggle("open");
+          navToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+        navLinks.addEventListener("click", function(event){
+          if(!event.target.classList.contains("nav-link")) return;
+          navLinks.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+        });
+      }
+
+      var sections = document.querySelectorAll("section[id], header[id]");
+      if("IntersectionObserver" in window && sections.length){
+        var observer = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(!entry.isIntersecting) return;
+            var id = entry.target.id;
+            links.forEach(function(link){
+              link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+            });
+          });
+        }, { rootMargin: "-35% 0px -55% 0px", threshold: 0.01 });
+        sections.forEach(function(section){ observer.observe(section); });
+      }
+    })();
+  </script>
+</body>
+</html>
+

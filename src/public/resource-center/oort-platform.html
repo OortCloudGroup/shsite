@@ -1,0 +1,1095 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OORT.sh · 开放能力底座 | 云+端一体化应用支撑平台</title>
+    <meta name="description" content="OORT.sh 面向产品开发提供云+端一体化开放能力底座，沉淀服务总线、统一用户、统一授权、基础技术服务与 300+ 可复用业务能力，帮助团队减少重复建设、缩短交付周期、提升应用运营效率。">
+    <style>
+    /* ========================================================================
+       OORT.sh · 开放能力介绍页 v2
+       视觉风格参考 Google Workspace：大量留白、圆角卡片、柔和阴影、Material 配色
+       ======================================================================== */
+
+    :root {
+        --blue:   #1a73e8; --blue-l: #aecbfa; --blue-bg: #e8f0fe;
+        --red:    #ea4335; --red-bg: #fce8e6;
+        --yellow: #fbbc04; --yellow-bg: #fef7e0;
+        --green:  #34a853; --green-bg: #e6f4ea;
+        --purple: #9334e6; --purple-bg: #f3e8fd;
+        --orange: #ea8600; --orange-bg: #fef7e0;
+
+        --ink: #202124; --ink-soft: #3c4043; --muted: #5f6368;
+        --line: #dadce0; --bg: #ffffff; --bg-soft: #f8f9fa;
+        --dark: #202a3c;
+
+        --r: 16px; --r-lg: 24px; --r-xl: 32px;
+        --s1: 0 1px 3px rgba(60,64,67,.1), 0 1px 2px rgba(60,64,67,.06);
+        --s2: 0 1px 4px rgba(60,64,67,.12), 0 4px 12px rgba(60,64,67,.08);
+        --s3: 0 4px 16px rgba(60,64,67,.14), 0 8px 28px rgba(60,64,67,.10);
+        --s4: 0 8px 28px rgba(60,64,67,.18);
+
+        --t: .25s ease;
+        --max: 1200px;
+        --font: "Google Sans","Inter","Helvetica Neue","PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Arial,sans-serif;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:80px}
+    body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    svg{display:block}
+    .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:500;line-height:1;padding:12px 26px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;transition:all var(--t);white-space:nowrap}
+    .btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+    .btn:active{transform:scale(.97)}
+    .btn-lg{padding:16px 38px;font-size:16px}
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:var(--s1)}
+    .btn-primary:hover{background:#1557b0;box-shadow:var(--s2);transform:translateY(-2px)}
+    .btn-outline{border-color:var(--line);color:var(--blue);background:#fff}
+    .btn-outline:hover{background:var(--blue-bg);border-color:var(--blue)}
+    .btn-ghost{color:var(--ink-soft);background:transparent;border-color:transparent}
+    .btn-ghost:hover{background:var(--bg-soft)}
+    .btn-white{background:#fff;color:var(--blue)}
+    .btn-white:hover{background:#f1f5ff;transform:translateY(-2px)}
+    .btn-ghost-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+    .btn-ghost-white:hover{background:rgba(255,255,255,.14);border-color:#fff}
+
+    /* Navbar */
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.82);backdrop-filter:saturate(200%) blur(16px);-webkit-backdrop-filter:saturate(200%) blur(16px);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+    .navbar.scrolled{border-color:rgba(218,220,224,.7);box-shadow:0 1px 4px rgba(60,64,67,.08)}
+    .nav-inner{max-width:var(--max);margin:0 auto;padding:0 24px;height:68px;display:flex;align-items:center;gap:28px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:600}
+    .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+    .brand-text{font-size:22px;letter-spacing:-.5px;color:var(--ink)}
+    .brand-dot{color:var(--blue)}
+    .nav-links{display:flex;gap:4px;margin-left:4px}
+    .nav-link{font-size:14px;color:var(--ink-soft);font-weight:500;padding:8px 12px;border-radius:8px;transition:all .2s}
+    .nav-link:hover{background:var(--bg-soft);color:var(--blue)}
+    .nav-link.active{color:var(--blue)}
+    .nav-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+    .nav-toggle span{width:22px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+    /* ===== HERO ===== */
+    .hero{position:relative;padding:160px 0 104px;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#f7fbff 54%,#f8fafc 100%)}
+    .hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(26,115,232,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(26,115,232,.045) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(180deg,rgba(0,0,0,.88),transparent 78%);pointer-events:none}
+    .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(86px);opacity:.38}
+    .blob-1{width:620px;height:620px;background:#aecbfa;top:-170px;right:-110px}
+    .blob-2{width:460px;height:460px;background:#cce6d4;bottom:-150px;left:-110px}
+    .blob-3{width:340px;height:340px;background:#feefc3;top:220px;left:42%;opacity:.48}
+
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.04fr .96fr;gap:64px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.3px;color:var(--blue);background:var(--blue-bg);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+    .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(26,115,232,.15)}
+    .eyebrow-l{color:#aecbfa;background:rgba(174,203,250,.12)}
+    .eyebrow-l::before{background:#aecbfa;box-shadow:0 0 0 3px rgba(174,203,250,.2)}
+
+    .hero-title{font-size:54px;line-height:1.12;font-weight:700;letter-spacing:-1.8px}
+    .grad{background:linear-gradient(135deg,var(--blue),#4285f4 45%,var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:gShift 6s ease-in-out infinite}
+    @keyframes gShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+    .hero-sub{font-size:18px;color:var(--muted);margin:24px 0 32px;max-width:560px;line-height:1.7}
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+    .hero-trust{margin-top:28px;font-size:14px;color:var(--muted);display:flex;align-items:center;gap:10px}
+    .hero-trust strong{color:var(--ink-soft);font-weight:600}
+    .tdot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(52,168,83,.16)}
+
+    /* Hero visual: capability cockpit */
+    .hero-vis{position:relative;min-height:510px;display:flex;align-items:center;justify-content:center;perspective:1200px}
+    .hero-card{position:relative;width:520px;max-width:100%;min-height:430px;border-radius:36px;padding:24px;background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(248,251,255,.78));border:1px solid rgba(218,220,224,.7);box-shadow:0 24px 70px rgba(26,115,232,.16),0 4px 16px rgba(60,64,67,.08);backdrop-filter:blur(18px);overflow:hidden;transform:rotateX(4deg) rotateY(-7deg);transition:transform var(--t),box-shadow var(--t)}
+    .hero-card:hover{transform:rotateX(0) rotateY(0) translateY(-6px);box-shadow:0 30px 82px rgba(26,115,232,.2),0 8px 22px rgba(60,64,67,.1)}
+    .hero-card::before{content:"";position:absolute;inset:-1px;background:radial-gradient(circle at 24% 18%,rgba(26,115,232,.18),transparent 28%),radial-gradient(circle at 82% 76%,rgba(52,168,83,.16),transparent 30%),linear-gradient(135deg,rgba(255,255,255,.35),transparent);pointer-events:none}
+    .hero-card::after{content:"";position:absolute;left:24px;right:24px;top:78px;height:1px;background:linear-gradient(90deg,transparent,rgba(26,115,232,.22),transparent)}
+    .hero-topbar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+    .hero-window-dots{display:flex;gap:7px}.hero-window-dots span{width:10px;height:10px;border-radius:50%;background:#dadce0}.hero-window-dots span:nth-child(1){background:var(--red)}.hero-window-dots span:nth-child(2){background:var(--yellow)}.hero-window-dots span:nth-child(3){background:var(--green)}
+    .hero-status{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--green);background:var(--green-bg);border:1px solid rgba(52,168,83,.2);border-radius:999px;padding:6px 11px}.hero-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(52,168,83,.14)}
+    .hero-orbit{position:relative;z-index:2;width:100%;height:300px;margin:0 auto}
+    .hero-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(26,115,232,.22)}
+    .hero-ring.r1{width:236px;height:236px}.hero-ring.r2{width:316px;height:316px;animation:spin 28s linear infinite}.hero-ring.r3{width:392px;height:392px;opacity:.58;animation:spin 42s linear infinite reverse}
+    @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+    .hero-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:140px;height:140px;border-radius:34px;background:linear-gradient(135deg,var(--blue),#4285f4 52%,var(--green));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;box-shadow:0 18px 45px rgba(26,115,232,.32);z-index:4}
+    .hero-core::before{content:"";position:absolute;inset:-14px;border-radius:42px;border:1px solid rgba(26,115,232,.18);background:rgba(26,115,232,.04);z-index:-1}
+    .hero-core b{font-size:20px;letter-spacing:-.4px;line-height:1}.hero-core small{font-size:12px;opacity:.9}
+    .hero-node{position:absolute;z-index:5;display:flex;align-items:center;gap:10px;min-width:138px;padding:11px 13px;background:rgba(255,255,255,.94);border:1px solid rgba(218,220,224,.75);border-radius:18px;box-shadow:0 10px 26px rgba(60,64,67,.1);transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
+    .hero-node:hover{transform:translateY(-5px);box-shadow:0 16px 34px rgba(60,64,67,.14);border-color:rgba(26,115,232,.28)}
+    .hero-node i{width:32px;height:32px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;background:var(--node-color);font-style:normal;flex-shrink:0;box-shadow:0 6px 14px color-mix(in srgb,var(--node-color) 24%,transparent)}
+    .hero-node b{font-size:13px;line-height:1.2;color:var(--ink)}.hero-node small{display:block;margin-top:2px;font-size:11px;color:var(--muted);line-height:1.2}
+    .hn-1{--node-color:var(--blue);left:50%;top:2px;transform:translateX(-50%)}.hn-1:hover{transform:translateX(-50%) translateY(-5px)}
+    .hn-2{--node-color:var(--green);right:4px;top:76px}.hn-3{--node-color:var(--orange);right:16px;bottom:58px}.hn-4{--node-color:var(--red);left:50%;bottom:0;transform:translateX(-50%)}.hn-4:hover{transform:translateX(-50%) translateY(-5px)}
+    .hn-5{--node-color:var(--purple);left:0;bottom:62px}.hn-6{--node-color:var(--blue);left:6px;top:78px}
+    .hero-metrics{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+    .hero-metric{padding:14px 12px;border-radius:18px;background:#fff;border:1px solid rgba(218,220,224,.68);box-shadow:var(--s1)}
+    .hero-metric strong{display:block;font-size:22px;line-height:1;color:var(--blue);letter-spacing:-.7px}.hero-metric span{display:block;margin-top:6px;font-size:12px;color:var(--muted)}
+
+    /* ===== STATS ===== */
+    .stats{padding:16px 0 64px}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .stat{text-align:center;padding:32px 16px;background:#fff;border-radius:var(--r);border:1px solid rgba(218,220,224,.5);box-shadow:var(--s1);transition:transform var(--t),box-shadow var(--t)}
+    .stat:hover{transform:translateY(-4px);box-shadow:var(--s2)}
+    .stat-n{font-size:50px;font-weight:700;color:var(--blue);letter-spacing:-2px;line-height:1}
+    .stat-u{font-size:28px;font-weight:700;color:var(--blue)}
+    .stat-l{display:block;margin-top:10px;font-size:15px;color:var(--muted);font-weight:500}
+
+    /* ===== SECTIONS ===== */
+    .sec{padding:100px 0}
+    .sec-soft{background:linear-gradient(180deg,#f8f9fa,#fff)}
+    .sec-dark{background:linear-gradient(135deg,#202a3c,#2a3550)}
+    .sec-head{max-width:720px;margin:0 auto 60px;text-align:center}
+    .sec-title{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1.18}
+    .sec-title.l{color:#fff}
+    .sec-desc{font-size:18px;color:var(--muted);margin-top:18px;line-height:1.7}
+    .sec-desc.l{color:#c4ccd8}
+
+    /* ===== ARCHITECTURE ===== */
+    .arch{max-width:1040px;margin:0 auto;position:relative;padding:10px}
+    .arch::before{content:"";position:absolute;inset:0;border-radius:36px;background:radial-gradient(circle at 12% 8%,rgba(26,115,232,.16),transparent 30%),radial-gradient(circle at 92% 86%,rgba(52,168,83,.14),transparent 32%),linear-gradient(135deg,#f8fbff,#fff 45%,#f7fbf8);box-shadow:inset 0 0 0 1px rgba(218,220,224,.65);z-index:0}
+    .arch::after{content:"";position:absolute;left:50%;top:92px;bottom:92px;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(26,115,232,0),rgba(26,115,232,.35),rgba(52,168,83,.25),rgba(234,67,53,0));z-index:1}
+    .arch-layers{position:relative;z-index:2;display:grid;grid-template-columns:1fr;gap:18px;padding:28px}
+    .arch-layer{position:relative;overflow:hidden;border-radius:26px;padding:22px 24px;border:1px solid rgba(218,220,224,.72);display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;background:rgba(255,255,255,.86);box-shadow:0 10px 30px rgba(60,64,67,.08);backdrop-filter:blur(14px);transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
+    .arch-layer:hover{transform:translateY(-4px);box-shadow:0 18px 46px rgba(60,64,67,.13);border-color:rgba(26,115,232,.24)}
+    .arch-layer::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;border-radius:26px 0 0 26px;background:var(--layer-color)}
+    .arch-layer::after{content:"";position:absolute;right:-80px;top:-80px;width:190px;height:190px;border-radius:50%;background:var(--layer-bg);opacity:.82;pointer-events:none}
+
+    .arch-app{--layer-color:var(--blue);--layer-bg:var(--blue-bg)}
+    .arch-biz{--layer-color:var(--green);--layer-bg:var(--green-bg)}
+    .arch-bus{--layer-color:var(--orange);--layer-bg:var(--yellow-bg)}
+    .arch-base{--layer-color:var(--red);--layer-bg:var(--red-bg)}
+
+    .arch-tag{position:relative;z-index:1;display:grid;grid-template-columns:46px 1fr;gap:12px;align-items:center;min-width:0;text-align:left}
+    .arch-ic{width:46px;height:46px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,var(--layer-color),color-mix(in srgb,var(--layer-color) 72%,#fff));box-shadow:0 8px 18px color-mix(in srgb,var(--layer-color) 24%,transparent)}
+    .arch-kicker{display:block;font-size:11px;line-height:1;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:6px;font-weight:600}
+    .arch-name{display:block;font-size:17px;line-height:1.2;color:var(--ink);font-weight:700}
+
+    .arch-items{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:10px;align-items:center;align-content:center}
+    .arch-chip{padding:8px 15px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);background:#fff;border:1px solid rgba(218,220,224,.78);box-shadow:0 1px 2px rgba(60,64,67,.04);transition:all var(--t)}
+    .arch-chip:hover{transform:translateY(-2px);box-shadow:var(--s1);border-color:color-mix(in srgb,var(--layer-color) 38%,#dadce0);color:var(--layer-color);background:color-mix(in srgb,var(--layer-bg) 62%,#fff)}
+
+    .arch-flow{position:relative;z-index:2;display:flex;justify-content:center;margin:-8px 0;color:#8ab4f8}
+    .arch-flow span{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid rgba(218,220,224,.75);box-shadow:var(--s1)}
+
+    /* Unified pillars */
+    .unified-row{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
+    .uni-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r);padding:28px 22px;text-align:center;transition:transform var(--t),box-shadow var(--t);border-top:3px solid transparent}
+    .uni-card:hover{transform:translateY(-6px);box-shadow:var(--s3)}
+    .uni-card:nth-child(1){border-top-color:var(--blue)}
+    .uni-card:nth-child(2){border-top-color:var(--red)}
+    .uni-card:nth-child(3){border-top-color:var(--yellow)}
+    .uni-card:nth-child(4){border-top-color:var(--green)}
+    .uni-card:nth-child(5){border-top-color:var(--blue)}
+    .uni-ic{width:48px;height:48px;border-radius:14px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:24px}
+    .uni-card h3{font-size:17px;margin-bottom:8px;font-weight:600}
+    .uni-card p{font-size:13.5px;color:var(--muted);line-height:1.55}
+
+    /* Split */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .check{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:14px}
+    .check li{position:relative;padding-left:34px;font-size:15.5px;color:var(--ink-soft);line-height:1.6}
+    .check li::before{content:"✓";position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(52,168,83,.2)}
+
+    .tech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .chip{background:#fff;border:1px solid rgba(218,220,224,.5);border-radius:var(--r);padding:22px 20px;font-size:16px;font-weight:500;color:var(--ink-soft);display:flex;align-items:center;gap:14px;box-shadow:var(--s1);transition:all var(--t)}
+    .chip:hover{transform:translateY(-3px);box-shadow:var(--s2)}
+    .chip.accent{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 16px rgba(26,115,232,.28)}
+
+    /* Services grid */
+    .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .svc{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r);padding:24px 20px;transition:transform var(--t),box-shadow var(--t)}
+    .svc:hover{transform:translateY(-5px);box-shadow:var(--s3)}
+    .svc-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+    .svc h4{font-size:16px;margin-bottom:4px;font-weight:600}
+    .svc p{font-size:13px;color:var(--muted);line-height:1.5}
+
+    /* Cloud+Terminal */
+    .dual{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+    .dual-card{background:#fff;border:1px solid rgba(218,220,224,.5);border-radius:var(--r-xl);padding:36px;box-shadow:var(--s1);transition:all var(--t)}
+    .dual-card:hover{transform:translateY(-5px);box-shadow:var(--s3);border-color:transparent}
+    .dual-cloud{background:linear-gradient(160deg,#f4f8ff,#fff)}
+    .dual-terminal{background:linear-gradient(160deg,#f3fbf5,#fff)}
+    .dual-head{display:flex;align-items:center;gap:18px;margin-bottom:24px}
+    .dual-badge{width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.14)}
+    .dual-badge.b{background:linear-gradient(135deg,var(--blue),#4285f4)}
+    .dual-badge.g{background:linear-gradient(135deg,#2d9a52,var(--green))}
+    .dual-head h3{font-size:20px;font-weight:600;margin-bottom:2px}
+    .dual-head p{font-size:13.5px;color:var(--muted)}
+    .tags{display:flex;flex-wrap:wrap;gap:10px}
+    .tags span{font-size:14px;padding:8px 16px;border-radius:999px;background:var(--bg-soft);border:1px solid rgba(218,220,224,.6);color:var(--ink-soft);transition:all var(--t)}
+    .dual-cloud .tags span:hover{background:var(--blue-bg);border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+    .dual-terminal .tags span:hover{background:var(--green-bg);border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+    .tags .more{font-weight:600;background:transparent!important;border-style:dashed!important;color:var(--muted)}
+
+    /* Service Bus */
+    .bus-vis{position:relative;max-width:620px;margin:0 auto;padding:24px;border:1px solid rgba(255,255,255,.12);border-radius:32px;background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.045));box-shadow:0 28px 80px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden;isolation:isolate}
+    .bus-vis::before{content:"";position:absolute;inset:-120px -80px auto auto;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(66,133,244,.34),transparent 68%);z-index:-1}
+    .bus-vis::after{content:"";position:absolute;left:-120px;bottom:-130px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(52,168,83,.18),transparent 70%);z-index:-1}
+    .bus-topology{position:relative;display:grid;grid-template-columns:1fr 1.05fr 1fr;gap:16px;align-items:stretch;margin-bottom:18px}
+    .bus-lane{display:flex;flex-direction:column;gap:10px}
+    .bus-lane-title{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:#cfe1ff;margin-bottom:2px}
+    .bus-lane-title::before{content:"";width:8px;height:8px;border-radius:50%;background:#8ab4f8;box-shadow:0 0 0 5px rgba(138,180,248,.12)}
+    .bus-cap{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:center;min-height:64px;padding:12px;border:1px solid rgba(255,255,255,.13);border-radius:18px;background:rgba(255,255,255,.075);backdrop-filter:blur(8px);transition:transform var(--t),background var(--t),border-color var(--t),box-shadow var(--t)}
+    .bus-cap:hover{transform:translateY(-4px);background:rgba(26,115,232,.2);border-color:rgba(138,180,248,.55);box-shadow:0 14px 28px rgba(0,0,0,.16)}
+    .bus-cap i{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);color:#8ab4f8;font-style:normal}.bus-cap svg{width:18px;height:18px}.bus-cap b{display:block;font-size:13px;color:#fff;line-height:1.25}.bus-cap span{display:block;margin-top:3px;font-size:11px;color:#b9c7dc;line-height:1.35}
+    .bus-hub{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:330px;border:1px solid rgba(138,180,248,.3);border-radius:26px;background:linear-gradient(160deg,rgba(26,115,232,.28),rgba(66,133,244,.12));overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+    .bus-hub::before,.bus-hub::after{content:"";position:absolute;border:1px dashed rgba(255,255,255,.18);border-radius:50%}.bus-hub::before{width:230px;height:230px}.bus-hub::after{width:154px;height:154px}
+    .bus-core{position:relative;z-index:1;width:124px;height:124px;border-radius:34px;background:linear-gradient(135deg,var(--blue),#62a0ff);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;box-shadow:0 22px 46px rgba(26,115,232,.34),0 0 0 12px rgba(138,180,248,.1)}
+    .bus-core svg{width:34px;height:34px;margin-bottom:8px}.bus-core b{font-size:16px;line-height:1.2}.bus-core span{font-size:11px;color:rgba(255,255,255,.78);margin-top:4px}
+    .bus-orbit{position:absolute;z-index:1;display:inline-flex;align-items:center;gap:5px;padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.15);color:#e8f0fe;font-size:11px;font-weight:700}.bo-1{top:34px;left:50%;transform:translateX(-50%)}.bo-2{right:18px;top:50%;transform:translateY(-50%)}.bo-3{bottom:34px;left:50%;transform:translateX(-50%)}.bo-4{left:18px;top:50%;transform:translateY(-50%)}
+    .bus-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.bus-flow span{position:relative;padding:10px 8px;border-radius:14px;text-align:center;font-size:12px;font-weight:700;color:#dce9ff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1)}.bus-flow span::after{content:"";position:absolute;right:-8px;top:50%;width:8px;height:2px;background:rgba(138,180,248,.45)}.bus-flow span:last-child::after{display:none}
+
+    /* App cards */
+    .app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+    .app{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r);padding:30px 24px;transition:transform var(--t),box-shadow var(--t)}
+    .app:hover{transform:translateY(-6px);box-shadow:var(--s3)}
+    .app-ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:18px}
+    .app h3{font-size:18px;margin-bottom:8px;font-weight:600}
+    .app p{font-size:14px;color:var(--muted);line-height:1.6}
+
+    /* CTA */
+    .cta{padding:100px 0;background:linear-gradient(135deg,var(--blue),#4285f4);position:relative;overflow:hidden}
+    .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.1),transparent 60%);pointer-events:none}
+    .cta-in{position:relative;z-index:1;text-align:center;color:#fff}
+    .cta-in h2{font-size:42px;font-weight:700;letter-spacing:-1.2px;line-height:1.15}
+    .cta-in p{font-size:19px;margin:20px 0 36px;color:rgba(255,255,255,.9);max-width:600px;margin-inline:auto;line-height:1.6}
+    .cta-acts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+    /* Footer */
+    .footer{background:var(--bg-soft);border-top:1px solid rgba(218,220,224,.5);padding:64px 0 36px}
+    .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:44px}
+    .footer-brand p{font-size:14px;color:var(--muted);line-height:1.6}
+    .footer-brand .ft{margin-top:12px;color:var(--ink-soft);font-weight:500}
+    .footer-col h5{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:16px;letter-spacing:.3px;text-transform:uppercase}
+    .footer-col a{display:block;font-size:14px;color:var(--muted);padding:6px 0;transition:color var(--t)}
+    .footer-col a:hover{color:var(--blue)}
+    .footer-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;padding-top:24px;border-top:1px solid rgba(218,220,224,.4);font-size:13px;color:var(--muted)}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.4,0,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    /* Responsive */
+    @media(max-width:1024px){
+        .unified-row{grid-template-columns:repeat(3,1fr)}
+        .bus-topology{grid-template-columns:1fr}.bus-hub{min-height:260px;order:-1}.bus-flow{grid-template-columns:repeat(2,1fr)}.bus-flow span::after{display:none}
+    }
+    @media(max-width:860px){
+        .hero-inner,.split,.dual{grid-template-columns:1fr}
+        .hero-vis{min-height:430px;margin-top:28px}
+        .hero-card{width:100%;min-height:410px;transform:none}
+        .hero-ring.r3{width:360px;height:360px}
+        .stats-grid{grid-template-columns:repeat(2,1fr)}
+        .unified-row{grid-template-columns:repeat(2,1fr)}
+        .svc-grid,.app-grid{grid-template-columns:repeat(2,1fr)}
+        .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+        .arch{padding:6px}
+        .arch-layers{padding:18px;gap:16px}
+        .arch-layer{grid-template-columns:1fr;gap:16px;padding:22px 20px}
+        .hero-title{font-size:40px}
+        .sec-title{font-size:30px}
+        .sec{padding:80px 0}
+    }
+    @media(max-width:640px){
+        .nav-links{display:none}
+        .nav-links.open{display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:#fff;padding:16px 24px 20px;border-bottom:1px solid var(--line);box-shadow:var(--s2);gap:4px}
+        .nav-actions .btn-ghost{display:none}
+        .nav-toggle{display:flex}
+        .hero{padding:120px 0 70px}
+        .hero-title{font-size:32px;letter-spacing:-1px}
+        .hero-sub{font-size:16px}
+        .hero-vis{min-height:auto}
+        .hero-card{padding:18px;border-radius:26px;min-height:auto}
+        .hero-orbit{height:390px}
+        .hero-card:hover{transform:none}
+        .hero-ring.r1{width:210px;height:210px}.hero-ring.r2{width:285px;height:285px}.hero-ring.r3{width:340px;height:340px}
+        .hero-core{width:126px;height:126px;border-radius:30px}
+        .hero-node{min-width:132px;padding:9px 11px}.hero-node i{width:28px;height:28px;border-radius:10px}
+        .hn-1{top:0}.hn-2{right:0;top:74px}.hn-3{right:0;bottom:74px}.hn-4{bottom:0}.hn-5{left:0;bottom:74px}.hn-6{left:0;top:74px}
+        .hero-metrics{grid-template-columns:1fr;gap:8px}.hero-metric{padding:11px 12px}.hero-metric strong{font-size:20px}
+        .sec{padding:64px 0}
+        .sec-title{font-size:26px}
+        .sec-desc{font-size:15.5px}
+        .unified-row,.svc-grid,.app-grid,.stats-grid{grid-template-columns:1fr}
+        .arch::before{border-radius:26px}
+        .arch::after{display:none}
+        .arch-layers{padding:12px;gap:14px}
+        .arch-layer{border-radius:20px;padding:20px 18px}
+        .arch-layer::before{border-radius:20px 0 0 20px}
+        .arch-tag{grid-template-columns:42px 1fr}
+        .arch-ic{width:42px;height:42px;border-radius:14px}
+        .arch-chip{font-size:12.5px;padding:7px 12px}
+        .bus-vis{padding:16px;border-radius:26px}.bus-hub{min-height:220px}.bus-core{width:108px;height:108px;border-radius:28px}.bus-orbit{position:static;transform:none;margin:4px}.bus-hub{flex-direction:row;flex-wrap:wrap;gap:4px;padding:18px}.bus-hub::before,.bus-hub::after{display:none}.bus-flow{grid-template-columns:1fr}
+        .dual{gap:18px}
+        .dual-card{padding:24px 20px}
+        .cta{padding:72px 0}
+        .cta-in h2{font-size:28px}
+        .cta-in p{font-size:16px}
+        .footer-grid{grid-template-columns:1fr}
+    }
+    @media(prefers-reduced-motion:reduce){
+        .reveal{opacity:1;transform:none;transition:none}
+        html{scroll-behavior:auto}
+        .hero-ring,.blob{animation:none}
+        .grad{animation:none;background-position:0% 50%}
+    }
+    
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="nav-inner">
+                        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+              <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#architecture" class="nav-link">平台架构</a>
+                <a href="#unified" class="nav-link">统一架构</a>
+                <a href="#foundation" class="nav-link">基础服务</a>
+                <a href="#integration" class="nav-link">云+端</a>
+                <a href="#bus" class="nav-link">服务总线</a>
+                <a href="#apps" class="nav-link">应用能力</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="#cta" class="btn btn-ghost">联系我们</a>
+                <a href="#cta" class="btn btn-primary">免费开始</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="top">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg" aria-hidden="true">
+                <span class="blob blob-1"></span>
+                <span class="blob blob-2"></span>
+                <span class="blob blob-3"></span>
+            </div>
+            <div class="container hero-inner">
+                <div class="hero-copy">
+                    <span class="eyebrow">丰富的开放能力 · 云 + 端一体化</span>
+                    <h1 class="hero-title">把共性能力交给平台<br><span class="grad">把研发时间留给业务创新</span></h1>
+                    <p class="hero-sub">
+                        开发者部署平台OORT.sh以互联互通、资源共享为架构，沉淀统一门户、统一用户、统一授权、服务总线与 300+ 可复用业务能力。从基础设施到成熟应用，帮助团队快速组装业务系统，减少重复建设，缩短项目周期。
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#cta" class="btn btn-primary btn-lg">接入能力底座</a>
+                        <a href="#integration" class="btn btn-outline btn-lg">查看开放能力</a>
+                    </div>
+                    <div class="hero-trust">
+                        <span class="tdot"></span> 已沉淀 <strong>300+</strong> 项可复用能力 · 覆盖云端、终端与应用层
+                    </div>
+                </div>
+
+                <div class="hero-vis">
+                    <div class="hero-card">
+                        <div class="hero-topbar">
+                            <div class="hero-window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                            <div class="hero-status">能力在线</div>
+                        </div>
+                        <div class="hero-orbit">
+                            <span class="hero-ring r1"></span>
+                            <span class="hero-ring r2"></span>
+                            <span class="hero-ring r3"></span>
+                            <div class="hero-core">
+                                <svg viewBox="0 0 32 32" width="34" height="34" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="5" y="5" width="22" height="22" rx="6"/>
+                                    <circle cx="16" cy="16" r="4"/>
+                                    <path d="M16 5v5M16 22v5M5 16h5M22 16h5"/>
+                                </svg>
+                                <b>OORT.sh</b>
+                                <small>开放能力底座</small>
+                            </div>
+                            <div class="hero-node hn-1"><i><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 3v18"/></svg></i><div><b>统一架构</b><small>门户 · 用户 · 授权</small></div></div>
+                            <div class="hero-node hn-2"><i><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/></svg></i><div><b>基础服务</b><small>容器 · 存储 · 消息</small></div></div>
+                            <div class="hero-node hn-3"><i><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg></i><div><b>服务总线</b><small>调度 · 适配 · 管控</small></div></div>
+                            <div class="hero-node hn-4"><i><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/></svg></i><div><b>业务服务</b><small>认证 · 地图 · 视频</small></div></div>
+                            <div class="hero-node hn-5"><i><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></i><div><b>终端能力</b><small>刷脸 · 扫一扫 · 地图</small></div></div>
+                            <div class="hero-node hn-6"><i><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H7a5 5 0 111.2-9.85A7 7 0 1120 16.5"/></svg></i><div><b>云端能力</b><small>工作流 · 电子签名</small></div></div>
+                        </div>
+                        <div class="hero-metrics">
+                            <div class="hero-metric"><strong>300+</strong><span>开放能力</span></div>
+                            <div class="hero-metric"><strong>200+</strong><span>云端服务</span></div>
+                            <div class="hero-metric"><strong>100+</strong><span>终端组件</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats">
+            <div class="container stats-grid">
+                <div class="stat reveal"><span class="stat-n" data-count="300">300</span><span class="stat-u">+</span><span class="stat-l">开放能力沉淀</span></div>
+                <div class="stat reveal"><span class="stat-n" data-count="200">200</span><span class="stat-u">+</span><span class="stat-l">云端业务服务</span></div>
+                <div class="stat reveal"><span class="stat-n" data-count="100">100</span><span class="stat-u">+</span><span class="stat-l">终端组件能力</span></div>
+                <div class="stat reveal"><span class="stat-n">5</span><span class="stat-u">大</span><span class="stat-l">统一基础架构</span></div>
+            </div>
+        </section>
+
+        <!-- Architecture -->
+        <section class="sec" id="architecture">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">平台架构</span>
+                    <h2 class="sec-title">从基础设施到业务应用的统一能力中枢</h2>
+                    <p class="sec-desc">平台采用"服务中心 + 服务总线 + 基础服务 + 业务服务"分层架构，向下屏蔽底层复杂性，向上提供标准化服务目录，实现应用、服务、资源、数据的统一管理与复用。</p>
+                </div>
+                <div class="arch reveal">
+                    <div class="arch-layers">
+                        <div class="arch-layer arch-app">
+                            <div class="arch-tag">
+                                <span class="arch-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M8 20h8"/><path d="M12 18v2"/></svg></span>
+                                <div><span class="arch-kicker">Applications</span><span class="arch-name">应用层</span></div>
+                            </div>
+                            <div class="arch-items">
+                                <span class="arch-chip">统一管理</span><span class="arch-chip">共性应用</span><span class="arch-chip">个性化需求</span><span class="arch-chip">移动应用</span><span class="arch-chip">Chat</span><span class="arch-chip">Meet</span><span class="arch-chip">云盘</span><span class="arch-chip">课堂</span>
+                            </div>
+                        </div>
+                        <div class="arch-flow"><span><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                        <div class="arch-layer arch-biz">
+                            <div class="arch-tag">
+                                <span class="arch-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-5"/></svg></span>
+                                <div><span class="arch-kicker">Business</span><span class="arch-name">业务服务</span></div>
+                            </div>
+                            <div class="arch-items">
+                                <span class="arch-chip">身份认证</span><span class="arch-chip">用户鉴权</span><span class="arch-chip">地图服务</span><span class="arch-chip">消息推送</span><span class="arch-chip">智能识别</span><span class="arch-chip">LBS 定位</span><span class="arch-chip">视频服务</span><span class="arch-chip">语音服务</span>
+                            </div>
+                        </div>
+                        <div class="arch-flow"><span><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                        <div class="arch-layer arch-bus">
+                            <div class="arch-tag">
+                                <span class="arch-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v6"/><path d="M12 15v6"/><path d="M3 12h6"/><path d="M15 12h6"/></svg></span>
+                                <div><span class="arch-kicker">Service Bus</span><span class="arch-name">服务总线</span></div>
+                            </div>
+                            <div class="arch-items">
+                                <span class="arch-chip">资源服务管理</span><span class="arch-chip">服务调度</span><span class="arch-chip">服务适配</span><span class="arch-chip">跨网跨域访问控制</span><span class="arch-chip">数据合规访问</span><span class="arch-chip">资源目录</span><span class="arch-chip">调用执行</span><span class="arch-chip">配置管理</span>
+                            </div>
+                        </div>
+                        <div class="arch-flow"><span><svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+                        <div class="arch-layer arch-base">
+                            <div class="arch-tag">
+                                <span class="arch-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3"/></svg></span>
+                                <div><span class="arch-kicker">Infrastructure</span><span class="arch-name">基础服务</span></div>
+                            </div>
+                            <div class="arch-items">
+                                <span class="arch-chip">容器服务</span><span class="arch-chip">消息队列</span><span class="arch-chip">分布式存储</span><span class="arch-chip">日志系统</span><span class="arch-chip">数据库</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unified -->
+        <section class="sec sec-soft" id="unified">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">统一基础架构</span>
+                    <h2 class="sec-title">五大统一，让应用建设先天标准化</h2>
+                    <p class="sec-desc">通过统一门户、统一用户、统一服务、统一授权与数据对标，平台在应用建设初期就完成标准约束与能力共享，让后续的接入、协同、运维与治理更集约、更规范、更精细、更智能。</p>
+                </div>
+                <div class="unified-row reveal">
+                    <div class="uni-card"><div class="uni-ic" style="background:var(--blue-bg);color:var(--blue)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 3v18"/><path d="M3 9h18"/></svg></div><h3>统一门户</h3><p>汇聚多应用入口，形成统一访问、运营、展示的门户体验。</p></div>
+                    <div class="uni-card"><div class="uni-ic" style="background:var(--red-bg);color:var(--red)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg></div><h3>统一用户</h3><p>打通账号、组织与角色，用户信息集中维护、跨应用复用。</p></div>
+                    <div class="uni-card"><div class="uni-ic" style="background:var(--yellow-bg);color:var(--orange)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div><h3>统一服务</h3><p>以服务目录沉淀共性能力，减少重复开发，让服务按需调用。</p></div>
+                    <div class="uni-card"><div class="uni-ic" style="background:var(--green-bg);color:var(--green)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1.5"/></svg></div><h3>统一授权</h3><p>统一认证与授权策略，支持细粒度访问控制与安全审计。</p></div>
+                    <div class="uni-card"><div class="uni-ic" style="background:var(--blue-bg);color:var(--blue)"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div><h3>数据对标</h3><p>建立统一数据标准与指标口径，支撑跨系统协同。</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Foundation -->
+        <section class="sec" id="foundation">
+            <div class="container split">
+                <div class="reveal">
+                    <span class="eyebrow">基础技术服务</span>
+                    <h2 class="sec-title">把底层复杂性封装成稳定服务</h2>
+                    <p class="sec-desc">容器、消息、存储、日志、数据库等基础技术能力被统一封装为标准服务。移动应用按照分层耦合、微服务化模式进行云上运行，共性服务共享使用，避免重复建设、降低开发成本、缩短项目周期。</p>
+                    <ul class="check">
+                        <li>云原生运行与弹性伸缩，支撑业务峰值</li>
+                        <li>分层解耦、微服务架构，模块独立演进</li>
+                        <li>共性服务平台化共享，减少运维负担</li>
+                    </ul>
+                </div>
+                <div class="reveal">
+                    <div class="tech-grid">
+                        <div class="chip"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><circle cx="17" cy="12" r="1"/></svg>容器服务</div>
+                        <div class="chip"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H4z"/><path d="M8 20h8"/><path d="M12 16v4"/><path d="M8 10l3 3 5-5"/></svg>消息队列</div>
+                        <div class="chip"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg>分布式存储</div>
+                        <div class="chip"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>日志系统</div>
+                        <div class="chip"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3"/></svg>数据库</div>
+                        <div class="chip accent"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>微服务化</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Services -->
+        <section class="sec sec-soft" id="services">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">通用业务服务</span>
+                    <h2 class="sec-title">把高频场景沉淀为可组合能力</h2>
+                    <p class="sec-desc">身份认证、用户鉴权、地图、消息、智能识别、LBS 定位、视频、语音等高频业务能力以组件化方式开放，业务系统可像搭积木一样快速组合。</p>
+                </div>
+                <div class="svc-grid reveal">
+                    <div class="svc"><div class="svc-ic" style="background:var(--blue-bg);color:var(--blue)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h4>身份认证</h4><p>统一身份核验，多方式登录</p></div>
+                    <div class="svc"><div class="svc-ic" style="background:var(--green-bg);color:var(--green)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h4>用户鉴权</h4><p>细粒度权限与访问控制</p></div>
+                    <div class="svc"><div class="svc-ic" style="background:var(--red-bg);color:var(--red)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h4>地图</h4><p>地理信息渲染与可视化</p></div>
+                    <div class="svc"><div class="svc-ic" style="background:var(--yellow-bg);color:var(--orange)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h4>消息</h4><p>多通道触达与推送</p></div>
+                    <div class="svc"><div class="svc-ic" style="background:var(--green-bg);color:var(--green)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 014 4v2a4 4 0 01-8 0V6a4 4 0 014-4z"/><path d="M16 14H8a4 4 0 00-4 4v2h16v-2a4 4 0 00-4-4z"/><circle cx="9" cy="7" r=".5" fill="currentColor"/><circle cx="15" cy="7" r=".5" fill="currentColor"/></svg></div><h4>智能识别</h4><p>AI 图文识别与语义理解</p></div>
+                    <div class="svc"><div class="svc-ic" style="background:var(--blue-bg);color:var(--blue)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/><path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/></svg></div><h4>LBS 定位</h4><p>实时位置服务与轨迹分析</p></div>
+                    <div class="svc"><div class="svc-ic" style="background:var(--red-bg);color:var(--red)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg></div><h4>视频</h4><p>音视频采集处理与分发</p></div>
+                    <div class="svc"><div class="svc-ic" style="background:var(--yellow-bg);color:var(--orange)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><path d="M12 19v4"/><path d="M8 23h8"/></svg></div><h4>语音</h4><p>语音识别与语音合成</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cloud + Terminal -->
+        <section class="sec" id="integration">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">云 + 端一体化开发运营支撑</span>
+                    <h2 class="sec-title">一次接入，云端与终端能力同时就位</h2>
+                    <p class="sec-desc">OORT.sh 屏蔽底层技术差异，让业务系统在云端与终端协同开发。云端提供约 200+ 项政务业务服务，终端提供约 100+ 项终端政务基础能力。</p>
+                </div>
+                <div class="dual reveal">
+                    <div class="dual-card dual-cloud">
+                        <div class="dual-head">
+                            <span class="dual-badge b">200+</span>
+                            <div><h3>云端业务服务能力</h3><p>可直接调用的高频政务业务服务接口</p></div>
+                        </div>
+                        <div class="tags">
+                            <span>点播服务</span><span>流媒体服务</span><span>视频发布</span>
+                            <span>工作流引擎</span><span>表单服务</span><span>工单服务</span>
+                            <span>收藏服务</span><span>日程服务</span><span>通知服务</span>
+                            <span>点赞服务</span><span>分享服务</span><span>电子签名</span>
+                            <span class="more">更多云端能力…</span>
+                        </div>
+                    </div>
+                    <div class="dual-card dual-terminal">
+                        <div class="dual-head">
+                            <span class="dual-badge g">100+</span>
+                            <div><h3>终端业务服务能力</h3><p>开箱即用的移动端设备与交互组件</p></div>
+                        </div>
+                        <div class="tags">
+                            <span>手机地图集成</span><span>刷脸组件集成</span>
+                            <span>智能感知集成</span><span>扫一扫集成</span>
+                            <span>语音识别集成</span><span>推送通知集成</span>
+                            <span>生物认证集成</span><span>OCR 识别集成</span>
+                            <span class="more">更多终端能力…</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Service Bus -->
+        <section class="sec sec-dark" id="bus">
+            <div class="container split">
+                <div class="reveal">
+                    <span class="eyebrow eyebrow-l">服务总线</span>
+                    <h2 class="sec-title l">统一调度，让能力在多端自由流转</h2>
+                    <p class="sec-desc l">按照"统一规划、多级联动、协同高效"原则构建，提供应用服务目录，实现对注册信息、服务资源及数据资源的目录化管理和全要素管控；面向横向部门协同与纵向层级贯通，提供跨网跨域访问控制与数据合规访问能力，通过开放共享为移动应用运营提供支撑。</p>
+                </div>
+                <div class="reveal">
+                    <div class="bus-vis" aria-label="服务总线应用资源协调架构图">
+                        <div class="bus-topology">
+                            <div class="bus-lane">
+                                <div class="bus-lane-title">接入与治理</div>
+                                <div class="bus-cap"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/><path d="M9 4v16"/></svg></i><div><b>资源服务管理</b><span>服务注册、目录编排、资源建模</span></div></div>
+                                <div class="bus-cap"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/></svg></i><div><b>跨网跨域控制</b><span>访问策略、身份校验、边界管控</span></div></div>
+                                <div class="bus-cap"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18"/><path d="M7 8l-4 4 4 4"/><path d="M17 8l4 4-4 4"/></svg></i><div><b>服务适配转换</b><span>协议转换、字段映射、接口封装</span></div></div>
+                            </div>
+                            <div class="bus-hub">
+                                <span class="bus-orbit bo-1">目录</span><span class="bus-orbit bo-2">调度</span><span class="bus-orbit bo-3">追踪</span><span class="bus-orbit bo-4">策略</span>
+                                <div class="bus-core"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/></svg><b>服务总线</b><span>应用资源协调中枢</span></div>
+                            </div>
+                            <div class="bus-lane">
+                                <div class="bus-lane-title">共享与输出</div>
+                                <div class="bus-cap"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></i><div><b>资源目录输出</b><span>统一目录、能力市场、按需订阅</span></div></div>
+                                <div class="bus-cap"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></i><div><b>调用执行跟踪</b><span>链路追踪、审计留痕、异常定位</span></div></div>
+                                <div class="bus-cap"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></i><div><b>数据合规访问</b><span>横向协同、纵向贯通、合规共享</span></div></div>
+                            </div>
+                        </div>
+                        <div class="bus-flow"><span>统一注册</span><span>智能调度</span><span>安全适配</span><span>共享输出</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Apps -->
+        <section class="sec" id="apps">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">应用层成熟能力</span>
+                    <h2 class="sec-title">协作套件已就绪，直接嵌入你的产品</h2>
+                    <p class="sec-desc">在能力底座之上，平台预置了 Chat、Meet、云盘、课堂等成熟应用能力，以标准接口随取随用，省去从零搭建协作场景的成本。</p>
+                </div>
+                <div class="app-grid reveal">
+                    <div class="app"><div class="app-ic" style="background:var(--blue-bg)"><svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>Chat</h3><p>即时通讯与团队协作，消息、文件、状态实时互通，支持群组与快捷搜索。</p></div>
+                    <div class="app"><div class="app-ic" style="background:var(--green-bg)"><svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="22" height="16" rx="3"/><path d="M14 21v4"/><path d="M8 25h12"/><circle cx="14" cy="13" r="3"/></svg></div><h3>Meet</h3><p>高清音视频会议，多端入会，屏幕共享与远程协作，随时随地高效沟通。</p></div>
+                    <div class="app"><div class="app-ic" style="background:var(--yellow-bg)"><svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="var(--orange)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h14l6 6v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M18 4v6h6"/><path d="M9 15h10"/><path d="M9 19h6"/></svg></div><h3>云盘</h3><p>安全可控的云端存储，文件共享与协作权限管理，支持在线预览与版本管理。</p></div>
+                    <div class="app"><div class="app-ic" style="background:var(--red-bg)"><svg viewBox="0 0 28 28" width="28" height="28" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h20v14a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><path d="M14 4l4 4H6l4-4h4z"/><circle cx="14" cy="17" r="3"/></svg></div><h3>课堂</h3><p>在线教学与培训，直播、点播、互动一站式支撑，助力知识高效传递。</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta" id="cta">
+            <div class="container cta-in reveal">
+                <h2>把共性能力交给平台，把精力留给业务</h2>
+                <p>OORT.sh 为产品开发提供强有力的前后端支持，让开发者抛弃基础共性功能的构建负担。少写重复代码，多做业务创新，加速每一次产品迭代。</p>
+                <div class="cta-acts">
+                    <a href="#top" class="btn btn-white btn-lg">免费开始构建</a>
+                    <a href="#top" class="btn btn-ghost-white btn-lg">预约产品演示</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                                <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+                  <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+                </a>
+                <p>开发者部署平台<br>互联互通 · 资源共享 · 云端一体</p>
+                <p class="ft">为产品开发提供强有力的前后端支撑，让开发者抛弃基础共性功能的构建负担。</p>
+            </div>
+            <div class="footer-col"><h5>平台架构</h5><a href="#unified">统一基础架构</a><a href="#foundation">基础技术服务</a><a href="#services">通用业务服务</a><a href="#bus">服务总线</a></div>
+            <div class="footer-col"><h5>开放能力</h5><a href="#integration">云端服务能力</a><a href="#integration">终端服务能力</a><a href="#apps">应用层能力</a><a href="#architecture">平台架构图</a></div>
+            <div class="footer-col"><h5>开始使用</h5><a href="#cta">免费开始</a><a href="#cta">预约演示</a><a href="#cta">联系我们</a></div>
+        </div>
+        <div class="container footer-bot">
+            <span>© 2026 OORT.sh ·开发者部署平台</span>
+            <span>云 + 端一体化开发运营支撑平台</span>
+        </div>
+    </footer>
+
+    <script>
+    (function(){
+        "use strict";
+        var navbar=document.getElementById("navbar");
+        function onScroll(){if(window.scrollY>8)navbar.classList.add("scrolled");else navbar.classList.remove("scrolled")}
+        window.addEventListener("scroll",onScroll,{passive:true});onScroll();
+
+        var toggle=document.getElementById("navToggle"),links=document.getElementById("navLinks");
+        if(toggle&&links){toggle.addEventListener("click",function(){links.classList.toggle("open")});links.addEventListener("click",function(e){if(e.target.classList.contains("nav-link"))links.classList.remove("open")})}
+
+        var reveals=document.querySelectorAll(".reveal");
+        if("IntersectionObserver" in window){var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");ro.unobserve(e.target)}})},{threshold:.1,rootMargin:"0px 0px -30px 0px"});reveals.forEach(function(el){ro.observe(el)})}else{reveals.forEach(function(el){el.classList.add("in")})}
+
+        function animateCount(el){var t=parseInt(el.getAttribute("data-count"),10);if(isNaN(t))return;var d=1400,s=null;function step(ts){if(!s)s=ts;var p=Math.min((ts-s)/d,1);var e=1-Math.pow(1-p,3);el.textContent=Math.floor(e*t);if(p<1)requestAnimationFrame(step);else el.textContent=t}requestAnimationFrame(step)}
+        var counters=document.querySelectorAll(".stat-n[data-count]");
+        if("IntersectionObserver" in window){var co=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){animateCount(e.target);co.unobserve(e.target)}})},{threshold:.6});counters.forEach(function(el){co.observe(el)})}else{counters.forEach(animateCount)}
+
+        var sections=document.querySelectorAll("main section[id]"),nm={};
+        document.querySelectorAll(".nav-link").forEach(function(link){var id=link.getAttribute("href").slice(1);nm[id]=link});
+        if("IntersectionObserver" in window&&sections.length){var so=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.getAttribute("id");Object.keys(nm).forEach(function(k){nm[k].classList.toggle("active",k===id)})}})},{threshold:.5,rootMargin:"-68px 0px -40% 0px"});sections.forEach(function(sec){so.observe(sec)})}
+    })();
+    </script>
+</body>
+</html>

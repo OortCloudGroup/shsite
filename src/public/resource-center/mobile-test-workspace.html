@@ -1,0 +1,1442 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>移动端测试工具中心｜业务系统集成调试测试</title>
+  <style>
+    :root {
+      --blue: #1a73e8;
+      --blue-2: #4285f4;
+      --green: #34a853;
+      --yellow: #fbbc04;
+      --red: #ea4335;
+      --ink: #202124;
+      --text: #3c4043;
+      --muted: #5f6368;
+      --line: #e8eaed;
+      --soft: #f8fafd;
+      --card: #ffffff;
+      --shadow: 0 20px 55px rgba(60, 64, 67, 0.12);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Google Sans", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      padding: 0 44px;
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(232, 234, 237, 0.75);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: conic-gradient(from 210deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 28px rgba(66, 133, 244, 0.25);
+    }
+
+    .brand-mark::after {
+      content: "T";
+      width: 25px;
+      height: 25px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      background: #fff;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav a:hover {
+      color: var(--blue);
+    }
+
+    .nav-cta {
+      padding: 10px 18px;
+      border: 1px solid var(--blue);
+      border-radius: 999px;
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 88px 44px 70px;
+      background:
+        radial-gradient(circle at 8% 10%, rgba(66, 133, 244, 0.16), transparent 28%),
+        radial-gradient(circle at 84% 18%, rgba(52, 168, 83, 0.14), transparent 25%),
+        linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -15% -24% -15%;
+      height: 260px;
+      background: radial-gradient(closest-side, rgba(251, 188, 4, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
+      gap: 62px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(60, 64, 67, 0.08);
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(52, 168, 83, 0.12);
+    }
+
+    h1 {
+      margin: 26px 0 18px;
+      max-width: 760px;
+      color: var(--ink);
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+      font-weight: 750;
+    }
+
+    .hero-lead {
+      margin: 0;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 12px 30px rgba(26, 115, 232, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: #0b57d0;
+    }
+
+    .btn-secondary {
+      color: var(--blue);
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(26, 115, 232, 0.35);
+      background: #f8fbff;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 560px;
+    }
+
+    .phone {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 286px;
+      height: 570px;
+      transform: translate(-50%, -50%) rotate(-3deg);
+      border-radius: 44px;
+      border: 10px solid #202124;
+      background: #f8fafd;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 86px;
+      height: 22px;
+      transform: translateX(-50%);
+      border-radius: 0 0 16px 16px;
+      background: #202124;
+      z-index: 2;
+    }
+
+    .phone-screen {
+      height: 100%;
+      padding: 46px 18px 20px;
+      background:
+        linear-gradient(145deg, rgba(66, 133, 244, 0.08), transparent 35%),
+        #fff;
+    }
+
+    .status-card {
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #e8f0fe, #fff);
+      border: 1px solid #dfe7fd;
+    }
+
+    .status-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .pill {
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(52, 168, 83, 0.12);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      padding: 14px 12px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tool-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .mini-tool {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 20px rgba(60, 64, 67, 0.05);
+    }
+
+    .mini-icon {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .mini-tool b {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .mini-tool small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .floating-card {
+      position: absolute;
+      z-index: 4;
+      width: 210px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 45px rgba(60, 64, 67, 0.13);
+    }
+
+    .floating-card b {
+      display: block;
+      color: var(--ink);
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .floating-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card-api {
+      left: 2%;
+      top: 75px;
+    }
+
+    .card-observe {
+      right: 0;
+      bottom: 90px;
+    }
+
+    section {
+      padding: 86px 44px;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .section-head {
+      max-width: 780px;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+
+    .section-kicker {
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 10px 0 14px;
+      color: var(--ink);
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.14;
+      letter-spacing: -0.04em;
+    }
+
+    .section-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      min-height: 220px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(60, 64, 67, 0.06);
+      transition: 0.22s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      margin-bottom: 22px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .feature-card h3,
+    .step h3,
+    .scenario h3 {
+      margin: 0 0 10px;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p,
+    .step p,
+    .scenario p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .band {
+      background: var(--soft);
+    }
+
+    .tool-suite {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .tool-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 280px;
+      padding: 26px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 10px 26px rgba(60, 64, 67, 0.06);
+    }
+
+    .tool-card::after {
+      content: "";
+      position: absolute;
+      right: -44px;
+      bottom: -44px;
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+    }
+
+    .tool-card h3 {
+      position: relative;
+      margin: 18px 0 10px;
+      color: var(--ink);
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    .tool-card p {
+      position: relative;
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .badge-icon {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: 0 12px 24px var(--accent-shadow);
+    }
+
+    .tags {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f1f3f4;
+      color: #4b5563;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      counter-reset: flow;
+    }
+
+    .step {
+      position: relative;
+      min-height: 210px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .step::before {
+      counter-increment: flow;
+      content: "0" counter(flow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 24px;
+      border-radius: 14px;
+      background: #e8f0fe;
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .scenario-main {
+      min-height: 430px;
+      padding: 42px;
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(26, 115, 232, 0.92), rgba(66, 133, 244, 0.72)),
+        radial-gradient(circle at 90% 10%, rgba(251, 188, 4, 0.55), transparent 28%);
+      color: #fff;
+      box-shadow: 0 22px 55px rgba(26, 115, 232, 0.22);
+    }
+
+    .scenario-main h2 {
+      color: #fff;
+      max-width: 620px;
+    }
+
+    .scenario-main p {
+      max-width: 620px;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 18px;
+    }
+
+    .scenario-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .scenario-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      background: #fff;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .scenario-side {
+      display: grid;
+      gap: 18px;
+    }
+
+    .scenario {
+      padding: 26px;
+      border-radius: 30px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 26px rgba(60, 64, 67, 0.06);
+    }
+
+    .integration {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .code-card {
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid #2f3337;
+      background: #202124;
+      box-shadow: 0 22px 55px rgba(32, 33, 36, 0.2);
+    }
+
+    .code-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e8eaed;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    pre {
+      margin: 0;
+      padding: 24px;
+      overflow: auto;
+      color: #e8eaed;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .keyword { color: #8ab4f8; }
+    .string { color: #81c995; }
+    .comment { color: #9aa0a6; }
+
+    .cta {
+      padding: 92px 44px;
+      background: #fff;
+    }
+
+    .cta-box {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 54px;
+      border-radius: 38px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(251, 188, 4, 0.18), transparent 24%),
+        radial-gradient(circle at 80% 18%, rgba(52, 168, 83, 0.16), transparent 24%),
+        linear-gradient(135deg, #f8fbff, #fff);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      margin-top: 0;
+    }
+
+    .footer {
+      padding: 34px 44px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      background: #fff;
+    }
+
+    @media (max-width: 980px) {
+      .topbar {
+        padding: 0 22px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero,
+      section,
+      .cta {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .hero-grid,
+      .scenario-grid,
+      .integration {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 620px;
+      }
+
+      .feature-grid,
+      .tool-suite,
+      .flow {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding-top: 54px;
+      }
+
+      .hero-lead,
+      .section-desc,
+      .scenario-main p {
+        font-size: 16px;
+      }
+
+      .feature-grid,
+      .tool-suite,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 560px;
+      }
+
+      .phone {
+        width: 250px;
+        height: 510px;
+      }
+
+      .floating-card {
+        width: 180px;
+      }
+
+      .card-api {
+        left: 0;
+        top: 20px;
+      }
+
+      .card-observe {
+        right: 0;
+        bottom: 24px;
+      }
+
+      .cta-box,
+      .scenario-main {
+        padding: 30px 22px;
+      }
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+        .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+</style>
+</head>
+<body>
+  <header class="topbar">
+        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+      <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+    </a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#included">工具套件</a>
+      <a href="#workflow">接入流程</a>
+      <a href="#scenarios">应用场景</a>
+      <a href="#integration">集成方式</a>
+      <a class="nav-cta" href="#cta">申请接入</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span>移动端专门测试工具 · 可集成调试测试</div>
+          <h1>让业务系统的移动端调试，像协作套件一样简单。</h1>
+          <p class="hero-lead">
+            提供面向移动端开发、联调、验收和线上诊断的一站式测试工具页面。业务系统可按需集成 PostMan、vConsole、总线 API 测试和数据可观测工具，快速完成接口验证、日志诊断、链路追踪与问题复现。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#included">查看工具能力 →</a>
+            <a class="btn btn-secondary" href="#integration">了解集成方案</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="移动端测试工具预览图">
+          <div class="floating-card card-api">
+            <b>总线 API 测试</b>
+            <span>统一鉴权、参数模板、响应校验与联调记录。</span>
+          </div>
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="status-card">
+                <div class="status-title">移动调试面板 <span class="pill">Online</span></div>
+                <div class="metric-row">
+                  <div class="metric"><strong>128</strong><span>今日请求</span></div>
+                  <div class="metric"><strong>99.6%</strong><span>成功率</span></div>
+                </div>
+              </div>
+              <div class="tool-list">
+                <div class="mini-tool"><span class="mini-icon" style="background:#ff6c37">P</span><div><b>PostMan</b><small>接口集合与环境变量</small></div></div>
+                <div class="mini-tool"><span class="mini-icon" style="background:#1a73e8">V</span><div><b>vConsole</b><small>移动 Web 日志与网络调试</small></div></div>
+                <div class="mini-tool"><span class="mini-icon" style="background:#34a853">B</span><div><b>Bus API</b><small>服务总线 API 验证</small></div></div>
+                <div class="mini-tool"><span class="mini-icon" style="background:#a142f4">O</span><div><b>Observability</b><small>埋点、日志、链路可观测</small></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="floating-card card-observe">
+            <b>数据可观测</b>
+            <span>从用户行为到接口链路，快速定位移动端问题。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Why it matters</div>
+          <h2>为业务系统开发而生的移动调试工作台</h2>
+          <p class="section-desc">把分散的调试工具统一成一个可嵌入、可配置、可观测的移动测试入口，降低移动端适配、接口联调和线上问题排查成本。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="icon" style="background:#1a73e8">↔</div>
+            <h3>即插即用集成</h3>
+            <p>通过 JS SDK、H5 调试入口或业务系统菜单集成，支持开发、测试、预发等环境快速切换。</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon" style="background:#34a853">✓</div>
+            <h3>统一联调标准</h3>
+            <p>沉淀接口集合、请求模板、鉴权参数、响应断言和调试记录，让团队协作更加一致。</p>
+          </article>
+          <article class="feature-card">
+            <div class="icon" style="background:#fbbc04">◎</div>
+            <h3>端到端可观测</h3>
+            <p>汇聚日志、网络请求、埋点事件、性能指标与链路追踪，帮助快速复现和定位问题。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="included">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Included tools</div>
+          <h2>包含移动端开发测试所需的核心工具</h2>
+          <p class="section-desc">从接口调试到控制台日志，从总线服务验证到数据分析，覆盖业务系统移动端研发全流程。</p>
+        </div>
+        <div class="tool-suite">
+          <article class="tool-card" style="--accent:#ff6c37;--accent-soft:rgba(255,108,55,.13);--accent-shadow:rgba(255,108,55,.22)">
+            <div class="badge-icon">P</div>
+            <h3>PostMan 接口测试</h3>
+            <p>管理接口集合、环境变量、Header、Token 与测试脚本，支持移动端联调时快速发起请求和验证响应。</p>
+            <div class="tags"><span class="tag">接口集合</span><span class="tag">环境变量</span><span class="tag">响应断言</span></div>
+          </article>
+          <article class="tool-card" style="--accent:#1a73e8;--accent-soft:rgba(26,115,232,.13);--accent-shadow:rgba(26,115,232,.22)">
+            <div class="badge-icon">V</div>
+            <h3>vConsole 移动调试</h3>
+            <p>在手机浏览器或 WebView 中查看 console、network、storage 与系统信息，减少远程复现成本。</p>
+            <div class="tags"><span class="tag">Console</span><span class="tag">Network</span><span class="tag">Storage</span></div>
+          </article>
+          <article class="tool-card" style="--accent:#34a853;--accent-soft:rgba(52,168,83,.13);--accent-shadow:rgba(52,168,83,.22)">
+            <div class="badge-icon">B</div>
+            <h3>总线 API 测试</h3>
+            <p>面向服务总线、网关和微服务接口，提供统一鉴权、参数模板、服务路由和错误码解析。</p>
+            <div class="tags"><span class="tag">服务总线</span><span class="tag">网关路由</span><span class="tag">错误码</span></div>
+          </article>
+          <article class="tool-card" style="--accent:#a142f4;--accent-soft:rgba(161,66,244,.13);--accent-shadow:rgba(161,66,244,.22)">
+            <div class="badge-icon">O</div>
+            <h3>数据可观测工具</h3>
+            <p>采集埋点、接口耗时、异常日志、页面性能与链路信息，为移动端质量分析提供数据依据。</p>
+            <div class="tags"><span class="tag">日志</span><span class="tag">埋点</span><span class="tag">链路追踪</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Workflow</div>
+          <h2>四步完成业务系统接入与调试闭环</h2>
+          <p class="section-desc">参考协作套件式的信息架构，让研发、测试、产品和运维都能围绕同一份数据定位问题。</p>
+        </div>
+        <div class="flow">
+          <article class="step">
+            <h3>配置环境</h3>
+            <p>维护开发、测试、预发、生产等环境地址，配置鉴权、Token、租户与应用标识。</p>
+          </article>
+          <article class="step">
+            <h3>接入工具</h3>
+            <p>按需启用 PostMan 集合、vConsole 面板、总线 API 模板和可观测 SDK。</p>
+          </article>
+          <article class="step">
+            <h3>联调验证</h3>
+            <p>在移动端真实环境发起接口请求，查看日志、网络、性能和数据上报结果。</p>
+          </article>
+          <article class="step">
+            <h3>沉淀报告</h3>
+            <p>自动汇总请求记录、异常堆栈、链路耗时和测试结论，便于验收与回归。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="scenarios">
+      <div class="container scenario-grid">
+        <div class="scenario-main">
+          <div class="section-kicker" style="color:#fff">Scenarios</div>
+          <h2>覆盖移动业务研发的关键场景</h2>
+          <p>不只是一个工具集合，而是面向业务系统移动端建设的统一测试能力。让调试入口、接口标准、运行数据和质量结论在一个页面中协同。</p>
+          <div class="scenario-list">
+            <div class="scenario-item"><span class="check">✓</span><div><b>移动 H5 / 小程序 / App WebView 联调</b><br />快速查看网络请求、控制台日志、页面存储与设备信息。</div></div>
+            <div class="scenario-item"><span class="check">✓</span><div><b>网关、总线和微服务接口验收</b><br />以统一模板验证入参、出参、鉴权和错误码规范。</div></div>
+            <div class="scenario-item"><span class="check">✓</span><div><b>线上问题复现与质量观测</b><br />结合埋点、链路、异常和性能指标形成问题定位证据链。</div></div>
+          </div>
+        </div>
+        <div class="scenario-side">
+          <article class="scenario">
+            <h3>开发人员</h3>
+            <p>减少手机端抓包和日志导出成本，提升接口联调和缺陷修复效率。</p>
+          </article>
+          <article class="scenario">
+            <h3>测试人员</h3>
+            <p>使用标准测试模板执行移动端回归，沉淀可复用的测试记录与报告。</p>
+          </article>
+          <article class="scenario">
+            <h3>业务运维</h3>
+            <p>通过可观测数据持续监测移动端接口稳定性、页面性能和用户行为路径。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="integration">
+      <div class="container integration">
+        <div>
+          <div class="section-kicker">Integration</div>
+          <h2>灵活嵌入业务系统，按环境安全启用</h2>
+          <p class="section-desc">支持以页面、菜单、悬浮入口或 SDK 方式接入。可根据租户、角色、环境和白名单控制工具可见范围，避免生产环境误操作。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#cta">规划接入清单</a>
+            <a class="btn btn-secondary" href="#included">返回工具套件</a>
+          </div>
+        </div>
+        <div class="code-card" aria-label="示例集成代码">
+          <div class="code-title"><span class="dot" style="background:#ea4335"></span><span class="dot" style="background:#fbbc04"></span><span class="dot" style="background:#34a853"></span><span>mobile-test-workspace.config.js</span></div>
+          <pre><code><span class="comment">// 根据环境和角色启用移动端测试工具</span>
+<span class="keyword">const</span> tools = MobileTestWorkspace.init({
+  env: <span class="string">"test"</span>,
+  appId: <span class="string">"business-mobile-app"</span>,
+  enable: [<span class="string">"postman"</span>, <span class="string">"vconsole"</span>, <span class="string">"busApi"</span>, <span class="string">"observability"</span>],
+  auth: {
+    tenantId: <span class="string">"tenant-demo"</span>,
+    tokenProvider: () => getAccessToken()
+  },
+  guard: {
+    allowRoles: [<span class="string">"developer"</span>, <span class="string">"tester"</span>, <span class="string">"ops"</span>],
+    productionReadonly: true
+  }
+});
+
+tools.open();</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="cta">
+      <div class="cta-box">
+        <div class="section-kicker">Get started</div>
+        <h2>为你的业务系统启用移动端测试工具中心</h2>
+        <p class="section-desc">统一调试入口、接口测试、日志诊断与数据可观测能力，帮助团队更快完成移动端开发、测试和交付。</p>
+        <div class="hero-actions" style="justify-content:center">
+          <a class="btn btn-primary" href="mailto:team@example.com?subject=申请接入移动端测试工具中心">申请接入</a>
+          <a class="btn btn-secondary" href="#workflow">查看接入流程</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © 2026 Mobile Test Workspace. 面向业务系统开发的移动端调试测试工具中心。
+  </footer>
+</body>
+</html>
+

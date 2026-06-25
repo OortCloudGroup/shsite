@@ -1,0 +1,1150 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OORT.sh 私有云基础能力开发平台</title>
+  <meta name="description" content="基于 OORT.sh 私有云基础能力的软件系统开发页面，介绍集约化、服务化、AI Studio 开发环境、多环境部署与企业级生产能力。" />
+  <style>
+    :root {
+      --blue: #1a73e8;
+      --blue-2: #174ea6;
+      --green: #34a853;
+      --yellow: #fbbc04;
+      --red: #ea4335;
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #dadce0;
+      --soft: #f8fafd;
+      --card: #ffffff;
+      --shadow: 0 18px 45px rgba(60, 64, 67, .12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Google Sans", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,.88);
+      border-bottom: 1px solid rgba(218,220,224,.75);
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: conic-gradient(from 210deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+      box-shadow: 0 8px 22px rgba(26,115,232,.22);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover { color: var(--blue); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: .2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(26,115,232,.25);
+    }
+
+    .btn-primary:hover { background: var(--blue-2); transform: translateY(-1px); }
+
+    .btn-secondary {
+      color: var(--blue);
+      border-color: var(--line);
+      background: #fff;
+    }
+
+    .btn-secondary:hover { border-color: var(--blue); background: #f6fafe; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% 20%, rgba(66,133,244,.18), transparent 30%),
+        radial-gradient(circle at 18% 34%, rgba(52,168,83,.12), transparent 24%),
+        linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 86px 24px 74px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(360px, .94fr);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(52,168,83,.12);
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.06;
+      letter-spacing: -.055em;
+      font-weight: 750;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-lead {
+      margin: 0 0 30px;
+      color: var(--muted);
+      font-size: 20px;
+      max-width: 660px;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .hero-visual {
+      position: relative;
+      min-height: 510px;
+    }
+
+    .suite-card {
+      position: absolute;
+      inset: 26px 0 auto auto;
+      width: min(100%, 480px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .window-head {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .traffic { width: 12px; height: 12px; border-radius: 50%; }
+    .traffic.red { background: #ff6d62; }
+    .traffic.yellow { background: #f9c74f; }
+    .traffic.green { background: #57cc99; }
+
+    .studio {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .studio-row {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border: 1px solid #eef0f3;
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .icon.blue { background: var(--blue); }
+    .icon.green { background: var(--green); }
+    .icon.yellow { background: var(--yellow); color: #3c4043; }
+    .icon.red { background: var(--red); }
+
+    .studio-row strong { display: block; font-size: 15px; }
+    .studio-row span { color: var(--muted); font-size: 13px; }
+    .pill { color: var(--blue); background: #e8f0fe; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 700; }
+
+    .float-chip {
+      position: absolute;
+      left: 0;
+      bottom: 58px;
+      width: 250px;
+      border-radius: 22px;
+      padding: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .float-chip b { display: block; font-size: 38px; line-height: 1; color: var(--blue); }
+    .float-chip span { color: var(--muted); font-size: 14px; }
+
+    section { padding: 86px 24px; }
+
+    .container { max-width: 1180px; margin: 0 auto; }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 42px;
+    }
+
+    .section-kicker {
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 50px);
+      line-height: 1.14;
+      letter-spacing: -.04em;
+      font-weight: 740;
+    }
+
+    .section-desc {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      padding: 28px;
+      box-shadow: 0 3px 10px rgba(60,64,67,.04);
+    }
+
+    .card h3 {
+      margin: 18px 0 10px;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: -.02em;
+    }
+
+    .card p { margin: 0; color: var(--muted); }
+
+    .mini-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      background: #e8f0fe;
+    }
+
+    .soft { background: var(--soft); }
+
+    .capability-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .capability-panel {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .capability-panel h3 {
+      font-size: 28px;
+      margin: 0 0 18px;
+      letter-spacing: -.03em;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #3c4043;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .governance {
+      display: grid;
+      grid-template-columns: .86fr 1.14fr;
+      gap: 34px;
+      align-items: center;
+      border-radius: 34px;
+      background: #202124;
+      color: #fff;
+      padding: 44px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .governance::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: rgba(66,133,244,.28);
+    }
+
+    .governance p { color: rgba(255,255,255,.72); }
+
+    .flow {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    .flow-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue);
+      font-weight: 800;
+    }
+
+    .flow-step b { display: block; margin-bottom: 3px; }
+    .flow-step span { color: rgba(255,255,255,.7); font-size: 14px; }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .tool {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: #3c4043;
+      font-weight: 650;
+    }
+
+    .tool::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .env {
+      min-height: 92px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      font-weight: 760;
+      color: #3c4043;
+      box-shadow: 0 2px 8px rgba(60,64,67,.04);
+    }
+
+    .wide-card {
+      margin-top: 24px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #e8f0fe, #e6f4ea 58%, #fef7e0);
+      padding: 36px;
+      border: 1px solid rgba(26,115,232,.16);
+    }
+
+    .features {
+      columns: 3;
+      column-gap: 24px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .features li {
+      break-inside: avoid;
+      margin: 0 0 12px;
+      padding-left: 26px;
+      position: relative;
+      color: #3c4043;
+    }
+
+    .features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .templates {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .template {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      background: #fff;
+      min-height: 142px;
+    }
+
+    .template b { display: block; font-size: 18px; margin-bottom: 8px; }
+    .template span { color: var(--muted); font-size: 14px; }
+
+    .cta {
+      text-align: center;
+      padding: 96px 24px;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .cta-box {
+      max-width: 960px;
+      margin: 0 auto;
+      border-radius: 38px;
+      padding: 56px 34px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 { max-width: 760px; margin: 0 auto; }
+    .cta p { color: var(--muted); max-width: 760px; margin: 18px auto 28px; font-size: 18px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner, .capability-wrap, .governance, .grid-2 { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 480px; }
+      .suite-card { left: 0; margin: auto; }
+      .grid-3, .templates { grid-template-columns: repeat(2, 1fr); }
+      .matrix { grid-template-columns: repeat(3, 1fr); }
+      .features { columns: 2; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-inner { padding-top: 58px; }
+      .grid-3, .templates { grid-template-columns: 1fr; }
+      .matrix { grid-template-columns: repeat(2, 1fr); }
+      .features { columns: 1; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .governance, .wide-card, .capability-panel { padding: 26px; }
+      .float-chip { position: relative; bottom: auto; margin-top: 24px; width: 100%; }
+      .suite-card { position: relative; inset: auto; width: 100%; }
+      .hero-visual { min-height: auto; }
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+        .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="主导航">
+            <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <div class="nav-links">
+        <a href="#platform">私有云基础能力</a>
+        <a href="#studio">AI Studio</a>
+        <a href="#production">上生产</a>
+        <a href="#governance">调用管控</a>
+      </div>
+      <a class="btn btn-primary" href="#cta">开始集约化开发</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>基于私有云基础能力开发 · 软件资产持续沉淀</div>
+          <h1>让复杂系统开发，进入<span class="gradient-text">共享、解耦、服务化</span>的新阶段</h1>
+          <p class="hero-lead">OORT.sh 以私有云智能化应用建设经验为底座，将前端能力、后端能力、AI 开发工具链、多环境部署与企业级合规能力产品化，帮助团队避免重复建设，实现“人人为我，我为人人”的软件资产复用。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#platform">了解平台能力</a>
+            <a class="btn btn-secondary" href="#studio">查看 AI Studio</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="开发平台能力示意图">
+          <div class="suite-card">
+            <div class="window-head">
+              <span class="traffic red"></span><span class="traffic yellow"></span><span class="traffic green"></span>
+            </div>
+            <div class="studio">
+              <div class="studio-row"><div class="icon blue">FE</div><div><strong>前端能力集合</strong><span>组件、页面、SDK、权限接入复用</span></div><span class="pill">共享</span></div>
+              <div class="studio-row"><div class="icon green">BE</div><div><strong>后端能力集合</strong><span>微服务、接口、网关、数据能力复用</span></div><span class="pill">服务化</span></div>
+              <div class="studio-row"><div class="icon yellow">AI</div><div><strong>OortCloud AI Studio</strong><span>多智能体 CLI 与工程化开发环境</span></div><span class="pill">智能</span></div>
+              <div class="studio-row"><div class="icon red">Ops</div><div><strong>多环境部署</strong><span>DEV / SIT / UAT / STAGING / PROD / COB</span></div><span class="pill">可控</span></div>
+            </div>
+          </div>
+          <div class="float-chip"><b>1+N</b><span>一个私有云能力底座，支撑 N 类业务系统快速生产化交付。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Private Cloud Capability Platform</div>
+          <h2>以私有云基础能力为底座，集约化、节约化开发</h2>
+          <p class="section-desc">围绕公共安全、企业数字化和智能化应用建设场景，将通用工程能力沉淀为可复用的软件资产，减少烟囱式系统和重复造轮子。</p>
+        </div>
+        <div class="grid-3">
+          <article class="card"><div class="mini-icon">🏗️</div><h3>集约化建设</h3><p>统一基础设施、开发规范、能力目录和资产管理，让项目团队优先复用已验证能力，而不是重复开发相同模块。</p></article>
+          <article class="card"><div class="mini-icon">♻️</div><h3>软件资产沉淀</h3><p>将组件、服务、接口、模板、数据模型和行业经验持续沉淀，形成组织级资产池，越用越完整。</p></article>
+          <article class="card"><div class="mini-icon">🤝</div><h3>人人为我，我为人人</h3><p>每个项目既是能力消费者，也是能力贡献者。优秀实践通过平台共享，反哺后续项目交付。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Layered & Service-oriented</div>
+          <h2>共享、解耦、分层、服务化开发</h2>
+          <p class="section-desc">把复杂系统拆解为清晰边界的能力层：前端复用体验与交互，后端复用业务与数据，平台统一治理调用关系。</p>
+        </div>
+        <div class="capability-wrap">
+          <div class="capability-panel">
+            <h3>前端能力集合</h3>
+            <p>为前端团队提供可调用、可组合、可复用的 UI、业务组件和 SDK 能力，快速接入统一门户、权限体系、组织架构、消息通知、地图/GIS、可视化、低代码页面和 AIGC 交互。</p>
+            <div class="tag-list">
+              <span class="tag">企业级组件库</span><span class="tag">统一登录</span><span class="tag">权限菜单</span><span class="tag">GIS 地图</span><span class="tag">数据可视化</span><span class="tag">AIGC 交互</span><span class="tag">小程序能力</span><span class="tag">低代码页面</span>
+            </div>
+          </div>
+          <div class="capability-panel">
+            <h3>后端能力集合</h3>
+            <p>为后端团队提供可治理的服务、接口、数据和 AI 能力，通过 API、SDK、消息和任务编排方式复用，支撑复杂业务系统快速构建和稳定运行。</p>
+            <div class="tag-list">
+              <span class="tag">微服务能力</span><span class="tag">API 网关</span><span class="tag">业务中台</span><span class="tag">数据服务</span><span class="tag">AI Agent</span><span class="tag">模型训练</span><span class="tag">流程引擎</span><span class="tag">审计日志</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="governance">
+      <div class="container">
+        <div class="governance">
+          <div>
+            <div class="section-kicker" style="color:#8ab4f8">Governed Reuse</div>
+            <h2>能力可以共享，调用必须可管可控</h2>
+            <p>平台对能力调用进行统一治理：谁能看见、谁能申请、谁能审批、谁在调用、调用了多少、是否合规，都有完整链路。共享不是失控，而是在规则下更高效地复用。</p>
+          </div>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-num">1</div><div><b>能力上架</b><span>能力提供方发布说明、接口、版本、权限范围、SLA 和使用示例。</span></div></div>
+            <div class="flow-step"><div class="flow-num">2</div><div><b>申请审批</b><span>调用方提交用途、项目、环境、数据范围和额度申请，按规则流转审批。</span></div></div>
+            <div class="flow-step"><div class="flow-num">3</div><div><b>授权调用</b><span>审批通过后发放凭证、权限策略和调用配额，前后端按规范接入。</span></div></div>
+            <div class="flow-step"><div class="flow-num">4</div><div><b>监控审计</b><span>持续记录调用日志、性能指标、异常告警和合规审计，支持追溯与优化。</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="studio" class="soft">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">OortCloud AI Studio</div>
+          <h2>面向真实工程交付的 AI 编程开发环境</h2>
+          <p class="section-desc">OortCloud AI Studio 支持多种 AI 编程智能体开发工具，把需求理解、代码生成、工程改造、调试验证和部署发布纳入统一工作空间。</p>
+          <div class="tools" aria-label="支持的 AI CLI 工具">
+            <span class="tool">OortCode CLI</span><span class="tool">ClawCode CLI</span><span class="tool">Qoder CLI</span><span class="tool">Codex CLI</span><span class="tool">Gemini CLI</span><span class="tool">OpenCode CLI</span><span class="tool">ClaudeCode CLI</span>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="card"><div class="mini-icon">🧠</div><h3>AI 辅助工程开发</h3><p>让智能体理解项目结构、业务规范和交付目标，辅助完成代码生成、重构、测试、文档和问题定位。</p></article>
+          <article class="card"><div class="mini-icon">🧩</div><h3>统一开发工作空间</h3><p>围绕项目、前端、后台服务、AI Agent、网站、小程序等对象组织研发流程，减少环境割裂。</p></article>
+          <article class="card"><div class="mini-icon">🚀</div><h3>从开发到生产闭环</h3><p>连接模板、代码、构建、部署、配置、审批和运行观测，让 AI 生成的软件真正可上线、可运维。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Configurable Environments</div>
+          <h2>多种部署环境可配置，匹配企业发布流程</h2>
+          <p class="section-desc">覆盖从开发调试到生产运行、日终批处理等多阶段环境，支持权限隔离、配置差异、发布审批和质量门禁。</p>
+        </div>
+        <div class="matrix">
+          <div class="env">DEV</div><div class="env">SIT</div><div class="env">UAT</div><div class="env">STAGING</div><div class="env">PROD</div><div class="env">COB</div>
+        </div>
+        <div class="wide-card">
+          <h3 style="margin:0;font-size:26px;letter-spacing:-.02em">覆盖多种开发能力</h3>
+          <ul class="features">
+            <li>项目管理与工程脚手架</li><li>前端应用与组件开发</li><li>后台服务与微服务开发</li><li>AI Agent 编排开发</li><li>企业网站与门户开发</li><li>移动端与小程序开发</li><li>低代码 / 无代码应用构建</li><li>数据服务与数据治理</li><li>GIS 地图与空间分析</li><li>模型标注与训练</li><li>AIGC 内容生成能力</li><li>统一运维与可观测能力</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="production" class="soft">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Production-ready Templates</div>
+          <h2>丰富的企业级软件模板，帮助开发真正“上生产”</h2>
+          <p class="section-desc">不止生成演示代码，而是面向真实组织的权限体系、业务系统集成、合规审计、运行维护和长期演进。</p>
+        </div>
+        <div class="templates">
+          <div class="template"><b>权限与组织模板</b><span>用户、角色、组织、菜单、数据权限、单点登录与统一认证。</span></div>
+          <div class="template"><b>业务系统模板</b><span>流程、表单、台账、任务、消息、统计分析和门户集成。</span></div>
+          <div class="template"><b>AI 应用模板</b><span>Agent、知识库、模型调用、提示词管理、内容生成与审核。</span></div>
+          <div class="template"><b>合规运维模板</b><span>审计日志、审批流、环境发布、监控告警、备份恢复与安全策略。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="cta">
+      <div class="cta-box">
+        <div class="section-kicker">Key Advantage</div>
+        <h2>利用 OORT.sh 深厚工程能力，将复杂技术产品化</h2>
+        <p>基于 OORT.sh 开发软件系统的关键优势，是把私有云、工程工具链、AI 编程、企业模板、部署运维和安全合规封装成可使用的产品能力，解决用户安装部署难、集成难、上线难、持续演进难的问题。</p>
+        <a class="btn btn-primary" href="#top">回到页面顶部</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© 2026 OORT.sh Private Cloud Capability Development</span>
+      <span>集约化 · 节约化 · 共享复用 · 服务化开发</span>
+    </div>
+  </footer>
+</body>
+</html>
+

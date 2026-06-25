@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="开发模板中心：项目、前端、后台服务、AI Agent、网站、小程序、低代码、无代码、数据、GIS、模型标注与训练、AIGC 等模板介绍。" />
+  <title>开发模板中心｜从一体化项目到分离部署模板</title>
+  <style>
+    :root{
+      --blue:#1a73e8;
+      --blue-dark:#1558b0;
+      --blue-soft:#e8f0fe;
+      --green:#34a853;
+      --green-soft:#e6f4ea;
+      --yellow:#fbbc04;
+      --yellow-soft:#fef7e0;
+      --red:#ea4335;
+      --red-soft:#fce8e6;
+      --purple:#a142f4;
+      --purple-soft:#f3e8fd;
+      --cyan:#12b5cb;
+      --cyan-soft:#e6f7fb;
+      --ink:#202124;
+      --ink-soft:#3c4043;
+      --muted:#5f6368;
+      --line:#dadce0;
+      --bg:#fff;
+      --bg-soft:#f8fafd;
+      --card:#fff;
+      --max:1180px;
+      --r-lg:24px;
+      --r-md:18px;
+      --s1:0 1px 2px rgba(60,64,67,.08),0 1px 3px rgba(60,64,67,.08);
+      --s2:0 8px 26px rgba(60,64,67,.12);
+      --s3:0 24px 70px rgba(60,64,67,.16);
+      --t:.24s cubic-bezier(.2,.8,.2,1);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:108px}
+    body{margin:0;color:var(--ink);font-family:"Google Sans","Google Sans Text",Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;background:#fff;line-height:1.65;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    /* Workspace-like floating navigation */
+    .navbar{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:1000;width:min(var(--max),calc(100% - 32px));min-height:64px;border:1px solid rgba(218,225,235,.92);border-radius:999px;background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(22px);box-shadow:0 18px 48px rgba(15,23,42,.12),0 2px 10px rgba(15,23,42,.06)}
+    .nav-in{min-height:64px;padding:10px 14px 10px 18px;display:flex;align-items:center;gap:18px}
+    .brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:#0f172a;white-space:nowrap;letter-spacing:.2px}
+    .brand-mark{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--blue),#44b7ff);box-shadow:0 10px 24px rgba(26,115,232,.18);font-weight:900}
+    .nav-links{display:flex;align-items:center;justify-content:center;gap:4px;flex:1;overflow:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:999px;color:#5f6f86;font-size:14px;font-weight:600;line-height:1;white-space:nowrap;transition:background var(--t),color var(--t),transform var(--t);text-decoration:none}
+    .nav-links a:hover{color:var(--blue);background:rgba(26,115,232,.08);transform:translateY(-1px)}
+    .nav-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:999px;font-weight:700;cursor:pointer;transition:transform var(--t),box-shadow var(--t),background var(--t),border-color var(--t);white-space:nowrap}
+    .btn-primary{min-height:42px;padding:0 18px;background:linear-gradient(135deg,var(--blue),#44b7ff);color:#fff;box-shadow:0 12px 26px rgba(26,115,232,.2)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(26,115,232,.28)}
+    .btn-ghost{min-height:42px;padding:0 16px;color:var(--blue);background:#fff;border-color:rgba(26,115,232,.16)}
+    .btn-ghost:hover{background:var(--blue-soft)}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:12px;padding:8px;box-shadow:0 8px 18px rgba(15,23,42,.08);cursor:pointer}.nav-toggle span{width:20px;height:2px;background:#182337;border-radius:2px}
+
+    .hero{position:relative;overflow:hidden;padding:154px 0 86px;background:radial-gradient(circle at 84% 12%,rgba(26,115,232,.16),transparent 32%),radial-gradient(circle at 12% 18%,rgba(52,168,83,.14),transparent 30%),linear-gradient(180deg,#fff 0%,#f8fbff 68%,#fff 100%)}
+    .hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(26,115,232,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,115,232,.06) 1px,transparent 1px);background-size:46px 46px;mask-image:linear-gradient(180deg,transparent,#000 18%,#000 76%,transparent);pointer-events:none}
+    .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.04fr .96fr;gap:58px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:#fff;border:1px solid rgba(218,220,224,.8);box-shadow:var(--s1);font-size:13px;font-weight:700;color:var(--blue);margin-bottom:22px}.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));box-shadow:0 0 0 4px rgba(26,115,232,.12)}
+    h1{margin:0;font-size:clamp(42px,5.6vw,68px);line-height:1.06;letter-spacing:-2px;font-weight:800;color:var(--ink)}
+    .grad{background:linear-gradient(110deg,var(--blue),var(--green) 43%,var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:18px;color:var(--muted);line-height:1.8;max-width:650px;margin:24px 0 0}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn-lg{min-height:50px;padding:0 24px;font-size:15px}
+    .hero-note{display:flex;gap:10px;align-items:center;margin-top:22px;color:var(--muted);font-size:14px}.hero-note span{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;border-radius:50%;background:var(--green-soft);color:var(--green);font-weight:900}
+
+    .workspace-board{position:relative;min-height:540px;border-radius:34px;background:rgba(255,255,255,.82);border:1px solid rgba(218,220,224,.72);box-shadow:var(--s3);padding:24px;backdrop-filter:blur(18px);overflow:hidden}
+    .workspace-board::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 12%,rgba(251,188,4,.2),transparent 24%),radial-gradient(circle at 12% 88%,rgba(161,66,244,.14),transparent 30%);pointer-events:none}
+    .board-top{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.dots{display:flex;gap:7px}.dots i{width:12px;height:12px;border-radius:50%;display:block}.dots i:nth-child(1){background:var(--red)}.dots i:nth-child(2){background:var(--yellow)}.dots i:nth-child(3){background:var(--green)}.board-chip{font-size:12px;color:var(--blue);font-weight:700;background:var(--blue-soft);border-radius:999px;padding:6px 10px}
+    .template-stack{position:relative;display:grid;gap:14px}.stack-card{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;padding:15px;border:1px solid rgba(218,220,224,.76);border-radius:20px;background:rgba(255,255,255,.9);box-shadow:0 5px 16px rgba(60,64,67,.08);transition:transform var(--t),box-shadow var(--t)}.stack-card:hover{transform:translateY(-4px);box-shadow:var(--s2)}.stack-ic{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;color:#fff;font-weight:800}.ic-blue{background:var(--blue)}.ic-green{background:var(--green)}.ic-yellow{background:var(--yellow);color:#5f4b00}.ic-purple{background:var(--purple)}.ic-cyan{background:var(--cyan)}.stack-card b{display:block;font-size:15px}.stack-card small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}.status{font-size:12px;font-weight:800;border-radius:999px;padding:5px 9px}.s-blue{color:var(--blue);background:var(--blue-soft)}.s-green{color:var(--green);background:var(--green-soft)}.s-purple{color:var(--purple);background:var(--purple-soft)}
+
+    section{padding:86px 0}.sec-soft{background:linear-gradient(180deg,#f8fafd,#fff)}.sec-head{max-width:760px;margin:0 auto 46px;text-align:center}.kicker{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}.sec-head h2{font-size:clamp(30px,3.7vw,48px);line-height:1.12;letter-spacing:-1.1px;margin:0;font-weight:800}.sec-head p{margin:16px 0 0;color:var(--muted);font-size:17px}
+    .pill-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:30px}.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 15px;font-size:14px;font-weight:700;color:var(--ink-soft);box-shadow:var(--s1)}.pill.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .template-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.tpl-card{position:relative;min-height:230px;padding:24px;border:1px solid rgba(218,220,224,.72);border-radius:24px;background:#fff;box-shadow:var(--s1);overflow:hidden;transition:transform var(--t),box-shadow var(--t),border-color var(--t)}.tpl-card::after{content:"";position:absolute;right:-42px;top:-42px;width:118px;height:118px;border-radius:50%;background:var(--tone);opacity:.55}.tpl-card:hover{transform:translateY(-6px);box-shadow:var(--s2);border-color:rgba(26,115,232,.25)}.tpl-icon{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--tone);color:var(--tone-ink);font-weight:900;font-size:20px;margin-bottom:18px}.tpl-card h3{font-size:18px;margin:0 0 10px;font-weight:800}.tpl-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.65}.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}.tags span{font-size:12px;color:var(--ink-soft);background:var(--bg-soft);border:1px solid rgba(218,220,224,.72);border-radius:999px;padding:3px 8px}
+    .blue{--tone:var(--blue-soft);--tone-ink:var(--blue)}.green{--tone:var(--green-soft);--tone-ink:var(--green)}.yellow{--tone:var(--yellow-soft);--tone-ink:#b06000}.red{--tone:var(--red-soft);--tone-ink:var(--red)}.purple{--tone:var(--purple-soft);--tone-ink:var(--purple)}.cyan{--tone:var(--cyan-soft);--tone-ink:var(--cyan)}
+
+    .dual{display:grid;grid-template-columns:1fr 1fr;gap:24px}.mode-card{border:1px solid rgba(218,220,224,.76);border-radius:30px;background:#fff;box-shadow:var(--s2);padding:30px;position:relative;overflow:hidden}.mode-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 90% 0,var(--tone),transparent 34%);opacity:.9;pointer-events:none}.mode-card>*{position:relative}.mode-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}.mode-no{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:var(--tone);color:var(--tone-ink);font-weight:900;font-size:20px}.mode-card h3{font-size:26px;line-height:1.2;margin:0;font-weight:800}.mode-card p{color:var(--muted);margin:14px 0 0}.check{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}.check li{display:flex;gap:10px;color:var(--ink-soft);font-size:15px}.check li::before{content:"✓";width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--green-soft);color:var(--green);font-weight:900;flex:0 0 auto}.flow-line{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px}.flow-line span{font-size:13px;font-weight:700;color:var(--tone-ink);background:var(--tone);border-radius:999px;padding:6px 10px}
+
+    .matrix{border:1px solid rgba(218,220,224,.8);border-radius:28px;overflow:hidden;background:#fff;box-shadow:var(--s2)}.matrix-row{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}.matrix-row:last-child{border-bottom:0}.matrix-row>div{padding:18px;border-right:1px solid var(--line);font-size:14px}.matrix-row>div:last-child{border-right:0}.matrix-head{background:#f8fafd;font-weight:800;color:var(--ink)}.matrix strong{display:block;font-size:15px;color:var(--ink);margin-bottom:4px}.matrix span{color:var(--muted)}
+
+    .cta{padding:84px 0 96px}.cta-box{position:relative;overflow:hidden;text-align:center;border-radius:34px;padding:clamp(42px,7vw,82px);background:linear-gradient(135deg,#1a73e8 0%,#4285f4 48%,#34a853 100%);color:#fff;box-shadow:var(--s3)}.cta-box::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 18%,rgba(255,255,255,.18),transparent 28%),radial-gradient(circle at 86% 82%,rgba(255,255,255,.16),transparent 32%)}.cta-box>*{position:relative}.cta-box h2{font-size:clamp(30px,4vw,50px);line-height:1.15;margin:0;font-weight:800;letter-spacing:-1px}.cta-box p{max-width:760px;margin:18px auto 0;color:rgba(255,255,255,.92);font-size:17px}.cta-box .hero-cta{justify-content:center}.cta-box .btn-ghost{background:#fff;color:var(--blue);border-color:#fff}
+    footer{border-top:1px solid var(--line);background:#f8fafd;color:var(--muted);font-size:14px}.footer-in{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:30px 24px}
+
+    @media(max-width:980px){.hero-in,.dual{grid-template-columns:1fr}.workspace-board{min-height:auto}.template-grid{grid-template-columns:repeat(2,1fr)}.matrix-row{grid-template-columns:1fr}.matrix-row>div{border-right:0;border-bottom:1px solid var(--line)}.matrix-row>div:last-child{border-bottom:0}.nav-links{display:none}.nav-links.open{display:flex;position:absolute;top:calc(100% + 10px);left:0;right:0;flex-direction:column;align-items:stretch;background:#fff;border:1px solid rgba(218,225,235,.92);border-radius:22px;padding:10px;box-shadow:0 18px 48px rgba(15,23,42,.12)}.nav-links.open a{justify-content:flex-start}.nav-toggle{display:flex}}
+    @media(max-width:640px){.container{padding:0 18px}.navbar{top:10px;width:calc(100% - 24px);border-radius:24px}.nav-in{padding:8px 12px 8px 14px;min-height:58px}.brand span{display:none}.hero{padding:128px 0 58px}section{padding:66px 0}.template-grid{grid-template-columns:1fr}.stack-card{grid-template-columns:42px 1fr}.status{display:none}.footer-in{padding:24px 18px}}
+  
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+    </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <div class="nav-in">
+      <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#modes" class="nav-link">两种模板</a>
+        <a href="#templates" class="nav-link">模板库</a>
+        <a href="#logic" class="nav-link">高级逻辑</a>
+        <a href="#compare" class="nav-link">选型矩阵</a>
+      </nav>
+      <div class="nav-acts"><a class="btn btn-primary btn-sm" href="#templates">浏览模板</a></div>
+      <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-in">
+        <div>
+          <div class="eyebrow">从一个工程到多域分离部署</div>
+          <h1>覆盖业务交付全链路的 <span class="grad">开发模板</span></h1>
+          <p class="hero-sub">面向项目、前端、后台服务、AI Agent、网站、小程序、低代码、无代码、数据、GIS、模型标注与训练、AIGC 等场景，提供可复制、可组合、可治理的模板体系。</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="#modes">理解两种模板</a>
+            <a class="btn btn-ghost btn-lg" href="#compare">查看选型矩阵</a>
+          </div>
+          <div class="hero-note"><span>✓</span>项目模板强调一体化开箱即用；分离模板强调专业域自治、独立部署与高级编排。</div>
+        </div>
+        <div class="workspace-board" aria-label="开发模板工作台示意">
+          <div class="board-top"><div class="dots"><i></i><i></i><i></i></div><div class="board-chip">Template Workspace</div></div>
+          <div class="template-stack">
+            <article class="stack-card"><div class="stack-ic ic-blue">全</div><div><b>项目模板</b><small>前后端、数据库、网关、CI/CD 与基础设施在一个工程中协同</small></div><span class="status s-blue">一体化</span></article>
+            <article class="stack-card"><div class="stack-ic ic-green">服</div><div><b>后台服务模板</b><small>API、任务、消息、权限、观测与运行时独立发布</small></div><span class="status s-green">分离部署</span></article>
+            <article class="stack-card"><div class="stack-ic ic-purple">AI</div><div><b>AI Agent / AIGC 模板</b><small>提示词、工具调用、知识库、评测与生成工作流</small></div><span class="status s-purple">智能编排</span></article>
+            <article class="stack-card"><div class="stack-ic ic-cyan">数</div><div><b>数据 / GIS / 标注训练模板</b><small>数据管线、空间服务、标注任务与模型训练闭环</small></div><span class="status s-blue">专业域</span></article>
+            <article class="stack-card"><div class="stack-ic ic-yellow">低</div><div><b>低代码 / 无代码模板</b><small>表单、流程、规则、页面搭建与自动化扩展</small></div><span class="status s-green">快速交付</span></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="modes">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Template Modes</div>
+          <h2>两种模板：一体化项目模板与分离部署模板</h2>
+          <p>同样是模板，适用阶段和工程逻辑完全不同：前者帮助快速启动完整业务，后者服务于更复杂、更长期、更专业的系统演进。</p>
+        </div>
+        <div class="dual">
+          <article class="mode-card blue">
+            <div class="mode-top"><div class="mode-no">01</div><h3>项目模板</h3></div>
+            <p>项目模板是指前端、后台服务、数据库、基础设施、部署脚本、配置与工程约定都在一个工程里的模板。适合从 0 到 1 快速生成一个完整可运行项目。</p>
+            <ul class="check">
+              <li>统一仓库、统一依赖、统一启动命令，降低初始协作成本。</li>
+              <li>内置基础设施描述，如数据库、缓存、对象存储、网关、CI/CD。</li>
+              <li>适合原型验证、中小型业务、客户定制项目和教学演示。</li>
+            </ul>
+            <div class="flow-line"><span>单工程</span><span>开箱即用</span><span>全栈闭环</span><span>快速交付</span></div>
+          </article>
+          <article class="mode-card green">
+            <div class="mode-top"><div class="mode-no">02</div><h3>分离部署模板</h3></div>
+            <p>其他类型模板更多是分离部署的高级逻辑：前端、服务、Agent、数据、GIS、训练任务、低代码引擎等按领域独立演进，并通过平台能力组合成业务系统。</p>
+            <ul class="check">
+              <li>每个模板对应一个专业能力域，可独立发布、扩缩容与治理。</li>
+              <li>适合大型系统、平台化产品、多团队协作和长期运营。</li>
+              <li>通过 API、事件、权限、数据契约、服务目录形成组合能力。</li>
+            </ul>
+            <div class="flow-line"><span>多工程</span><span>服务自治</span><span>平台编排</span><span>长期演进</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="templates">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Template Library</div>
+          <h2>从应用交付到智能生产力的模板库</h2>
+          <p>模板不是简单脚手架，而是把工程结构、领域最佳实践、部署方式、权限治理和可观测能力封装成可复用资产。</p>
+        </div>
+        <div class="pill-tabs"><span class="pill active">全部模板</span><span class="pill">应用开发</span><span class="pill">智能体</span><span class="pill">数据与空间</span><span class="pill">可视化搭建</span></div>
+        <div class="template-grid">
+          <article class="tpl-card blue"><div class="tpl-icon">项</div><h3>项目模板</h3><p>前端、后台、数据库、基础设施、环境变量、部署流水线全部在一个工程中，适合快速生成完整业务系统。</p><div class="tags"><span>Full-stack</span><span>Infra</span><span>CI/CD</span></div></article>
+          <article class="tpl-card green"><div class="tpl-icon">前</div><h3>前端模板</h3><p>面向门户、控制台、运营后台、移动 H5 和组件库，内置路由、状态、权限、主题和构建规范。</p><div class="tags"><span>Vue/React</span><span>UI</span><span>Auth</span></div></article>
+          <article class="tpl-card yellow"><div class="tpl-icon">服</div><h3>后台服务模板</h3><p>封装 REST / GraphQL / RPC、任务调度、消息队列、审计日志、权限校验和健康检查。</p><div class="tags"><span>API</span><span>Job</span><span>Queue</span></div></article>
+          <article class="tpl-card purple"><div class="tpl-icon">AI</div><h3>AI Agent 模板</h3><p>提供角色设定、工具调用、记忆、知识库、工作流、评测与安全边界，构建可运营的智能体。</p><div class="tags"><span>Agent</span><span>Tools</span><span>RAG</span></div></article>
+          <article class="tpl-card cyan"><div class="tpl-icon">站</div><h3>网站模板</h3><p>适合官网、文档站、营销页、产品介绍页和内容站点，强调 SEO、性能、内容结构和多端体验。</p><div class="tags"><span>SEO</span><span>Content</span><span>Static</span></div></article>
+          <article class="tpl-card green"><div class="tpl-icon">小</div><h3>小程序模板</h3><p>面向微信/支付宝/多端小程序，内置登录、支付、订阅消息、地理位置与轻量业务流程。</p><div class="tags"><span>Mini App</span><span>Pay</span><span>OpenAPI</span></div></article>
+          <article class="tpl-card red"><div class="tpl-icon">低</div><h3>低代码模板</h3><p>提供表单、列表、详情、流程、规则、报表和扩展插件，服务中后台快速搭建与企业流程。</p><div class="tags"><span>Form</span><span>Flow</span><span>Plugin</span></div></article>
+          <article class="tpl-card yellow"><div class="tpl-icon">无</div><h3>无代码模板</h3><p>将数据模型、页面、权限和自动化动作产品化，让非研发人员也能配置业务应用。</p><div class="tags"><span>No-code</span><span>Rules</span><span>Automation</span></div></article>
+          <article class="tpl-card blue"><div class="tpl-icon">数</div><h3>数据模板</h3><p>覆盖采集、清洗、同步、指标、可视化、数据权限与质量校验，形成可复用数据资产管线。</p><div class="tags"><span>ETL</span><span>BI</span><span>Quality</span></div></article>
+          <article class="tpl-card cyan"><div class="tpl-icon">GIS</div><h3>GIS 模板</h3><p>提供地图服务、图层管理、空间查询、轨迹分析、地理围栏和行业空间数据可视化能力。</p><div class="tags"><span>Map</span><span>Layer</span><span>Spatial</span></div></article>
+          <article class="tpl-card purple"><div class="tpl-icon">训</div><h3>模型标注与训练模板</h3><p>支持数据集管理、标注任务、审核流、训练作业、模型版本、评测报告和上线流程。</p><div class="tags"><span>Dataset</span><span>Train</span><span>Evaluate</span></div></article>
+          <article class="tpl-card red"><div class="tpl-icon">生</div><h3>AIGC 模板</h3><p>围绕文本、图片、视频、音频、代码生成与多模态工作流，内置提示词、审核和生成资产管理。</p><div class="tags"><span>Generate</span><span>Review</span><span>Assets</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="logic">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Advanced Logic</div>
+          <h2>分离模板背后的高级工程逻辑</h2>
+          <p>当模板从单工程走向多工程，就需要用平台化方式管理依赖、部署、权限、数据契约和运行时治理。</p>
+        </div>
+        <div class="template-grid">
+          <article class="tpl-card blue"><div class="tpl-icon">契</div><h3>契约优先</h3><p>通过 API Schema、事件格式、数据模型和权限声明，让不同模板之间可以稳定组合。</p><div class="tags"><span>API</span><span>Event</span><span>Schema</span></div></article>
+          <article class="tpl-card green"><div class="tpl-icon">治</div><h3>服务治理</h3><p>每个模板独立发布，但统一接入注册、网关、鉴权、审计、限流、灰度和可观测体系。</p><div class="tags"><span>Gateway</span><span>Auth</span><span>Observe</span></div></article>
+          <article class="tpl-card yellow"><div class="tpl-icon">编</div><h3>业务编排</h3><p>通过工作流、任务编排、Agent 调度和消息事件，将分散模板组合成端到端业务能力。</p><div class="tags"><span>Workflow</span><span>Agent</span><span>Message</span></div></article>
+          <article class="tpl-card purple"><div class="tpl-icon">运</div><h3>持续运营</h3><p>模板交付后持续沉淀指标、日志、反馈、评测和最佳实践，形成可演进的平台资产。</p><div class="tags"><span>Metrics</span><span>Feedback</span><span>Version</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec-soft" id="compare">
+      <div class="container">
+        <div class="sec-head">
+          <div class="kicker">Choose Template</div>
+          <h2>如何选择一体化项目模板或分离部署模板</h2>
+          <p>选择不是看模板名字，而是看团队规模、业务复杂度、部署边界和未来演进方式。</p>
+        </div>
+        <div class="matrix" role="table" aria-label="开发模板选型矩阵">
+          <div class="matrix-row matrix-head" role="row"><div>维度</div><div>项目模板</div><div>分离部署模板</div><div>建议</div></div>
+          <div class="matrix-row" role="row"><div><strong>启动速度</strong><span>从 0 到 1 的第一步</span></div><div>最快，一个工程直接运行</div><div>需要先确认边界和依赖</div><div>原型和小项目优先项目模板</div></div>
+          <div class="matrix-row" role="row"><div><strong>团队协作</strong><span>多人、多团队并行</span></div><div>适合小团队集中协作</div><div>适合多团队按领域自治</div><div>团队越多越适合分离模板</div></div>
+          <div class="matrix-row" role="row"><div><strong>部署治理</strong><span>发布、扩容、权限、审计</span></div><div>统一部署，治理简单</div><div>独立部署，治理更强</div><div>生产级复杂系统选择分离模板</div></div>
+          <div class="matrix-row" role="row"><div><strong>长期演进</strong><span>版本、复用、平台资产</span></div><div>适合项目内迭代</div><div>适合沉淀可复用能力</div><div>平台化产品优先分离模板</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-box">
+          <div class="kicker" style="color:rgba(255,255,255,.86)">Template-first Development</div>
+          <h2>用模板沉淀能力，用平台组合业务。</h2>
+          <p>一体化项目模板解决“快速开始”，分离部署模板解决“持续演进”。当二者协同，开发模板就不只是脚手架，而是组织级工程资产。</p>
+          <div class="hero-cta"><a class="btn btn-ghost btn-lg" href="#templates">回到模板库</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-in">
+      <a class="brand" href="#top"><b class="brand-mark">T</b><span>开发模板中心</span></a>
+      <span>© 2026 Development Template Workspace</span>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 8), { passive: true });
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    [...navLinks.querySelectorAll('a')].forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+  </script>
+</body>
+</html>
+

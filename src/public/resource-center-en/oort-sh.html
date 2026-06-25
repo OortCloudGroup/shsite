@@ -1,0 +1,876 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OORT.sh Developer Deployment Platform | Build a Private Global Deployment System</title>
+  <meta name="description" content="OORT.sh is OortCloud's enterprise-grade application hosting and deployment platform for developers. It supports private deployment, helping teams build their own global deployment systems and bring AI coding and Vibe Coding results online faster.">
+  <style>
+    :root{
+      --blue:#1a73e8;
+      --blue-deep:#174ea6;
+      --red:#ea4335;
+      --yellow:#fbbc04;
+      --green:#34a853;
+      --ink:#202124;
+      --muted:#5f6368;
+      --line:#dadce0;
+      --soft-blue:#e8f0fe;
+      --soft-red:#fce8e6;
+      --soft-yellow:#fef7e0;
+      --soft-green:#e6f4ea;
+      --soft-grey:#f8f9fa;
+      --radius:28px;
+      --max:1180px;
+      --shadow-sm:0 1px 3px rgba(60,64,67,.12),0 1px 2px rgba(60,64,67,.08);
+      --shadow-md:0 1px 2px rgba(60,64,67,.1),0 4px 14px rgba(60,64,67,.12);
+      --shadow-lg:0 8px 28px rgba(60,64,67,.16);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Google Sans","Roboto",-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
+      color:var(--ink);
+      background:#ffffff;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.92);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid #ecedef;
+    }
+    .nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:500;font-size:21px;color:var(--ink)}
+    .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+    .logo{
+      width:38px;height:38px;border-radius:50%;
+      display:grid;place-items:center;color:white;font-weight:700;font-size:18px;
+      background:conic-gradient(from 140deg,var(--blue),var(--green),var(--yellow),var(--red),var(--blue));
+    }
+    nav{display:flex;gap:2px;align-items:center}
+    nav a{font-size:15px;color:#3c4043;padding:9px 14px;border-radius:999px;transition:.18s}
+    nav a:hover,nav a.active{background:var(--soft-blue);color:var(--blue)}
+    .nav-cta{display:flex;gap:10px;align-items:center}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:11px 24px;border-radius:999px;font-weight:500;font-size:15px;
+      border:1px solid transparent;transition:.18s;cursor:pointer;white-space:nowrap;font-family:inherit;
+    }
+    .btn.primary{background:var(--blue);color:white}
+    .btn.primary:hover{background:var(--blue-deep);box-shadow:var(--shadow-md)}
+    .btn.ghost{background:white;color:var(--blue);border-color:var(--line)}
+    .btn.ghost:hover{background:var(--soft-blue);border-color:var(--soft-blue)}
+    .btn.text{background:transparent;color:var(--blue);padding-left:8px;padding-right:8px}
+    .btn.text:hover{background:var(--soft-blue)}
+    .menu{display:none;background:white;border:1px solid var(--line);border-radius:12px;width:42px;height:42px;font-size:20px;color:var(--ink)}
+
+    /* Hero */
+    .hero{padding:84px 0 64px;position:relative;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:56px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:999px;background:var(--soft-blue);color:var(--blue);font-weight:500;font-size:14px}
+    .pulse{width:8px;height:8px;border-radius:999px;background:var(--green)}
+    h1{font-size:clamp(40px,5.4vw,62px);line-height:1.12;margin:22px 0 18px;letter-spacing:-.02em;font-weight:500;color:var(--ink)}
+    h1 .grad{color:var(--blue)}
+    .lead{font-size:19px;line-height:1.7;color:var(--muted);margin:0 0 30px;max-width:620px}
+    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 28px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap}
+    .badge{padding:7px 14px;border-radius:999px;background:var(--soft-grey);color:#3c4043;font-size:13px;font-weight:500}
+
+    /* Hero visual - app window mock */
+    .visual{position:relative;min-height:440px;display:grid;place-items:center}
+    .blob{position:absolute;border-radius:50%;filter:blur(6px);z-index:0}
+    .blob.b1{width:300px;height:300px;background:var(--soft-blue);right:-40px;top:-20px}
+    .blob.b2{width:220px;height:220px;background:var(--soft-yellow);left:-30px;bottom:-10px}
+    .blob.b3{width:160px;height:160px;background:var(--soft-green);right:60px;bottom:40px}
+    .window{
+      position:relative;z-index:1;width:100%;max-width:520px;border-radius:24px;
+      background:white;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid #eceef1;
+    }
+    .window-top{height:44px;display:flex;align-items:center;gap:7px;padding:0 16px;background:var(--soft-grey);border-bottom:1px solid #eceef1}
+    .window-top i{width:11px;height:11px;border-radius:50%;display:block}
+    .window-top i:nth-child(1){background:var(--red)}.window-top i:nth-child(2){background:var(--yellow)}.window-top i:nth-child(3){background:var(--green)}
+    .window-top .url{margin-left:12px;flex:1;background:white;border-radius:999px;height:24px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:var(--muted)}
+    .codebox{background:#202124;color:#e8eaed;padding:20px;font-family:"Roboto Mono","SFMono-Regular",Consolas,monospace;font-size:13px;line-height:1.85}
+    .codebox .cmd{color:#8ab4f8}.codebox .ok{color:#81c995}.codebox .note{color:#fdd663}
+    .deploy-list{padding:16px 18px;display:grid;gap:10px;background:white}
+    .mini{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--soft-grey);border-radius:14px;padding:12px 14px}
+    .mini strong{font-size:14px;font-weight:500}.mini span{font-size:12px;color:var(--muted)}
+    .bar{width:96px;height:7px;background:#e3e6ea;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px}
+    .bar i.c1{background:var(--blue)}.bar i.c2{background:var(--green)}.bar i.c3{background:var(--yellow)}
+    .w92{width:92%}.w76{width:76%}.w64{width:64%}
+
+    /* Sections */
+    section{padding:80px 0}
+    .center{text-align:center;max-width:760px;margin:0 auto 48px}
+    .kicker{color:var(--blue);font-weight:500;font-size:15px;margin-bottom:12px}
+    h2{font-size:clamp(28px,3.6vw,40px);line-height:1.2;margin:0 0 16px;letter-spacing:-.015em;font-weight:500;color:var(--ink)}
+    .center p,.section-sub{color:var(--muted);font-size:18px;line-height:1.7;margin:0}
+
+    .grid{display:grid;gap:24px}
+    .grid.cols-4{grid-template-columns:repeat(4,1fr)}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+
+    /* Product-icon cards */
+    .pcard{background:white;border:1px solid #eceef1;border-radius:20px;padding:28px;transition:.2s;text-align:left}
+    .pcard:hover{box-shadow:var(--shadow-md);transform:translateY(-4px)}
+    .picon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;margin-bottom:18px;font-size:25px}
+    .picon.blue{background:var(--soft-blue)}.picon.red{background:var(--soft-red)}.picon.yellow{background:var(--soft-yellow)}.picon.green{background:var(--soft-green)}
+    .pcard h3{margin:0 0 9px;font-size:19px;font-weight:500;letter-spacing:-.01em}
+    .pcard p{margin:0;color:var(--muted);line-height:1.65;font-size:15px}
+
+    /* Alternating feature blocks */
+    .feature-row{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin:0 0 30px}
+    .feature-row:nth-child(even) .feature-text{order:2}
+    .feature-tag{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--blue);margin-bottom:14px}
+    .feature-tag .dot{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:15px}
+    .feature-text h3{font-size:clamp(24px,3vw,32px);font-weight:500;margin:0 0 14px;line-height:1.25;letter-spacing:-.015em}
+    .feature-text p{color:var(--muted);font-size:17px;line-height:1.7;margin:0 0 18px}
+    .feature-text ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+    .feature-text li{display:flex;gap:10px;align-items:flex-start;color:#3c4043;font-size:15px;line-height:1.6}
+    .feature-text li::before{content:"";flex:none;width:20px;height:20px;border-radius:50%;margin-top:1px;background:var(--soft-green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334a853' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/12px no-repeat}
+    .feature-art{border-radius:24px;padding:36px;min-height:300px;display:grid;align-content:center;gap:14px;box-shadow:var(--shadow-sm)}
+    .feature-art.blue{background:linear-gradient(160deg,#e8f0fe,#d2e3fc)}
+    .feature-art.green{background:linear-gradient(160deg,#e6f4ea,#ceead6)}
+    .feature-art.yellow{background:linear-gradient(160deg,#fef7e0,#feefc3)}
+    .art-pill{background:white;border-radius:14px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow-sm)}
+    .art-pill b{font-size:15px;font-weight:500}.art-pill small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+    .art-chip{font-size:12px;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--soft-blue);color:var(--blue);white-space:nowrap}
+
+    /* Workflow steps */
+    .steps{counter-reset:step;display:grid;gap:20px}
+    .step{display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:flex-start;background:white;border:1px solid #eceef1;border-radius:20px;padding:26px 28px;transition:.2s}
+    .step:hover{box-shadow:var(--shadow-md)}
+    .num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:700;color:white}
+    .step:nth-child(1) .num{background:var(--blue)}.step:nth-child(2) .num{background:var(--red)}.step:nth-child(3) .num{background:var(--yellow);color:#202124}.step:nth-child(4) .num{background:var(--green)}.step:nth-child(5) .num{background:var(--blue-deep)}
+    .step h3{margin:0 0 8px;font-size:20px;font-weight:500}
+    .step p{margin:0 0 12px;color:var(--muted);line-height:1.65;font-size:15px}
+    .chipline{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{font-size:12px;font-weight:500;color:#3c4043;background:var(--soft-grey);padding:6px 12px;border-radius:999px}
+
+    /* Soft sections */
+    .soft{background:var(--soft-grey)}
+    .soft-blue{background:var(--soft-blue)}
+
+    /* CTA */
+    .cta{background:var(--blue);color:white;border-radius:32px;padding:60px 48px;text-align:center;position:relative;overflow:hidden}
+    .cta:before{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.1)}
+    .cta:after{content:"";position:absolute;left:-50px;bottom:-70px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.08)}
+    .cta h2{color:white;position:relative}
+    .cta p{color:#d2e3fc;max-width:640px;margin:0 auto 26px;font-size:18px;line-height:1.7;position:relative}
+    .cta .btn.primary{background:white;color:var(--blue);position:relative}
+    .cta .btn.primary:hover{background:#f1f3f4}
+    .cta .btn.ghost{background:transparent;color:white;border-color:rgba(255,255,255,.5);position:relative}
+    .cta .btn.ghost:hover{background:rgba(255,255,255,.12)}
+
+    /* Resources */
+    .resource{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:22px 24px;background:white;border:1px solid #eceef1;border-radius:18px;transition:.2s}
+    .resource:hover{box-shadow:var(--shadow-md)}
+    .resource strong{display:block;margin-bottom:5px;font-weight:500;font-size:16px}
+    .resource span{color:var(--muted);font-size:14px}
+    .resource a{color:var(--blue);font-weight:500;white-space:nowrap}
+
+    /* Footer */
+    footer{padding:48px 0;border-top:1px solid #ecedef;color:var(--muted)}
+    .footer-grid{display:flex;justify-content:space-between;gap:24px;align-items:flex-start}
+    .source{font-size:13px;line-height:1.8;max-width:720px}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:.6s ease}.reveal.show{opacity:1;transform:none}
+    #topBtn{position:fixed;right:22px;bottom:22px;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:white;box-shadow:var(--shadow-md);display:none;place-items:center;font-size:20px;z-index:60;cursor:pointer;color:var(--blue)}
+    #topBtn.show{display:grid}
+
+    @media (max-width: 980px){
+      nav{display:none;position:absolute;left:18px;right:18px;top:74px;background:white;border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:var(--shadow-lg);flex-direction:column;align-items:stretch}
+      nav.open{display:flex}nav a{padding:13px 14px}.menu{display:block}.nav-cta .btn{display:none}
+      .hero-grid{grid-template-columns:1fr;gap:40px}.visual{min-height:380px}
+      .grid.cols-4,.grid.cols-3{grid-template-columns:repeat(2,1fr)}
+      .feature-row{grid-template-columns:1fr;gap:28px}.feature-row:nth-child(even) .feature-text{order:0}
+      .footer-grid{display:block}
+    }
+    @media (max-width: 640px){
+      .wrap{padding:0 18px}.hero{padding:54px 0 40px}.lead{font-size:17px}
+      .grid.cols-4,.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}
+      .blob{display:none}section{padding:56px 0}.cta{padding:40px 24px}
+      .resource{display:block}.resource a{display:inline-block;margin-top:10px}
+      .step{grid-template-columns:1fr}.step .num{margin-bottom:4px}
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+    </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+            <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh website">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <nav id="nav">
+        <a href="#overview">Overview</a>
+        <a href="#capabilities">Core Features</a>
+        <a href="#workflow">Deploy Workflow</a>
+        <a href="#ecosystem">Dev Ecosystem</a>
+        <a href="#support">Support</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn text" href="https://github.com/OortCloudGroup" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn primary" href="https://sh.oortcloudsmart.com/zh/" target="_blank" rel="noopener">Visit Platform</a>
+        <button class="menu" id="menuBtn" aria-label="Expand menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="reveal show">
+          <div class="eyebrow"><span class="pulse"></span> OortCloud Developer Deployment Platform</div>
+          <h1>Build your own<br><span class="grad">private global deployment system</span></h1>
+          <p class="lead">OORT.sh is an application hosting platform for developers and enterprise teams. After downloading and deploying it to global servers, teams can bring self-developed applications, AI coding results, and Vibe Coding projects into a unified release pipeline, creating controllable, scalable, and privatized global deployment capabilities.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="https://sh.oortcloudsmart.com/zh/" target="_blank" rel="noopener">Start for Free</a>
+            <a class="btn ghost" href="#workflow">Explore the Workflow</a>
+          </div>
+          <div class="badges" aria-label="Product keywords">
+            <span class="badge">Enterprise Application Hosting</span>
+            <span class="badge">Private Deployment</span>
+            <span class="badge">Built for Vibe Coding</span>
+            <span class="badge">Railway / Vercel-like Experience</span>
+          </div>
+        </div>
+        <div class="visual reveal show" aria-label="OORT.sh deployment platform diagram">
+          <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+          <div class="window">
+            <div class="window-top"><i></i><i></i><i></i><span class="url">oortsh · deployment console</span></div>
+            <div class="codebox">
+              <div><span class="cmd">$</span> oortsh init private-cloud</div>
+              <div><span class="cmd">$</span> connect servers --region global</div>
+              <div><span class="note">→</span> build app / ai-agent / vibe-project</div>
+              <div><span class="ok">✓</span> deploy to your own worldwide infrastructure</div>
+            </div>
+            <div class="deploy-list">
+              <div class="mini"><div><strong>Application Hosting</strong><br><span>Unified release for Web, APIs, and backend services</span></div><div class="bar"><i class="c1 w92"></i></div></div>
+              <div class="mini"><div><strong>Private Deployment</strong><br><span>Deploy the platform to your own server system</span></div><div class="bar"><i class="c2 w76"></i></div></div>
+              <div class="mini"><div><strong>Open Capabilities</strong><br><span>Access Chat, Meet, Drive, Classroom, and more</span></div><div class="bar"><i class="c3 w64"></i></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="wrap">
+        <div class="center reveal">
+          <div class="kicker">Overview</div>
+          <h2>Not just managed deployment, but a deployment foundation your team owns</h2>
+          <p>The core value of OORT.sh is helping enterprises keep deployment capabilities inside their own infrastructure: the platform can be deployed privately, applications can be hosted centrally, and development results can be distributed across a global server system.</p>
+        </div>
+        <div class="grid cols-4">
+          <article class="pcard reveal"><div class="picon blue">🌐</div><h3>Private Global System</h3><p>Deploy OORT.sh to globally selected enterprise servers to form an owned application release and access network.</p></article>
+          <article class="pcard reveal"><div class="picon red">🚀</div><h3>Develop and Release</h3><p>Carry AI coding, Vibe Coding, and conventional R&D outputs from code to production with fewer intermediate steps.</p></article>
+          <article class="pcard reveal"><div class="picon yellow">🧩</div><h3>Unified Application Hosting</h3><p>Provide one hosting, configuration, and operations view for Web apps, APIs, backend services, and enterprise applications.</p></article>
+          <article class="pcard reveal"><div class="picon green">🔒</div><h3>Enterprise Control</h3><p>Support private deployment and internal enterprise resource management for teams with strict data, network, and permission requirements.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities" class="soft">
+      <div class="wrap">
+        <div class="center reveal">
+          <div class="kicker">Core Capabilities</div>
+          <h2>Complete capabilities across design, development, deployment, distribution, and operations</h2>
+          <p>OORT.sh centers on application hosting while connecting OortCloud development environments, open capabilities, unified portals, and support systems.</p>
+        </div>
+
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <div class="feature-tag"><span class="dot" style="background:var(--soft-blue)">⚙️</span> Enterprise Application Hosting</div>
+            <h3>As smooth as Railway or Vercel, but better suited to enterprise privatization</h3>
+            <p>Provide a developer-friendly hosting experience centered on application hosting, service release, environment configuration, and runtime management, making production launch simple and controllable.</p>
+            <ul>
+              <li>Unified hosting and release for Web, APIs, and backend services</li>
+              <li>Clear visibility into environment configuration, release, and rollback</li>
+              <li>Better aligned with enterprise private deployment and compliance requirements</li>
+            </ul>
+          </div>
+          <div class="feature-art blue">
+            <div class="art-pill"><div><b>my-app · production</b><small>Deployed to 3 regions</small></div><span class="art-chip">Running</span></div>
+            <div class="art-pill"><div><b>api-service</b><small>Auto build + release</small></div><span class="art-chip">Online</span></div>
+            <div class="art-pill"><div><b>vibe-prototype</b><small>Preview environment</small></div><span class="art-chip">Preview</span></div>
+          </div>
+        </div>
+
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <div class="feature-tag"><span class="dot" style="background:var(--soft-green)">🧠</span> Built for AI Coding Results</div>
+            <h3>Bring AI coding and Vibe Coding outputs online faster</h3>
+            <p>Designed for the high-frequency project output created by AI-assisted development, helping prototypes, tools, agents, and business applications become usable faster while collaborating with OortCloud AI Studio and testing tools.</p>
+            <ul>
+              <li>Support frequent prototypes and utility applications</li>
+              <li>Integrate with AI Studio, templates, and testing tools</li>
+              <li>Reduce intermediate steps from code to production</li>
+            </ul>
+          </div>
+          <div class="feature-art green">
+            <div class="art-pill"><div><b>AI Studio</b><small>Generates application modules</small></div><span class="art-chip">Connected</span></div>
+            <div class="art-pill"><div><b>Vibe Coding</b><small>Code → runnable app</small></div><span class="art-chip">Ready</span></div>
+            <div class="art-pill"><div><b>One-click Deploy</b><small>Push to global nodes</small></div><span class="art-chip">Deploy</span></div>
+          </div>
+        </div>
+
+        <div class="feature-row reveal">
+          <div class="feature-text">
+            <div class="feature-tag"><span class="dot" style="background:var(--soft-yellow)">🔌</span> Open Capabilities and Multi-end Distribution</div>
+            <h3>Integrate collaboration capabilities and connect multi-end delivery</h3>
+            <p>Use foundational open capabilities such as Chat, Meet, Drive, and Classroom to provide collaboration, content, and communication services for applications, then distribute through unified portals, app markets, Android, iOS, HarmonyOS, Desktop, and other forms.</p>
+            <ul>
+              <li>Use open capabilities as foundational application modules</li>
+              <li>Publish through unified portals and app markets</li>
+              <li>Cover multi-terminal delivery and access entrances</li>
+            </ul>
+          </div>
+          <div class="feature-art yellow">
+            <div class="art-pill"><div><b>Open Capabilities</b><small>Chat · Meet · Drive · Classroom</small></div><span class="art-chip">Integrated</span></div>
+            <div class="art-pill"><div><b>Multi-end Distribution</b><small>Android · iOS · HarmonyOS · Desktop</small></div><span class="art-chip">4 Ends</span></div>
+            <div class="art-pill"><div><b>Unified Portal</b><small>App market display and distribution</small></div><span class="art-chip">Published</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="wrap">
+        <div class="center reveal">
+          <div class="kicker">Deployment Workflow</div>
+          <h2>From software design to global deployment</h2>
+          <p>Organize capabilities around the real developer path: design first, develop next, install OORT.sh into the target server system, then release, distribute, and operate continuously.</p>
+        </div>
+        <div class="steps">
+          <div class="step reveal"><div class="num">1</div><div><h3>Design the Application and Deployment Goals</h3><p>Clarify application type, target users, access regions, privatization requirements, and team collaboration methods to form the blueprint from product to delivery.</p><div class="chipline"><span class="chip">Product Design</span><span class="chip">Architecture Planning</span><span class="chip">Security Boundaries</span></div></div></div>
+          <div class="step reveal"><div class="num">2</div><div><h3>Develop and Test</h3><p>Use AI Studio, templates, testing tools, and open capabilities to complete development and turn AI-generated code into runnable applications.</p><div class="chipline"><span class="chip">AI Coding</span><span class="chip">Vibe Coding</span><span class="chip">Testing Tools</span></div></div></div>
+          <div class="step reveal"><div class="num">3</div><div><h3>Deploy OORT.sh</h3><p>Download OORT.sh and deploy it to enterprise-owned or designated global servers to build a dedicated global deployment control plane.</p><div class="chipline"><span class="chip">Private Deployment</span><span class="chip">Global Servers</span><span class="chip">Unified Control</span></div></div></div>
+          <div class="step reveal"><div class="num">4</div><div><h3>Host Applications and Services</h3><p>Connect Web apps, APIs, backend services, agents, or business systems to OORT.sh for configuration, release, rollback, and runtime status management.</p><div class="chipline"><span class="chip">Application Hosting</span><span class="chip">Service Release</span><span class="chip">Runtime Management</span></div></div></div>
+          <div class="step reveal"><div class="num">5</div><div><h3>Distribute, Operate, and Support</h3><p>Reach users through unified portals, app markets, multi-end entrances, and support systems, then continuously optimize with customer service, community Q&A, tickets, and documentation.</p><div class="chipline"><span class="chip">App Market</span><span class="chip">Operations Promotion</span><span class="chip">AI Customer Service</span></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ecosystem" class="soft-blue">
+      <div class="wrap">
+        <div class="center reveal">
+          <div class="kicker">Developer Ecosystem</div>
+          <h2>Works with the OortCloud product ecosystem</h2>
+          <p>OORT.sh is more than a deployment panel. It connects OortCloud software development, enterprise collaboration, AI automation, and application distribution.</p>
+        </div>
+        <div class="grid cols-3">
+          <article class="pcard reveal"><div class="picon blue">💻</div><h3>OortCloud AI Studio</h3><p>Built for AI coding and development environments, helping developers complete application prototypes, feature modules, and intelligent capability construction faster.</p></article>
+          <article class="pcard reveal"><div class="picon red">🤖</div><h3>OORT.AI</h3><p>Enterprise automation agent capabilities covering AI office work, AI coding, AI operations, AI customer service, and Agent creation and management.</p></article>
+          <article class="pcard reveal"><div class="picon yellow">🏢</div><h3>Workup Super App</h3><p>Integrates instant messaging, approvals, classroom, cloud drive, email, apps, sub-apps, and mini programs to provide a unified enterprise entrance.</p></article>
+          <article class="pcard reveal"><div class="picon green">💬</div><h3>Chat / Meet</h3><p>Communication and meeting capabilities can serve as the collaboration foundation for enterprise applications, giving business systems built-in organization communication entrances.</p></article>
+          <article class="pcard reveal"><div class="picon blue">☁️</div><h3>Drive / Classroom</h3><p>Content storage, courses, and knowledge service capabilities can combine with application scenarios to support materials, training, and knowledge operations.</p></article>
+          <article class="pcard reveal"><div class="picon red">🧭</div><h3>Unified Portal and App Market</h3><p>Handle display, distribution, and access management after application release, forming one entrance for internal and ecosystem applications.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios">
+      <div class="wrap">
+        <div class="center reveal">
+          <div class="kicker">Target Teams</div>
+          <h2>For teams that need their own deployment capabilities</h2>
+          <p>When a team wants not only to deploy applications, but also to own the deployment platform, runtime environment, global nodes, and enterprise permissions, OORT.sh delivers stronger value.</p>
+        </div>
+        <div class="grid cols-4">
+          <article class="pcard reveal"><div class="picon blue">🧑‍💻</div><h3>AI Coding Teams</h3><p>Teams producing frequent tools and prototypes that need fast hosting, validation, sharing, and continuous iteration.</p></article>
+          <article class="pcard reveal"><div class="picon red">🏭</div><h3>Enterprise IT Teams</h3><p>Teams that need a private, permission-controlled, and network-controlled application release and operations system.</p></article>
+          <article class="pcard reveal"><div class="picon yellow">🌍</div><h3>Overseas Business Teams</h3><p>Teams that need to deploy self-developed products to multi-region servers to improve access experience and delivery efficiency.</p></article>
+          <article class="pcard reveal"><div class="picon green">🧱</div><h3>Software Product Teams</h3><p>Teams that want to bring standardized products, industry applications, and customer projects into a unified release process.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="support" class="soft">
+      <div class="wrap">
+        <div class="center reveal">
+          <div class="kicker">Support System</div>
+          <h2>A developer growth path from beginner to expert</h2>
+          <p>Around the developer resource center, OORT.sh can organize exploration, design, development, distribution, promotion, ecosystem, and support modules to reduce team learning and delivery costs.</p>
+        </div>
+        <div class="grid cols-2">
+          <div class="pcard reveal"><div class="picon blue">🪜</div><h3>Four-level Ecosystem Path</h3><p>From entry level to advanced, professional, and expert levels, the path unfolds according to how deeply teams use platform capabilities, helping developers at every stage find suitable practices.</p></div>
+          <div class="pcard reveal"><div class="picon green">🛟</div><h3>Support and Service Entrances</h3><p>Provide AI customer service, community Q&A, online tickets, guides, documentation, skill improvement, and other support methods to help developers solve practical issues from deployment to operations.</p></div>
+        </div>
+        <div style="height:36px"></div>
+        <div class="cta reveal">
+          <h2>Turn every development output into sustainable product capability</h2>
+          <p>OORT.sh is built for long-term construction: download and deploy the platform, connect your own servers, and link development, hosting, distribution, and support so enterprises own their application globalization release infrastructure.</p>
+          <div class="hero-actions" style="justify-content:center"><a class="btn primary" href="https://sh.oortcloudsmart.com/zh/" target="_blank" rel="noopener">Visit OORT.sh</a><a class="btn ghost" href="#overview">Back to Overview</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources">
+      <div class="wrap">
+        <div class="center reveal">
+          <div class="kicker">Developer Entrances</div>
+          <h2>Start your deployment journey</h2>
+          <p>Use the following entrances to continue viewing product pages, the company open-source organization, and contact information.</p>
+        </div>
+        <div class="grid cols-2">
+          <div class="resource reveal"><div><strong>OORT.sh Chinese Product Page</strong><span>OORT.SH hosting platform for developers.</span></div><a href="https://sh.oortcloudsmart.com/zh/" target="_blank" rel="noopener">Open →</a></div>
+          <div class="resource reveal"><div><strong>OortCloud GitHub</strong><span>View OortCloudGroup open-source resources.</span></div><a href="https://github.com/OortCloudGroup" target="_blank" rel="noopener">Open →</a></div>
+          <div class="resource reveal"><div><strong>Contact Email</strong><span>For cooperation, consulting, and product communication.</span></div><a href="mailto:cnzhuhai@gmail.com">Send Email →</a></div>
+          <div class="resource reveal"><div><strong>Resource Center Suggestions</strong><span>Explore, design, develop, distribute, promote, join the ecosystem, and get support.</span></div><a href="#support">View →</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+            <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh website">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <div class="source">Source: OORT.sh product page (sh.oortcloudsmart.com/zh/), user-provided product descriptions, and resource center information.<br>© OortCloud. This page is an English static product introduction page and can be opened offline directly.</div>
+    </div>
+  </footer>
+  <button id="topBtn" aria-label="Back to top">↑</button>
+
+  <script>
+    const nav = document.querySelector('#nav');
+    const menuBtn = document.querySelector('#menuBtn');
+    const links = [...document.querySelectorAll('nav a')];
+    const topBtn = document.querySelector('#topBtn');
+    menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+    links.forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+        }
+      });
+    }, { rootMargin: '-38% 0px -52% 0px', threshold: 0 });
+    sections.forEach(sec => navObserver.observe(sec));
+
+    window.addEventListener('scroll', () => {
+      topBtn.classList.toggle('show', window.scrollY > 700);
+    }, { passive:true });
+    topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+  </script>
+</body>
+</html>
+

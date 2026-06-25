@@ -1,0 +1,1150 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OORT.sh Private Cloud Capability Development Platform</title>
+  <meta name="description" content="A software system development page based on OORT.sh private cloud capabilities, covering intensive development, service-oriented reuse, AI Studio development environments, multi-environment deployment, and enterprise-grade production readiness." />
+  <style>
+    :root {
+      --blue: #1a73e8;
+      --blue-2: #174ea6;
+      --green: #34a853;
+      --yellow: #fbbc04;
+      --red: #ea4335;
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #dadce0;
+      --soft: #f8fafd;
+      --card: #ffffff;
+      --shadow: 0 18px 45px rgba(60, 64, 67, .12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Google Sans", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.65;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,.88);
+      border-bottom: 1px solid rgba(218,220,224,.75);
+    }
+
+    .nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: conic-gradient(from 210deg, var(--blue), var(--green), var(--yellow), var(--red), var(--blue));
+      box-shadow: 0 8px 22px rgba(26,115,232,.22);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 26px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover { color: var(--blue); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: .2s ease;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(26,115,232,.25);
+    }
+
+    .btn-primary:hover { background: var(--blue-2); transform: translateY(-1px); }
+
+    .btn-secondary {
+      color: var(--blue);
+      border-color: var(--line);
+      background: #fff;
+    }
+
+    .btn-secondary:hover { border-color: var(--blue); background: #f6fafe; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% 20%, rgba(66,133,244,.18), transparent 30%),
+        radial-gradient(circle at 18% 34%, rgba(52,168,83,.12), transparent 24%),
+        linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 86px 24px 74px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(360px, .94fr);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.78);
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(52,168,83,.12);
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.06;
+      letter-spacing: -.055em;
+      font-weight: 750;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-lead {
+      margin: 0 0 30px;
+      color: var(--muted);
+      font-size: 20px;
+      max-width: 660px;
+    }
+
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .hero-visual {
+      position: relative;
+      min-height: 510px;
+    }
+
+    .suite-card {
+      position: absolute;
+      inset: 26px 0 auto auto;
+      width: min(100%, 480px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .window-head {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .traffic { width: 12px; height: 12px; border-radius: 50%; }
+    .traffic.red { background: #ff6d62; }
+    .traffic.yellow { background: #f9c74f; }
+    .traffic.green { background: #57cc99; }
+
+    .studio {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .studio-row {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      align-items: center;
+      gap: 14px;
+      padding: 14px;
+      border: 1px solid #eef0f3;
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .icon.blue { background: var(--blue); }
+    .icon.green { background: var(--green); }
+    .icon.yellow { background: var(--yellow); color: #3c4043; }
+    .icon.red { background: var(--red); }
+
+    .studio-row strong { display: block; font-size: 15px; }
+    .studio-row span { color: var(--muted); font-size: 13px; }
+    .pill { color: var(--blue); background: #e8f0fe; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 700; }
+
+    .float-chip {
+      position: absolute;
+      left: 0;
+      bottom: 58px;
+      width: 250px;
+      border-radius: 22px;
+      padding: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .float-chip b { display: block; font-size: 38px; line-height: 1; color: var(--blue); }
+    .float-chip span { color: var(--muted); font-size: 14px; }
+
+    section { padding: 86px 24px; }
+
+    .container { max-width: 1180px; margin: 0 auto; }
+
+    .section-head {
+      max-width: 790px;
+      margin-bottom: 42px;
+    }
+
+    .section-kicker {
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 50px);
+      line-height: 1.14;
+      letter-spacing: -.04em;
+      font-weight: 740;
+    }
+
+    .section-desc {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--card);
+      padding: 28px;
+      box-shadow: 0 3px 10px rgba(60,64,67,.04);
+    }
+
+    .card h3 {
+      margin: 18px 0 10px;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: -.02em;
+    }
+
+    .card p { margin: 0; color: var(--muted); }
+
+    .mini-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      background: #e8f0fe;
+    }
+
+    .soft { background: var(--soft); }
+
+    .capability-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .capability-panel {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .capability-panel h3 {
+      font-size: 28px;
+      margin: 0 0 18px;
+      letter-spacing: -.03em;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #3c4043;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .governance {
+      display: grid;
+      grid-template-columns: .86fr 1.14fr;
+      gap: 34px;
+      align-items: center;
+      border-radius: 34px;
+      background: #202124;
+      color: #fff;
+      padding: 44px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .governance::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: rgba(66,133,244,.28);
+    }
+
+    .governance p { color: rgba(255,255,255,.72); }
+
+    .flow {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    .flow-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue);
+      font-weight: 800;
+    }
+
+    .flow-step b { display: block; margin-bottom: 3px; }
+    .flow-step span { color: rgba(255,255,255,.7); font-size: 14px; }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .tool {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: #3c4043;
+      font-weight: 650;
+    }
+
+    .tool::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .env {
+      min-height: 92px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      font-weight: 760;
+      color: #3c4043;
+      box-shadow: 0 2px 8px rgba(60,64,67,.04);
+    }
+
+    .wide-card {
+      margin-top: 24px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #e8f0fe, #e6f4ea 58%, #fef7e0);
+      padding: 36px;
+      border: 1px solid rgba(26,115,232,.16);
+    }
+
+    .features {
+      columns: 3;
+      column-gap: 24px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .features li {
+      break-inside: avoid;
+      margin: 0 0 12px;
+      padding-left: 26px;
+      position: relative;
+      color: #3c4043;
+    }
+
+    .features li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .templates {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .template {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      background: #fff;
+      min-height: 142px;
+    }
+
+    .template b { display: block; font-size: 18px; margin-bottom: 8px; }
+    .template span { color: var(--muted); font-size: 14px; }
+
+    .cta {
+      text-align: center;
+      padding: 96px 24px;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+    }
+
+    .cta-box {
+      max-width: 960px;
+      margin: 0 auto;
+      border-radius: 38px;
+      padding: 56px 34px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 { max-width: 760px; margin: 0 auto; }
+    .cta p { color: var(--muted); max-width: 760px; margin: 18px auto 28px; font-size: 18px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner, .capability-wrap, .governance, .grid-2 { grid-template-columns: 1fr; }
+      .hero-visual { min-height: 480px; }
+      .suite-card { left: 0; margin: auto; }
+      .grid-3, .templates { grid-template-columns: repeat(2, 1fr); }
+      .matrix { grid-template-columns: repeat(3, 1fr); }
+      .features { columns: 2; }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-inner { padding-top: 58px; }
+      .grid-3, .templates { grid-template-columns: 1fr; }
+      .matrix { grid-template-columns: repeat(2, 1fr); }
+      .features { columns: 1; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .governance, .wide-card, .capability-panel { padding: 26px; }
+      .float-chip { position: relative; bottom: auto; margin-top: 24px; width: 100%; }
+      .suite-card { position: relative; inset: auto; width: 100%; }
+      .hero-visual { min-height: auto; }
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+        .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Main navigation">
+            <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh website">
+        <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+      </a>
+      <div class="nav-links">
+        <a href="#platform">Private Cloud</a>
+        <a href="#studio">AI Studio</a>
+        <a href="#production">Prod Ready</a>
+        <a href="#governance">Call Gov</a>
+      </div>
+      <a class="btn btn-primary" href="#cta">Start Intensive Development</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Developed on private cloud capabilities · Continuous software asset accumulation</div>
+          <h1>Move complex system development into a new era of <span class="gradient-text">sharing, decoupling, and services</span></h1>
+          <p class="hero-lead">Built on OORT.sh experience in private-cloud intelligent application delivery, the platform productizes frontend capabilities, backend capabilities, AI development toolchains, multi-environment deployment, and enterprise-grade compliance capabilities to help teams avoid duplicate construction and reuse software assets through shared contribution.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#platform">Explore Platform Capabilities</a>
+            <a class="btn btn-secondary" href="#studio">View AI Studio</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Development platform capability diagram">
+          <div class="suite-card">
+            <div class="window-head">
+              <span class="traffic red"></span><span class="traffic yellow"></span><span class="traffic green"></span>
+            </div>
+            <div class="studio">
+              <div class="studio-row"><div class="icon blue">FE</div><div><strong>Frontend Capability Set</strong><span>Reuse components, pages, SDKs, and permission access</span></div><span class="pill">Shared</span></div>
+              <div class="studio-row"><div class="icon green">BE</div><div><strong>Backend Capability Set</strong><span>Reuse microservices, APIs, gateways, and data capabilities</span></div><span class="pill">Service-based</span></div>
+              <div class="studio-row"><div class="icon yellow">AI</div><div><strong>OortCloud AI Studio</strong><span>Multi-agent CLI and engineering development environment</span></div><span class="pill">Intelligent</span></div>
+              <div class="studio-row"><div class="icon red">Ops</div><div><strong>Multi-environment Deployment</strong><span>DEV / SIT / UAT / STAGING / PROD / COB</span></div><span class="pill">Controlled</span></div>
+            </div>
+          </div>
+          <div class="float-chip"><b>1+N</b><span>One private-cloud capability foundation supports rapid production delivery for N types of business systems.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platform">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Private Cloud Capability Platform</div>
+          <h2>Intensive and cost-efficient development on private cloud capabilities</h2>
+          <p class="section-desc">For public safety, enterprise digitalization, and intelligent application scenarios, common engineering capabilities are accumulated as reusable software assets to reduce siloed systems and duplicated construction.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card"><div class="mini-icon">🏗️</div><h3>Intensive Construction</h3><p>Unify infrastructure, development standards, capability catalogs, and asset management so project teams can reuse validated capabilities before rebuilding the same modules.</p></article>
+          <article class="card"><div class="mini-icon">♻️</div><h3>Software Asset Accumulation</h3><p>Continuously accumulate components, services, APIs, templates, data models, and industry experience into an organization-level asset pool that becomes more complete with every use.</p></article>
+          <article class="card"><div class="mini-icon">🤝</div><h3>Shared Contribution and Reuse</h3><p>Every project is both a capability consumer and contributor. Proven practices are shared through the platform and fed back into future project delivery.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Layered & Service-oriented</div>
+          <h2>Shared, decoupled, layered, and service-oriented development</h2>
+          <p class="section-desc">Break complex systems into capability layers with clear boundaries: frontend teams reuse experience and interaction assets, backend teams reuse business and data capabilities, and the platform centrally governs invocation relationships.</p>
+        </div>
+        <div class="capability-wrap">
+          <div class="capability-panel">
+            <h3>Frontend Capability Set</h3>
+            <p>Provide frontend teams with callable, composable, and reusable UI, business component, and SDK capabilities for rapid access to unified portals, permission systems, organization structures, notifications, maps/GIS, visualization, low-code pages, and AIGC interactions.</p>
+            <div class="tag-list">
+              <span class="tag">Enterprise Component Library</span><span class="tag">Unified Login</span><span class="tag">Permission Menus</span><span class="tag">GIS Maps</span><span class="tag">Data Visualization</span><span class="tag">AIGC Interaction</span><span class="tag">Mini Program Capabilities</span><span class="tag">Low-code Pages</span>
+            </div>
+          </div>
+          <div class="capability-panel">
+            <h3>Backend Capability Set</h3>
+            <p>Provide backend teams with governable services, APIs, data, and AI capabilities that can be reused through APIs, SDKs, messages, and task orchestration to support rapid construction and stable operation of complex business systems.</p>
+            <div class="tag-list">
+              <span class="tag">Microservice Capabilities</span><span class="tag">API Gateway</span><span class="tag">Business Middle Platform</span><span class="tag">Data Services</span><span class="tag">AI Agent</span><span class="tag">Model Training</span><span class="tag">Workflow Engine</span><span class="tag">Audit Logs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="governance">
+      <div class="container">
+        <div class="governance">
+          <div>
+            <div class="section-kicker" style="color:#8ab4f8">Governed Reuse</div>
+            <h2>Capabilities can be shared, but calls must be governable and controlled</h2>
+            <p>The platform centrally governs capability calls: who can discover, apply, approve, and invoke capabilities; how much is invoked; and whether usage is compliant are all tracked end to end. Sharing does not mean losing control—it means more efficient reuse under clear rules.</p>
+          </div>
+          <div class="flow">
+            <div class="flow-step"><div class="flow-num">1</div><div><b>Capability Publishing</b><span>The capability provider publishes descriptions, APIs, versions, permission scopes, SLAs, and usage examples.</span></div></div>
+            <div class="flow-step"><div class="flow-num">2</div><div><b>Application Approval</b><span>The caller submits the purpose, project, environment, data scope, and quota request, then approval is routed according to rules.</span></div></div>
+            <div class="flow-step"><div class="flow-num">3</div><div><b>Authorized Invocation</b><span>After approval, credentials, permission policies, and call quotas are issued, and frontend/backend teams integrate according to standards.</span></div></div>
+            <div class="flow-step"><div class="flow-num">4</div><div><b>Monitoring and Audit</b><span>Call logs, performance metrics, anomaly alerts, and compliance audits are continuously recorded for traceability and optimization.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="studio" class="soft">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">OortCloud AI Studio</div>
+          <h2>An AI coding development environment for real engineering delivery</h2>
+          <p class="section-desc">OortCloud AI Studio supports multiple AI coding agent development tools and brings requirement understanding, code generation, engineering transformation, debugging, verification, deployment, and release into a unified workspace.</p>
+          <div class="tools" aria-label="Supported AI CLI tools">
+            <span class="tool">OortCode CLI</span><span class="tool">ClawCode CLI</span><span class="tool">Qoder CLI</span><span class="tool">Codex CLI</span><span class="tool">Gemini CLI</span><span class="tool">OpenCode CLI</span><span class="tool">ClaudeCode CLI</span>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="card"><div class="mini-icon">🧠</div><h3>AI-assisted Engineering Development</h3><p>Enable agents to understand project structure, business standards, and delivery goals, assisting with code generation, refactoring, testing, documentation, and issue diagnosis.</p></article>
+          <article class="card"><div class="mini-icon">🧩</div><h3>Unified Development Workspace</h3><p>Organize R&D workflows around projects, frontend applications, backend services, AI Agents, websites, mini programs, and other objects to reduce environment fragmentation.</p></article>
+          <article class="card"><div class="mini-icon">🚀</div><h3>Closed Loop from Development to Production</h3><p>Connect templates, code, builds, deployment, configuration, approvals, and runtime observability so AI-generated software can truly go online and be operated.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Configurable Environments</div>
+          <h2>Configurable deployment environments aligned with enterprise release workflows</h2>
+          <p class="section-desc">Cover multiple stages from development and debugging to production operation and close-of-business processing, with permission isolation, configuration differences, release approvals, and quality gates.</p>
+        </div>
+        <div class="matrix">
+          <div class="env">DEV</div><div class="env">SIT</div><div class="env">UAT</div><div class="env">STAGING</div><div class="env">PROD</div><div class="env">COB</div>
+        </div>
+        <div class="wide-card">
+          <h3 style="margin:0;font-size:26px;letter-spacing:-.02em">Covers a wide range of development capabilities</h3>
+          <ul class="features">
+            <li>Project management and engineering scaffolding</li><li>Frontend application and component development</li><li>Backend service and microservice development</li><li>AI Agent orchestration development</li><li>Enterprise website and portal development</li><li>Mobile and mini program development</li><li>Low-code / no-code application construction</li><li>Data services and data governance</li><li>GIS maps and spatial analysis</li><li>Model annotation and training</li><li>AIGC content generation capabilities</li><li>Unified operations and observability capabilities</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="production" class="soft">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Production-ready Templates</div>
+          <h2>Rich enterprise software templates that help development truly reach production</h2>
+          <p class="section-desc">Go beyond demo code generation with permission systems, business system integration, compliance auditing, operations and maintenance, and long-term evolution for real organizations.</p>
+        </div>
+        <div class="templates">
+          <div class="template"><b>Permissions and Organization Template</b><span>Users, roles, organizations, menus, data permissions, single sign-on, and unified authentication.</span></div>
+          <div class="template"><b>Business System Template</b><span>Workflows, forms, ledgers, tasks, messages, statistical analysis, and portal integration.</span></div>
+          <div class="template"><b>AI Application Template</b><span>Agents, knowledge bases, model invocation, prompt management, content generation, and review.</span></div>
+          <div class="template"><b>Compliance Operations Template</b><span>Audit logs, approval flows, environment release, monitoring alerts, backup and recovery, and security policies.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="cta">
+      <div class="cta-box">
+        <div class="section-kicker">Key Advantage</div>
+        <h2>Productize complex technology with OORT.sh deep engineering capabilities</h2>
+        <p>The key advantage of building software systems on OORT.sh is that private cloud capabilities, engineering toolchains, AI coding, enterprise templates, deployment operations, and security compliance are packaged into usable product capabilities, solving challenges in installation, deployment, integration, production launch, and continuous evolution.</p>
+        <a class="btn btn-primary" href="#top">Back to Top</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© 2026 OORT.sh Private Cloud Capability Development</span>
+      <span>Intensive · Cost-efficient · Shared reuse · Service-oriented development</span>
+    </div>
+  </footer>
+</body>
+</html>
+

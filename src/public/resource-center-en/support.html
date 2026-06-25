@@ -1,0 +1,1029 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OORT.sh · Support | AI Customer Service · Community Q&A · Online Tickets · Guides · Skill Development</title>
+    <meta name="description" content="OORT.sh Support Center — AI customer service is online 24/7, community Q&A enables mutual support, online tickets provide professional service, guides and documentation support self-service lookup, and learning paths help you progress from beginner to expert.">
+    <style>
+    :root{
+        --blue:#1a73e8;--blue-bg:#e8f0fe;--red:#ea4335;--red-bg:#fce8e6;
+        --yellow:#fbbc04;--yellow-bg:#fef7e0;--green:#34a853;--green-bg:#e6f4ea;
+        --purple:#9334e6;--purple-bg:#f3e8fd;--orange:#ea8600;--orange-bg:#fef7e0;
+        --ink:#202124;--ink-soft:#3c4043;--muted:#5f6368;--line:#dadce0;
+        --bg:#fff;--bg-soft:#f8f9fa;--dark:#202a3c;
+        --r:14px;--r-lg:20px;--r-xl:28px;
+        --s1:0 1px 3px rgba(60,64,67,.1),0 1px 2px rgba(60,64,67,.06);
+        --s2:0 1px 4px rgba(60,64,67,.12),0 4px 12px rgba(60,64,67,.08);
+        --s3:0 4px 16px rgba(60,64,67,.14),0 8px 28px rgba(60,64,67,.10);
+        --s4:0 8px 28px rgba(60,64,67,.18);
+        --t:.25s ease;--max:1200px;
+        --font:"Google Sans","Inter","Helvetica Neue","PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Arial,sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:80px}
+    body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}svg{display:block}
+    .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:500;line-height:1;padding:10px 22px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;transition:all var(--t);white-space:nowrap}
+    .btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+    .btn:active{transform:scale(.97)}
+    .btn-lg{padding:14px 32px;font-size:15px}
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:var(--s1)}
+    .btn-primary:hover{background:#1557b0;box-shadow:var(--s2);transform:translateY(-2px)}
+    .btn-outline{border-color:var(--line);color:var(--blue);background:#fff}
+    .btn-outline:hover{background:var(--blue-bg);border-color:var(--blue)}
+    .btn-ghost{color:var(--ink-soft);background:transparent;border-color:transparent}
+    .btn-ghost:hover{background:var(--bg-soft)}
+    .btn-white{background:#fff;color:var(--blue)}
+    .btn-white:hover{background:#f1f5ff;transform:translateY(-2px)}
+    .btn-ghost-white{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}
+    .btn-ghost-white:hover{background:rgba(255,255,255,.14);border-color:#fff}
+    .btn-sm{padding:7px 16px;font-size:13px}
+
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:saturate(200%) blur(16px);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+    .navbar.scrolled{border-color:rgba(218,220,224,.7);box-shadow:0 1px 4px rgba(60,64,67,.08)}
+    .nav-in{max-width:var(--max);margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:24px}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:20px}
+    .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+    .brand-dot{color:var(--blue)}
+    .nav-links{display:flex;gap:2px;margin-left:8px}
+    .nav-link{font-size:14px;color:var(--ink-soft);font-weight:500;padding:7px 12px;border-radius:8px;transition:all .2s}
+    .nav-link:hover{background:var(--bg-soft);color:var(--blue)}
+    .nav-link.active{color:var(--blue);background:var(--blue-bg)}
+    .nav-acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+    .nav-toggle span{width:20px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+    .hero{padding:140px 0 80px;overflow:hidden;background:linear-gradient(180deg,#fff,#f8fafc);position:relative}
+    .hero-bg{position:absolute;inset:0;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.3}
+    .b1{width:500px;height:500px;background:#aecbfa;top:-140px;right:-100px}
+    .b2{width:380px;height:380px;background:#cce6d4;bottom:-120px;left:-80px}
+    .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);background:var(--blue-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px}
+    .eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 3px rgba(26,115,232,.15)}
+    .hero-title{font-size:48px;font-weight:700;letter-spacing:-1.5px;line-height:1.12}
+    .grad{background:linear-gradient(135deg,var(--blue),#4285f4 45%,var(--green));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:17px;color:var(--muted);margin:20px 0 28px;max-width:560px;line-height:1.7}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;color:var(--muted)}
+    .hero-badge svg{color:var(--yellow)}
+
+    /* Support hero visual */
+    .support-visual{position:relative;width:100%;max-width:470px;min-height:420px;margin:0 auto;padding:24px;isolation:isolate}
+    .support-visual::before{content:"";position:absolute;inset:18px;border-radius:36px;background:linear-gradient(145deg,rgba(26,115,232,.15),rgba(52,168,83,.1) 48%,rgba(147,52,230,.13));filter:blur(12px);z-index:-2}
+    .support-visual::after{content:"";position:absolute;inset:54px 8px auto auto;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(251,188,4,.28),transparent 68%);z-index:-1}
+    .sv-card{position:relative;overflow:hidden;border:1px solid rgba(218,220,224,.75);border-radius:30px;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);box-shadow:0 28px 70px rgba(26,35,54,.14),0 8px 22px rgba(26,115,232,.08);padding:22px;min-height:360px}
+    .sv-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 6%,rgba(26,115,232,.12),transparent 34%),radial-gradient(circle at 92% 18%,rgba(52,168,83,.12),transparent 30%);pointer-events:none}
+    .sv-top{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+    .sv-agent{display:flex;align-items:center;gap:12px}
+    .sv-avatar{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,var(--blue),#65a7ff);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 10px 24px rgba(26,115,232,.25)}
+    .sv-agent h3{font-size:16px;line-height:1.2}.sv-agent p{font-size:12px;color:var(--muted);margin-top:2px}
+    .sv-live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--green);background:var(--green-bg);padding:6px 10px;border-radius:999px}
+    .sv-live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(52,168,83,.14)}
+    .sv-window{position:relative;border:1px solid rgba(218,220,224,.72);border-radius:22px;background:#fff;box-shadow:var(--s2);padding:16px;margin-bottom:16px}
+    .sv-ticket-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.sv-ticket-head strong{font-size:14px}.sv-ticket-head span{font-size:11px;color:var(--blue);font-weight:700;background:var(--blue-bg);padding:4px 9px;border-radius:999px}
+    .sv-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid rgba(218,220,224,.55)}.sv-row:first-of-type{border-top:0}.sv-row i{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;font-weight:800}.sv-row div{flex:1}.sv-row b{display:block;font-size:13px}.sv-row small{font-size:11px;color:var(--muted)}
+    .sv-blue i{background:var(--blue-bg);color:var(--blue)}.sv-green i{background:var(--green-bg);color:var(--green)}.sv-purple i{background:var(--purple-bg);color:var(--purple)}
+    .sv-metrics{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.sv-metric{border:1px solid rgba(218,220,224,.62);border-radius:16px;background:rgba(255,255,255,.8);padding:12px;text-align:center}.sv-metric b{display:block;font-size:18px;line-height:1;color:var(--ink)}.sv-metric span{display:block;margin-top:6px;font-size:11px;color:var(--muted)}
+    .sv-float{position:absolute;display:flex;align-items:center;gap:8px;border:1px solid rgba(218,220,224,.72);border-radius:16px;background:rgba(255,255,255,.92);box-shadow:var(--s2);padding:10px 12px;font-size:12px;font-weight:700;color:var(--ink-soft)}
+    .sv-float svg{width:16px;height:16px}.sv-f1{left:-4px;top:116px;color:var(--purple)}.sv-f2{right:-4px;bottom:118px;color:var(--orange)}
+
+    .sec{padding:80px 0}
+    .sec-soft{background:linear-gradient(180deg,#f8f9fa,#fff)}
+    .sec-head{max-width:680px;margin:0 auto 48px;text-align:center}
+    .sec-title{font-size:36px;font-weight:700;letter-spacing:-.8px;line-height:1.18}
+    .sec-desc{font-size:17px;color:var(--muted);margin-top:16px;line-height:1.65}
+
+    /* Support channel cards */
+    .ch-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+    .ch-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:28px 18px;text-align:center;transition:transform var(--t),box-shadow var(--t)}
+    .ch-card:hover{transform:translateY(-5px);box-shadow:var(--s3)}
+    .ch-ic{width:52px;height:52px;border-radius:14px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center}
+    .ch-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+    .ch-card p{font-size:12.5px;color:var(--muted);line-height:1.5}
+    .ch-card .ch-btn{display:inline-flex;align-items:center;gap:4px;margin-top:12px;font-size:13px;font-weight:500;color:var(--blue);padding:6px 14px;border-radius:999px;border:1px solid var(--blue-bg);background:var(--blue-bg);transition:all var(--t)}
+    .ch-card .ch-btn:hover{background:var(--blue);color:#fff}
+
+    /* Chat mock */
+    .chat-mock{max-width:560px;margin:0 auto;background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--s2)}
+    .chat-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+    .chat-avatar{width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff}
+    .chat-head h4{font-size:15px;font-weight:600}
+    .chat-head span{font-size:12px;color:var(--green);display:flex;align-items:center;gap:4px}
+    .chat-head span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green)}
+    .chat-body{padding:20px;display:flex;flex-direction:column;gap:12px;min-height:280px}
+    .chat-msg{max-width:80%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5}
+    .chat-bot{background:var(--bg-soft);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+    .chat-user{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+    .chat-input{padding:12px 20px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
+    .chat-input input{flex:1;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px;outline:none;font-family:var(--font)}
+    .chat-input input::placeholder{color:var(--muted)}
+    .chat-input button{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+    /* Community Q&A */
+    .qa-list{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+    .qa-item{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:20px 24px;transition:all var(--t)}
+    .qa-item:hover{border-color:rgba(52,168,83,.3);box-shadow:var(--s1)}
+    .qa-item h4{font-size:15px;font-weight:600;margin-bottom:6px;cursor:pointer}
+    .qa-item h4:hover{color:var(--green)}
+    .qa-item p{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+    .qa-meta{display:flex;gap:16px;flex-wrap:wrap}
+    .qa-meta span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px}
+    .qa-meta svg{width:14px;height:14px}
+    .qa-tag{display:inline-flex;font-size:11px;padding:3px 8px;border-radius:999px;background:var(--green-bg);color:var(--green);font-weight:600}
+
+    /* Ticket workflow */
+    .ticket-flow{position:relative;max-width:1040px;margin:0 auto;padding:24px;border:1px solid rgba(218,220,224,.72);border-radius:var(--r-xl);background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(248,250,255,.92));box-shadow:var(--s2);display:grid;grid-template-columns:repeat(4,1fr);gap:14px;overflow:hidden}
+    .ticket-flow::before{content:"";position:absolute;left:64px;right:64px;top:86px;height:3px;background:linear-gradient(90deg,var(--blue),var(--orange),var(--green));opacity:.22}
+    .ticket-flow::after{content:"";position:absolute;right:-90px;top:-120px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(147,52,230,.12),transparent 68%);pointer-events:none}
+    .t-step{position:relative;z-index:1;border:1px solid rgba(218,220,224,.72);border-radius:20px;background:rgba(255,255,255,.9);padding:18px;transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
+    .t-step:hover{transform:translateY(-6px);box-shadow:var(--s3);border-color:rgba(26,115,232,.22)}
+    .t-step::before{content:attr(data-step);position:absolute;top:14px;right:14px;font-size:28px;font-weight:800;line-height:1;color:rgba(32,33,36,.07)}
+    .t-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .t-dot{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 10px 22px rgba(60,64,67,.08);transition:all var(--t)}
+    .t-step:hover .t-dot{transform:rotate(-4deg) scale(1.06)}
+    .t-dot svg{width:22px;height:22px}
+    .t-step h4{font-size:16px;font-weight:700;line-height:1.25}
+    .t-step p{font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px;min-height:42px}
+    .t-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px dashed rgba(218,220,224,.75);padding-top:12px;font-size:11px;color:var(--muted)}
+    .t-meta b{font-size:12px;color:var(--ink-soft)}
+    .t-arrow{position:absolute;top:78px;right:-18px;z-index:3;color:rgba(26,115,232,.35);background:#fff;border-radius:999px;padding:4px;box-shadow:var(--s1)}
+    .t-step:last-child .t-arrow{display:none}
+    .t-s1 .t-dot{background:linear-gradient(135deg,var(--blue),#62a0ff);color:#fff}
+    .t-s2 .t-dot{background:linear-gradient(135deg,var(--yellow),#ffb357);color:#fff}
+    .t-s3 .t-dot{background:linear-gradient(135deg,var(--orange),#ff7a59);color:#fff}
+    .t-s4 .t-dot{background:linear-gradient(135deg,var(--green),#65c981);color:#fff}
+
+    .ticket-types{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px;max-width:700px;margin-inline:auto}
+    .ticket-type{text-align:center;padding:20px 16px;background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r);transition:all var(--t)}
+    .ticket-type:hover{border-color:rgba(147,52,230,.3);box-shadow:var(--s1)}
+    .ticket-type svg{width:28px;height:28px;margin:0 auto 8px;color:var(--purple)}
+    .ticket-type h5{font-size:13px;font-weight:600;margin-bottom:2px}
+    .ticket-type p{font-size:11px;color:var(--muted)}
+
+    /* Docs search + categories */
+    .docs-search{max-width:600px;margin:0 auto 32px}
+    .docs-search-box{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--yellow);border-radius:var(--r-lg);padding:14px 20px;box-shadow:var(--s2)}
+    .docs-search-box svg{color:var(--orange);flex-shrink:0}
+    .docs-search-box input{border:none;outline:none;font-size:15px;color:var(--ink);width:100%;font-family:var(--font)}
+    .docs-search-box input::placeholder{color:var(--muted)}
+
+    .doc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+    .doc-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:24px 18px;text-align:center;transition:all var(--t)}
+    .doc-card:hover{transform:translateY(-3px);box-shadow:var(--s2)}
+    .doc-ic{width:44px;height:44px;border-radius:12px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center}
+    .doc-card h4{font-size:14px;font-weight:600;margin-bottom:4px}
+    .doc-card p{font-size:12px;color:var(--muted);line-height:1.4}
+
+    /* Learning paths */
+    .path-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .path-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:28px 22px;transition:all var(--t)}
+    .path-card:hover{transform:translateY(-5px);box-shadow:var(--s3)}
+    .path-level{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;display:inline-block;margin-bottom:12px}
+    .path-card h4{font-size:16px;font-weight:600;margin-bottom:6px}
+    .path-card p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+    .path-progress{height:6px;background:var(--bg-soft);border-radius:999px;overflow:hidden;margin-bottom:8px}
+    .path-progress-bar{height:100%;border-radius:999px}
+    .path-card .path-meta{font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+
+    .pl-s1 .path-level{background:var(--green-bg);color:var(--green)}.pl-s1 .path-progress-bar{background:var(--green);width:25%}
+    .pl-s2 .path-level{background:var(--blue-bg);color:var(--blue)}.pl-s2 .path-progress-bar{background:var(--blue);width:50%}
+    .pl-s3 .path-level{background:var(--purple-bg);color:var(--purple)}.pl-s3 .path-progress-bar{background:var(--purple);width:75%}
+    .pl-s4 .path-level{background:var(--orange-bg);color:var(--orange)}.pl-s4 .path-progress-bar{background:var(--orange);width:100%}
+
+    .cta{padding:80px 0;background:linear-gradient(135deg,var(--blue),#4285f4);position:relative;overflow:hidden}
+    .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.1),transparent 60%);pointer-events:none}
+    .cta-in{position:relative;z-index:1;text-align:center;color:#fff}
+    .cta-in h2{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1.15}
+    .cta-in p{font-size:18px;margin:18px 0 32px;color:rgba(255,255,255,.9);max-width:560px;margin-inline:auto;line-height:1.6}
+    .cta-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    .footer{background:var(--bg-soft);border-top:1px solid rgba(218,220,224,.5);padding:56px 0 32px}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+    .footer-brand p{font-size:13px;color:var(--muted);line-height:1.6}
+    .footer-brand .ft{margin-top:10px;color:var(--ink-soft);font-weight:500}
+    .footer-col h5{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:14px;text-transform:uppercase;letter-spacing:.3px}
+    .footer-col a{display:block;font-size:13.5px;color:var(--muted);padding:5px 0;transition:color var(--t)}
+    .footer-col a:hover{color:var(--blue)}
+    .footer-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px;padding-top:20px;border-top:1px solid rgba(218,220,224,.4);font-size:12px;color:var(--muted)}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.4,0,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    @media(max-width:900px){
+        .hero-in{grid-template-columns:1fr}
+        .support-visual{max-width:520px;min-height:auto;margin-top:32px}
+        .ch-grid{grid-template-columns:repeat(3,1fr)}
+        .doc-grid{grid-template-columns:repeat(3,1fr)}
+        .path-grid{grid-template-columns:repeat(2,1fr)}
+        .ticket-types{grid-template-columns:repeat(2,1fr)}
+        .ticket-flow{grid-template-columns:repeat(2,1fr)}
+        .ticket-flow::before{display:none}
+        .t-arrow{display:none!important}
+        .footer-grid{grid-template-columns:1fr 1fr}
+        .hero-title{font-size:36px}
+        .sec-title{font-size:28px}
+        .sec{padding:64px 0}
+    }
+    @media(max-width:640px){
+        .nav-links{display:none}
+        .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;padding:12px 20px 16px;border-bottom:1px solid var(--line);box-shadow:var(--s2);gap:4px}
+        .nav-acts .btn-ghost{display:none}
+        .nav-toggle{display:flex}
+        .hero{padding:110px 0 60px}
+        .hero-title{font-size:30px}
+        .hero-sub{font-size:15.5px}
+        .ch-grid,.doc-grid{grid-template-columns:1fr}
+        .path-grid,.ticket-types{grid-template-columns:1fr}
+        .support-visual{padding:10px}.sv-card{padding:18px;min-height:auto}.sv-float{display:none}.sv-metrics{grid-template-columns:1fr}.sv-window{margin-bottom:12px}
+        .ticket-flow{grid-template-columns:1fr;padding:16px}.t-step p{min-height:auto}
+        .footer-grid{grid-template-columns:1fr}
+        .cta{padding:60px 0}
+        .cta-in h2{font-size:26px}
+    }
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+    
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+    </style>
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="nav-in">
+                        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+              <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#channels" class="nav-link">Support Channels</a>
+                <a href="#chat" class="nav-link">AI Support</a>
+                <a href="#community" class="nav-link">Community Q&A</a>
+                <a href="#ticket" class="nav-link">Tickets</a>
+                <a href="#docs" class="nav-link">Docs</a>
+                <a href="#learn" class="nav-link">Skill</a>
+            </nav>
+            <div class="nav-acts">
+                <a href="#chat" class="btn btn-primary btn-sm">Contact AI Support</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
+            <div class="container hero-in">
+                <div>
+                    <span class="eyebrow">OORT.sh Support</span>
+                    <h1 class="hero-title">Comprehensive Support<br><span class="grad">Helps You Resolve Issues Fast</span></h1>
+                    <p class="hero-sub">From AI customer service to community Q&A, from online tickets to learning guides, comprehensive support helps you resolve issues quickly and improve your skills. Online 24/7 and ready whenever you need us.</p>
+                    <div class="hero-cta">
+                        <a href="#chat" class="btn btn-primary btn-lg">Contact AI Support</a>
+                        <a href="#docs" class="btn btn-outline btn-lg">Browse Help Center</a>
+                    </div>
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg>
+                        5 Support Channels · Online 24/7 · Fast Response
+                    </div>
+                </div>
+                <div>
+                    <div class="support-visual" aria-label="OORT.sh support center hero illustration">
+                        <div class="sv-card">
+                            <div class="sv-top">
+                                <div class="sv-agent">
+                                    <div class="sv-avatar"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
+                                    <div><h3>OORT.sh Support Hub</h3><p>AI Support · Expert Tickets · Documentation Knowledge Base</p></div>
+                                </div>
+                                <span class="sv-live">Online</span>
+                            </div>
+                            <div class="sv-window">
+                                <div class="sv-ticket-head"><strong>#SUP-2026 Handling Board</strong><span>Priority Response</span></div>
+                                <div class="sv-row sv-blue"><i>AI</i><div><b>Intelligent Diagnosis</b><small>Application deployment configuration located</small></div></div>
+                                <div class="sv-row sv-green"><i>QA</i><div><b>Community Knowledge Match</b><small>Found 12 similar best answers</small></div></div>
+                                <div class="sv-row sv-purple"><i>EX</i><div><b>Expert Escalation</b><small>Engineers are troubleshooting together</small></div></div>
+                            </div>
+                            <div class="sv-metrics">
+                                <div class="sv-metric"><b>7×24</b><span>Online Support</span></div>
+                                <div class="sv-metric"><b>5</b><span>Support Channels</span></div>
+                                <div class="sv-metric"><b>SLA</b><span>Trackable Progress</span></div>
+                            </div>
+                        </div>
+                        <div class="sv-float sv-f1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg> Ticket Sync</div>
+                        <div class="sv-float sv-f2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> Doc Recommendations</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Channels Overview -->
+        <section class="sec" id="channels">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Support Channels</span>
+                    <h2 class="sec-title">Five Ways to Get Support Anytime</h2>
+                    <p class="sec-desc">Whether you need instant answers, in-depth discussions, or professional tickets, OORT.sh provides the right support channel for you.</p>
+                </div>
+                <div class="ch-grid reveal">
+                    <div class="ch-card">
+                        <div class="ch-ic" style="background:var(--blue-bg);color:var(--blue)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                        </div>
+                        <h3>AI Customer Service</h3>
+                        <p>AI support is online 24/7</p>
+                        <a href="#chat" class="ch-btn">Start Chat</a>
+                    </div>
+                    <div class="ch-card">
+                        <div class="ch-ic" style="background:var(--green-bg);color:var(--green)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                        </div>
+                        <h3>Community Q&A</h3>
+                        <p>Developer mutual support and discussion</p>
+                        <a href="#community" class="ch-btn">Enter Community</a>
+                    </div>
+                    <div class="ch-card">
+                        <div class="ch-ic" style="background:var(--purple-bg);color:var(--purple)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+                        </div>
+                        <h3>Online Tickets</h3>
+                        <p>Professional team service</p>
+                        <a href="#ticket" class="ch-btn">Submit Ticket</a>
+                    </div>
+                    <div class="ch-card">
+                        <div class="ch-ic" style="background:var(--orange-bg);color:var(--orange)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                        </div>
+                        <h3>Guides and Docs</h3>
+                        <p>Solve issues by yourself</p>
+                        <a href="#docs" class="ch-btn">Browse Docs</a>
+                    </div>
+                    <div class="ch-card">
+                        <div class="ch-ic" style="background:var(--yellow-bg);color:var(--orange)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+                        </div>
+                        <h3>Skill Development</h3>
+                        <p>From beginner to expert</p>
+                        <a href="#learn" class="ch-btn">Start Learning</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Chat -->
+        <section class="sec sec-soft" id="chat">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">AI Customer Service</span>
+                    <h2 class="sec-title">AI Customer Service, Online 24/7</h2>
+                    <p class="sec-desc">AI customer service answers your questions instantly and supports issue diagnosis, operation guidance, and troubleshooting. Ask anytime and get answers immediately.</p>
+                </div>
+                <div class="chat-mock reveal">
+                    <div class="chat-head">
+                        <div class="chat-avatar">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                        </div>
+                        <div><h4>OORT AI Support</h4><span>Online</span></div>
+                    </div>
+                    <div class="chat-body">
+                        <div class="chat-msg chat-bot">Hello! I am OORT AI Support. How can I help you?</div>
+                        <div class="chat-msg chat-user">How do I create an app and deploy it to iOS?</div>
+                        <div class="chat-msg chat-bot">Creating and deploying an app is simple! You can use the "one-sentence development" feature. Tell me what type of app you want to create. I can also take you to the <strong>developer documentation</strong> or <strong>quick start guide</strong>.</div>
+                        <div class="chat-msg chat-user">I want to create an employee management system</div>
+                        <div class="chat-msg chat-bot">Got it! I recommend the following plan:<br>1. Use the OORT.sh <strong>Employee Management Template</strong><br>2. Describe your requirements in one sentence to generate it automatically<br>3. Support multi-endpoint deployment to iOS / Android / Web<br><br>Would you like me to start creating it for you?</div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Enter your question..." readonly>
+                        <button aria-label="Send">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Q&A -->
+        <section class="sec" id="community">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Community Q&A</span>
+                    <h2 class="sec-title">Community Q&A for Mutual Support with Developers</h2>
+                    <p class="sec-desc">Search questions, ask, and answer others in the community while growing with OORT.sh developers worldwide. Popular questions are always available, and best answers are pinned at the top.</p>
+                </div>
+                <div class="qa-list reveal">
+                    <div class="qa-item">
+                        <span class="qa-tag">Solved</span>
+                        <h4>How do I configure single sign-on for the Unified Portal?</h4>
+                        <p>I want to connect an existing business system to the OORT.sh Unified Portal. How do I configure SSO single sign-on? Which protocols are supported?</p>
+                        <div class="qa-meta">
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> 12 Answers</span>
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 2.4k Views</span>
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 9V5a3 3 0 00-6 0v4"/><path d="M5 9h14l1 12H4L5 9z"/></svg> 48 Votes</span>
+                        </div>
+                    </div>
+                    <div class="qa-item">
+                        <span class="qa-tag">Popular</span>
+                        <h4>Can one-sentence development implement complex business logic?</h4>
+                        <p>I worry that "one-sentence development" can only build simple features. Is it suitable for complex systems with approval flows and permission controls?</p>
+                        <div class="qa-meta">
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> 28 Answers</span>
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 5.1k Views</span>
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 9V5a3 3 0 00-6 0v4"/><path d="M5 9h14l1 12H4L5 9z"/></svg> 126 Votes</span>
+                        </div>
+                    </div>
+                    <div class="qa-item">
+                        <span class="qa-tag">Latest</span>
+                        <h4>How do I list an application in the App Marketplace?</h4>
+                        <p>How do I submit a completed application for review and list it in the Unified App Marketplace? What requirements must it meet?</p>
+                        <div class="qa-meta">
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> 5 Answers</span>
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 890 Views</span>
+                            <span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 9V5a3 3 0 00-6 0v4"/><path d="M5 9h14l1 12H4L5 9z"/></svg> 22 Votes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Online Ticket -->
+        <section class="sec sec-soft" id="ticket">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Online Tickets</span>
+                    <h2 class="sec-title">Online Tickets, Served by a Professional Team</h2>
+                    <p class="sec-desc">After you submit a ticket, the professional support team will respond promptly and handle your issue. Tickets are fully trackable, and progress is visible in real time.</p>
+                </div>
+                <div class="ticket-flow reveal">
+                    <div class="t-step t-s1" data-step="01">
+                        <div class="t-head"><div class="t-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div><h4>Submit Ticket</h4></div>
+                        <p>Select an issue type and add impact scope, screenshots, and reproduction steps.</p>
+                        <div class="t-meta"><span>Entry</span><b>Form / AI Transfer</b></div>
+                        <div class="t-arrow"><svg width="32" height="16" viewBox="0 0 32 16"><path d="M0 8h28M22 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    </div>
+                    <div class="t-step t-s2" data-step="02">
+                        <div class="t-head"><div class="t-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M19 4a2 2 0 012 2"/></svg></div><h4>Intelligent Assignment</h4></div>
+                        <p>Automatically match the most suitable expert by module, priority, and historical cases.</p>
+                        <div class="t-meta"><span>Response</span><b>Real-Time Notification</b></div>
+                        <div class="t-arrow"><svg width="32" height="16" viewBox="0 0 32 16"><path d="M0 8h28M22 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    </div>
+                    <div class="t-step t-s3" data-step="03">
+                        <div class="t-head"><div class="t-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div><h4>Collaborative Handling</h4></div>
+                        <p>Experts troubleshoot and synchronize solutions, with key progress recorded in the ticket timeline.</p>
+                        <div class="t-meta"><span>Process</span><b>Fully Trackable</b></div>
+                        <div class="t-arrow"><svg width="32" height="16" viewBox="0 0 32 16"><path d="M0 8h28M22 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    </div>
+                    <div class="t-step t-s4" data-step="04">
+                        <div class="t-head"><div class="t-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div><h4>Confirm Resolution</h4></div>
+                        <p>Confirm the fix result, output resolution records, and convert them into knowledge base entries.</p>
+                        <div class="t-meta"><span>Closed Loop</span><b>Review and Archive</b></div>
+                    </div>
+                </div>
+                <div class="ticket-types reveal">
+                    <div class="ticket-type">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                        <h5>Technical Support</h5><p>Development and deployment issues</p>
+                    </div>
+                    <div class="ticket-type">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                        <h5>Fault Repair</h5><p>System troubleshooting</p>
+                    </div>
+                    <div class="ticket-type">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        <h5>Feature Suggestions</h5><p>New feature request feedback</p>
+                    </div>
+                    <div class="ticket-type">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                        <h5>Business Cooperation</h5><p>Ecosystem partnership consulting</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Docs -->
+        <section class="sec" id="docs">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Guides and Documentation</span>
+                    <h2 class="sec-title">Guides and Documentation for Self-Service Problem Solving</h2>
+                    <p class="sec-desc">A complete documentation center covers everything from quick starts to API references. Search to find answers immediately.</p>
+                </div>
+                <div class="docs-search reveal">
+                    <div class="docs-search-box">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                        <input type="text" placeholder="Search documentation..." readonly>
+                    </div>
+                </div>
+                <div class="doc-grid reveal">
+                    <div class="doc-card">
+                        <div class="doc-ic" style="background:var(--green-bg);color:var(--green)">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L6 14h7l-1 8 7-12h-7l1-8z"/></svg>
+                        </div>
+                        <h4>Quick Start</h4>
+                        <p>5-minute getting started guide</p>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-ic" style="background:var(--blue-bg);color:var(--blue)">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                        </div>
+                        <h4>Development Guide</h4>
+                        <p>Detailed development tutorials</p>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-ic" style="background:var(--purple-bg);color:var(--purple)">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                        </div>
+                        <h4>API Reference</h4>
+                        <p>Complete API documentation</p>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-ic" style="background:var(--orange-bg);color:var(--orange)">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                        </div>
+                        <h4>Best Practices</h4>
+                        <p>Industry solutions and cases</p>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-ic" style="background:var(--red-bg);color:var(--red)">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                        </div>
+                        <h4>FAQ</h4>
+                        <p>Frequently asked questions</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning -->
+        <section class="sec sec-soft" id="learn">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Acquire and Improve Skills</span>
+                    <h2 class="sec-title">Acquire and Improve Skills from Beginner to Expert</h2>
+                    <p class="sec-desc">Systematic learning paths help you grow from a beginner into an OORT.sh expert, earn official certification, and improve your career competitiveness.</p>
+                </div>
+                <div class="path-grid reveal">
+                    <div class="path-card pl-s1">
+                        <span class="path-level">Beginner</span>
+                        <h4>Introductory Course</h4>
+                        <p>Learn the basic concepts of the OORT.sh platform and complete development and deployment of your first application.</p>
+                        <div class="path-progress"><div class="path-progress-bar"></div></div>
+                        <div class="path-meta"><span>8 Lessons</span><span>About 2 Hours</span></div>
+                    </div>
+                    <div class="path-card pl-s2">
+                        <span class="path-level">Advanced</span>
+                        <h4>Advanced Tutorials</h4>
+                        <p>Dive into core capabilities such as Service Bus, unified users, and unified authorization.</p>
+                        <div class="path-progress"><div class="path-progress-bar"></div></div>
+                        <div class="path-meta"><span>16 Lessons</span><span>About 6 Hours</span></div>
+                    </div>
+                    <div class="path-card pl-s3">
+                        <span class="path-level">Certification</span>
+                        <h4>Certification Exam</h4>
+                        <p>Pass the official certification exam and earn OORT.sh developer certification.</p>
+                        <div class="path-progress"><div class="path-progress-bar"></div></div>
+                        <div class="path-meta"><span>Mock Test</span><span>Online Exam</span></div>
+                    </div>
+                    <div class="path-card pl-s4">
+                        <span class="path-level">Practice</span>
+                        <h4>Practical Cases</h4>
+                        <p>Analyze real project cases and master development and deployment techniques for complex business systems.</p>
+                        <div class="path-progress"><div class="path-progress-bar"></div></div>
+                        <div class="path-meta"><span>12 Cases</span><span>Continuously Updated</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta">
+            <div class="container cta-in reveal">
+                <h2>Need Help? We Are Always Online</h2>
+                <p>Whether you need instant answers from AI support or in-depth help through professional tickets, the OORT.sh support team is always with you.</p>
+                <div class="cta-acts">
+                    <a href="#chat" class="btn btn-white btn-lg">Contact AI Support</a>
+                    <a href="#ticket" class="btn btn-ghost-white btn-lg">Submit Ticket</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                                <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh official website">
+                  <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+                </a>
+                <p>Developer Deployment Platform OORT.sh<br>AI Customer Service · Community Q&A · Online Tickets · Guides · Skill Development</p>
+                <p class="ft">24/7 support, ready whenever you need us.</p>
+            </div>
+            <div class="footer-col"><h5>Platform Capabilities</h5><a href="index.html#architecture">Platform Architecture</a><a href="index.html#integration">Cloud Capabilities</a><a href="index.html#bus">Service Bus</a><a href="index.html#apps">Application Capabilities</a></div>
+            <div class="footer-col"><h5>Support Services</h5><a href="#chat">AI Customer Service</a><a href="#community">Community Q&A</a><a href="#ticket">Online Tickets</a><a href="#docs">Guides and Docs</a></div>
+            <div class="footer-col"><h5>Get Started</h5><a href="#learn">Skill Development</a><a href="ecosystem.html">Ecosystem Cooperation</a><a href="dev.html">Developer Docs</a><a href="index.html">Back to Home</a></div>
+        </div>
+        <div class="container footer-bot">
+            <span>© 2026 OORT.sh · Developer Deployment Platform</span>
+            <span>24/7 Support · Ready Whenever You Need Us</span>
+        </div>
+    </footer>
+
+    <script>
+    (function(){"use strict";var navbar=document.getElementById("navbar");function onScroll(){if(window.scrollY>8)navbar.classList.add("scrolled");else navbar.classList.remove("scrolled")}window.addEventListener("scroll",onScroll,{passive:true});onScroll();var toggle=document.getElementById("navToggle"),links=document.getElementById("navLinks");if(toggle&&links){toggle.addEventListener("click",function(){links.classList.toggle("open")});links.addEventListener("click",function(e){if(e.target.classList.contains("nav-link"))links.classList.remove("open")})}var reveals=document.querySelectorAll(".reveal");if("IntersectionObserver" in window){var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");ro.unobserve(e.target)}})},{threshold:.08,rootMargin:"0px 0px -20px 0px"});reveals.forEach(function(el){ro.observe(el)})}else{reveals.forEach(function(el){el.classList.add("in")})}var sections=document.querySelectorAll("main section[id]"),nm={};document.querySelectorAll(".nav-link").forEach(function(link){var id=link.getAttribute("href").slice(1);nm[id]=link});if("IntersectionObserver" in window&&sections.length){var so=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.getAttribute("id");Object.keys(nm).forEach(function(k){nm[k].classList.toggle("active",k===id)})}})},{threshold:.3,rootMargin:"-80px 0px -40% 0px"});sections.forEach(function(sec){so.observe(sec)})}})();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1538 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OORT.sh — 应用运营统一门户 | 一个平台，统筹一切</title>
+  <meta name="description" content="OORT.sh 构建统一门户、统一用户、统一服务、统一授权、统一数据对标，实现各业务应用全生命周期管理。避免重复建设、降低开发成本、缩短项目周期。" />
+  <style>
+    /* ============================================================
+       OORT.sh 应用运营统一门户 — 样式
+       设计语言参考 Google Workspace：干净留白、无衬线字体、
+       Google 四色点缀、柔和卡片、克制的动效。
+       ============================================================ */
+
+    /* ---------- 设计令牌 ---------- */
+    :root {
+      --g-blue: #1a73e8;
+      --g-blue-dark: #1557b0;
+      --g-red: #ea4335;
+      --g-yellow: #fbbc04;
+      --g-green: #34a853;
+
+      --ink: #202124;
+      --ink-soft: #5f6368;
+      --line: #dadce0;
+      --bg: #ffffff;
+      --bg-tint: #f8f9fa;
+      --bg-tint-2: #f1f3f4;
+
+      --radius: 16px;
+      --radius-lg: 28px;
+      --shadow-sm: 0 1px 2px rgba(60,64,67,.1), 0 1px 3px rgba(60,64,67,.08);
+      --shadow-md: 0 1px 3px rgba(60,64,67,.12), 0 4px 8px rgba(60,64,67,.08);
+      --shadow-lg: 0 8px 28px rgba(60,64,67,.16);
+
+      --maxw: 1180px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+
+      --font: "Google Sans", "Roboto", "Helvetica Neue", -apple-system,
+              BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI",
+              system-ui, sans-serif;
+    }
+
+    /* ---------- 基础重置 ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ---------- 通用按钮 ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: .2px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: transform .2s var(--ease), box-shadow .2s var(--ease),
+                  background .2s var(--ease), border-color .2s var(--ease);
+      white-space: nowrap;
+    }
+    .btn--lg { padding: 15px 32px; font-size: 16px; }
+    .btn--primary {
+      background: var(--g-blue);
+      color: #fff;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn--primary:hover {
+      background: var(--g-blue-dark);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+    .btn--ghost {
+      background: #fff;
+      color: var(--g-blue);
+      border-color: var(--line);
+    }
+    .btn--ghost:hover {
+      background: rgba(26,115,232,.04);
+      border-color: #c6d4ea;
+      transform: translateY(-1px);
+    }
+
+    /* ============ 顶部导航 ============ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .nav.is-scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 1px 0 rgba(0,0,0,.02);
+    }
+    .nav__inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__brand { display: flex; align-items: center; gap: 10px; }
+    .nav__logo {
+      display: inline-grid;
+      grid-template-columns: repeat(2, 9px);
+      grid-auto-rows: 9px;
+      gap: 3px;
+    }
+    .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .dot--blue { background: var(--g-blue); }
+    .dot--red { background: var(--g-red); }
+    .dot--yellow { background: var(--g-yellow); }
+    .dot--green { background: var(--g-green); }
+    .nav__name { font-size: 20px; font-weight: 700; letter-spacing: .3px; }
+    .nav__name-suffix { color: var(--g-blue); }
+    .nav__links { display: flex; align-items: center; gap: 6px; }
+    .nav__link {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-soft);
+      transition: background .2s var(--ease), color .2s var(--ease);
+    }
+    .nav__link:hover { background: var(--bg-tint-2); color: var(--ink); }
+    .nav__cta {
+      margin-left: 8px;
+      padding: 9px 20px;
+      border-radius: 999px;
+      background: var(--g-blue);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      transition: background .2s var(--ease), transform .2s var(--ease);
+    }
+    .nav__cta:hover { background: var(--g-blue-dark); transform: translateY(-1px); }
+    .nav__toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .nav__toggle span {
+      width: 22px; height: 2px; background: var(--ink); border-radius: 2px;
+      transition: transform .3s var(--ease), opacity .3s var(--ease);
+    }
+    .nav__toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__toggle.is-open span:nth-child(2) { opacity: 0; }
+    .nav__toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============ Hero ============ */
+    .hero { position: relative; overflow: hidden; }
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 480px at 85% -10%, rgba(26,115,232,.10), transparent 60%),
+        radial-gradient(700px 420px at 5% 10%, rgba(52,168,83,.08), transparent 60%),
+        linear-gradient(180deg, #fff 0%, var(--bg-tint) 100%);
+      z-index: -1;
+    }
+    .hero__inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 88px 24px 96px;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .hero__eyebrow {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--g-blue);
+      background: rgba(26,115,232,.08);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    .hero__title {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.12;
+      font-weight: 700;
+      letter-spacing: -.5px;
+      margin-bottom: 22px;
+    }
+    .hero__subtitle {
+      font-size: clamp(16px, 1.6vw, 19px);
+      color: var(--ink-soft);
+      max-width: 540px;
+      margin-bottom: 32px;
+    }
+    .hero__actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+    .hero__note { font-size: 14px; color: var(--ink-soft); font-weight: 500; }
+    .hero__visual { display: flex; justify-content: center; }
+    .portal-card {
+      width: 100%;
+      max-width: 520px;
+      min-height: 430px;
+      position: relative;
+      background:
+        radial-gradient(500px 220px at 50% 34%, rgba(26,115,232,.12), transparent 62%),
+        linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(218,220,224,.9);
+      overflow: hidden;
+      transform: perspective(1200px) rotateY(-5deg) rotateX(2deg);
+      transition: transform .5s var(--ease), box-shadow .5s var(--ease);
+    }
+    .portal-card:hover { transform: perspective(1200px) rotateY(0) rotateX(0); box-shadow: 0 16px 42px rgba(60,64,67,.18); }
+    .portal-card__bar {
+      display: flex; gap: 7px;
+      padding: 14px 18px;
+      background: rgba(248,249,250,.92);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      z-index: 2;
+    }
+    .portal-card__bar span { width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
+    .portal-card__bar span:nth-child(1){ background: var(--g-red); }
+    .portal-card__bar span:nth-child(2){ background: var(--g-yellow); }
+    .portal-card__bar span:nth-child(3){ background: var(--g-green); }
+    .operation-map {
+      position: relative;
+      min-height: 385px;
+      padding: 28px 26px 24px;
+      z-index: 1;
+    }
+    .operation-map::before {
+      content: "";
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      top: 164px;
+      height: 4px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--g-blue), var(--g-red), var(--g-yellow), var(--g-green), var(--g-blue));
+      opacity: .28;
+    }
+    .operation-map__title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(26,115,232,.08);
+      color: var(--g-blue);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .operation-map__title::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--g-green);
+      box-shadow: 16px 0 0 var(--g-yellow), 32px 0 0 var(--g-red);
+    }
+    .operation-flow {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+    .operation-step {
+      min-height: 150px;
+      padding: 14px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(218,220,224,.95);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+    }
+    .operation-step:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(26,115,232,.28); }
+    .operation-step__num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .operation-step__icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .operation-step strong { font-size: 14px; line-height: 1.25; margin-bottom: 5px; }
+    .operation-step small { font-size: 11px; color: var(--ink-soft); line-height: 1.35; }
+    .operation-step--blue .operation-step__num,
+    .operation-step--blue .operation-step__icon { background: var(--g-blue); }
+    .operation-step--red .operation-step__num,
+    .operation-step--red .operation-step__icon { background: var(--g-red); }
+    .operation-step--yellow .operation-step__num,
+    .operation-step--yellow .operation-step__icon { background: var(--g-yellow); color: #3c2f00; }
+    .operation-step--green .operation-step__num,
+    .operation-step--green .operation-step__icon { background: var(--g-green); }
+    .operation-step--mix .operation-step__num,
+    .operation-step--mix .operation-step__icon { background: linear-gradient(135deg, var(--g-blue), var(--g-green)); }
+    .operation-center {
+      position: relative;
+      z-index: 2;
+      margin: 0 auto 14px;
+      max-width: 360px;
+      border-radius: 24px;
+      padding: 18px 20px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,0)),
+        linear-gradient(135deg, var(--g-blue), #185abc);
+      color: #fff;
+      box-shadow: 0 18px 34px rgba(26,115,232,.26);
+      text-align: center;
+    }
+    .operation-center strong { display: block; font-size: 22px; line-height: 1.1; letter-spacing: .2px; }
+    .operation-center small { display: block; margin-top: 8px; font-size: 12px; opacity: .92; }
+    .operation-dashboard {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .operation-metric {
+      padding: 12px 10px;
+      border-radius: 16px;
+      background: rgba(241,243,244,.86);
+      border: 1px solid rgba(218,220,224,.86);
+      text-align: center;
+    }
+    .operation-metric strong { display: block; font-size: 18px; color: var(--g-blue); line-height: 1; margin-bottom: 6px; }
+    .operation-metric:nth-child(2) strong { color: var(--g-green); }
+    .operation-metric:nth-child(3) strong { color: var(--g-red); }
+    .operation-metric span { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+    .operation-foundation {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .operation-foundation span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(218,220,224,.9);
+      color: var(--ink-soft);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* ============ 应用推广运营链路 ============ */
+    .strip {
+      background: linear-gradient(180deg, #fff 0%, var(--bg-tint) 100%);
+      color: var(--ink);
+      padding: 0 24px;
+    }
+    .strip__inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border: 1px solid rgba(218,220,224,.9);
+      border-radius: 999px;
+      background:
+        radial-gradient(420px 120px at 22% 0%, rgba(26,115,232,.08), transparent 68%),
+        radial-gradient(360px 120px at 78% 100%, rgba(52,168,83,.08), transparent 70%),
+        rgba(255,255,255,.86);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-22px);
+    }
+    .strip__item {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(26,115,232,.06);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      white-space: nowrap;
+    }
+    .strip__sep { color: var(--g-blue); font-weight: 800; opacity: .45; }
+
+    /* ============ 通用 Section ============ */
+    .section {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 88px 24px;
+    }
+    .section--tint {
+      max-width: none;
+      background: var(--bg-tint);
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .section--tint > * { max-width: var(--maxw); margin-left: auto; margin-right: auto; padding-left: 24px; padding-right: 24px; }
+    .section__head { text-align: center; max-width: 720px; margin: 0 auto 52px; }
+    .section__title {
+      font-size: clamp(26px, 3.4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -.3px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section__lead { font-size: clamp(16px,1.5vw,18px); color: var(--ink-soft); }
+
+    /* ---------- 核心能力卡片 ---------- */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease),
+                  border-color .25s var(--ease);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+    .card__icon {
+      width: 54px; height: 54px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    .icon--blue   { background: var(--g-blue); }
+    .icon--red    { background: var(--g-red); }
+    .icon--yellow { background: var(--g-yellow); color:#3c2f00; }
+    .icon--green  { background: var(--g-green); }
+    .icon--mix    { background: linear-gradient(135deg, var(--g-blue), var(--g-green)); }
+    .card__title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .card__text { font-size: 15px; color: var(--ink-soft); }
+
+    /* ---------- 建设成效 ---------- */
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .value-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 30px 26px;
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .value-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+    }
+    .value-card:nth-child(1)::before { background: var(--g-blue); }
+    .value-card:nth-child(2)::before { background: var(--g-red); }
+    .value-card:nth-child(3)::before { background: var(--g-yellow); }
+    .value-card:nth-child(4)::before { background: var(--g-green); }
+    .value-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .value-card__num {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--bg-tint-2);
+      -webkit-text-stroke: 1px var(--line);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .value-card__title { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .value-card__text { font-size: 14.5px; color: var(--ink-soft); }
+
+    /* ---------- 全生命周期 ---------- */
+    .lifecycle { position: relative; padding: 20px 0; }
+    .lifecycle__line {
+      position: absolute;
+      left: 4%; right: 4%;
+      top: 41px;
+      height: 3px;
+      background: linear-gradient(90deg,
+        var(--g-blue), var(--g-red), var(--g-yellow), var(--g-green), var(--g-blue));
+      border-radius: 3px;
+      opacity: .35;
+    }
+    .lifecycle__list {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 16px;
+      position: relative;
+    }
+    .lifecycle__step { text-align: center; }
+    .lifecycle__dot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--g-blue);
+      color: var(--g-blue);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .25s var(--ease), background .25s var(--ease), color .25s var(--ease);
+    }
+    .lifecycle__step:hover .lifecycle__dot {
+      background: var(--g-blue); color: #fff; transform: scale(1.08);
+    }
+    .lifecycle__step h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .lifecycle__step p { font-size: 13px; color: var(--ink-soft); }
+
+    /* ---------- 为何选择 ---------- */
+    .why {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 56px;
+      align-items: center;
+    }
+    .why__lead { font-size: 17px; color: var(--ink-soft); margin: 18px 0 26px; }
+    .why__list { display: grid; gap: 14px; }
+    .why__list li { display: flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 500; }
+    .why__check {
+      flex: none;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(52,168,83,.12);
+      color: var(--g-green);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+    }
+    .why__stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .stat {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat__num { font-size: 44px; font-weight: 800; color: var(--g-blue); line-height: 1; }
+    .stat:nth-child(2) .stat__num { color: var(--g-red); }
+    .stat:nth-child(3) .stat__num { color: var(--g-yellow); }
+    .stat:nth-child(4) .stat__num { color: var(--g-green); }
+    .stat__label { font-size: 14px; color: var(--ink-soft); margin-top: 10px; }
+
+    /* ---------- CTA ---------- */
+    .cta {
+      background:
+        radial-gradient(700px 300px at 50% -20%, rgba(255,255,255,.18), transparent 70%),
+        linear-gradient(135deg, var(--g-blue), var(--g-blue-dark));
+      color: #fff;
+    }
+    .cta__inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta__title {
+      font-size: clamp(26px, 3.6vw, 40px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .cta__text { font-size: 18px; opacity: .92; margin-bottom: 32px; }
+    .cta__actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cta .btn--primary { background: #fff; color: var(--g-blue); }
+    .cta .btn--primary:hover { background: #f1f3f4; }
+    .cta .btn--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.6); }
+    .cta .btn--ghost:hover { background: rgba(255,255,255,.12); border-color: #fff; }
+
+    /* ---------- 页脚 ---------- */
+    .footer { background: var(--ink); color: #e8eaed; }
+    .footer__inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .footer__brand {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .footer__brand .nav__name { color: #fff; }
+    .footer__desc { font-size: 15px; color: #bdc1c6; margin-bottom: 8px; }
+    .footer__copy { font-size: 13px; color: #9aa0a6; }
+
+    /* ============ 滚动揭示动画 ============ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ============ 响应式 ============ */
+    @media (max-width: 980px) {
+      .hero__inner { grid-template-columns: 1fr; gap: 40px; padding-top: 64px; }
+      .hero__visual { order: -1; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .value-grid { grid-template-columns: repeat(2, 1fr); }
+      .why { grid-template-columns: 1fr; gap: 40px; }
+      .lifecycle__list { grid-template-columns: repeat(4, 1fr); row-gap: 28px; }
+      .lifecycle__line { display: none; }
+    }
+    @media (max-width: 720px) {
+      .portal-card { max-width: 390px; min-height: 640px; transform: none; }
+      .portal-card:hover { transform: none; }
+      .operation-map { min-height: 595px; padding: 22px 18px 18px; }
+      .operation-map::before { display: none; }
+      .operation-flow { grid-template-columns: 1fr; gap: 8px; margin-bottom: 12px; }
+      .operation-step { min-height: auto; padding: 11px 12px; flex-direction: row; justify-content: flex-start; text-align: left; }
+      .operation-step__num { margin: 0 8px 0 0; flex: none; }
+      .operation-step__icon { margin: 0 10px 0 0; flex: none; }
+      .operation-center { padding: 15px 16px; }
+      .operation-dashboard { grid-template-columns: 1fr; gap: 7px; }
+      .operation-foundation { gap: 6px; }
+      .nav__links {
+        position: fixed;
+        inset: 60px 0 auto 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 16px 20px 24px;
+        box-shadow: var(--shadow-md);
+        transform: translateY(-130%);
+        transition: transform .35s var(--ease);
+      }
+      .nav__links.is-open { transform: translateY(0); }
+      .nav__link, .nav__cta { width: 100%; text-align: center; }
+      .nav__cta { margin-left: 0; margin-top: 6px; }
+      .nav__toggle { display: flex; }
+      .section { padding: 64px 20px; }
+      .cards { grid-template-columns: 1fr; }
+      .value-grid { grid-template-columns: 1fr; }
+      .lifecycle__list { grid-template-columns: repeat(2, 1fr); }
+      .strip { padding: 0 16px; }
+      .strip__inner { gap: 6px; border-radius: 22px; transform: translateY(-14px); }
+      .strip__item { font-size: 13px; padding: 5px 9px; }
+    }
+  
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+        .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+</style>
+</head>
+<body>
+  <!-- ============ 顶部导航 ============ -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#hero" class="nav__brand">
+        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+            <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+        </a>
+        
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="主导航">
+        <a href="#capabilities" class="nav__link">核心能力</a>
+        <a href="#value" class="nav__link">建设成效</a>
+        <a href="#lifecycle" class="nav__link">全生命周期</a>
+        <a href="#why" class="nav__link">为何选择</a>
+        <a href="#cta" class="nav__cta">立即了解</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ Hero ============ -->
+    <section class="hero" id="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__content reveal">
+          <p class="hero__eyebrow">应用运营介绍 · OORT.sh</p>
+          <h1 class="hero__title">一个平台<br />统筹企业全部应用</h1>
+          <p class="hero__subtitle">
+            构建统一门户、统一用户、统一服务、统一授权、统一数据对标。
+            避免业务系统重复建设，降低开发成本，缩短项目周期。
+          </p>
+          <div class="hero__actions">
+            <a href="#cta" class="btn btn--primary">立即了解</a>
+            <a href="#capabilities" class="btn btn--ghost">查看核心能力</a>
+          </div>
+          <p class="hero__note">信息化统筹建设的抓手 · 集约化建设的利器</p>
+        </div>
+
+        <div class="hero__visual reveal" aria-label="OORT.sh 应用运营闭环示意图">
+          <div class="portal-card">
+            <div class="portal-card__bar">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="operation-map">
+              <div class="operation-map__title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;应用运营闭环</div>
+
+              <div class="operation-flow">
+                <div class="operation-step operation-step--blue">
+                  <span class="operation-step__num">01</span>
+                  <span class="operation-step__icon">接</span>
+                  <strong>应用接入</strong>
+                  <small>统一入驻、规范配置</small>
+                </div>
+                <div class="operation-step operation-step--red">
+                  <span class="operation-step__num">02</span>
+                  <span class="operation-step__icon">发</span>
+                  <strong>发布上架</strong>
+                  <small>版本管理、灰度发布</small>
+                </div>
+                <div class="operation-step operation-step--yellow">
+                  <span class="operation-step__num">03</span>
+                  <span class="operation-step__icon">用</span>
+                  <strong>使用运营</strong>
+                  <small>入口聚合、服务编排</small>
+                </div>
+                <div class="operation-step operation-step--green">
+                  <span class="operation-step__num">04</span>
+                  <span class="operation-step__icon">析</span>
+                  <strong>统计分析</strong>
+                  <small>访问、活跃、效果看板</small>
+                </div>
+                <div class="operation-step operation-step--mix">
+                  <span class="operation-step__num">05</span>
+                  <span class="operation-step__icon">维</span>
+                  <strong>维护迭代</strong>
+                  <small>监控告警、持续优化</small>
+                </div>
+              </div>
+
+              <div class="operation-center">
+                <strong>OORT.sh 运营中台</strong>
+                <small>统一管应用、管用户、管权限、管服务、管数据</small>
+              </div>
+
+              <div class="operation-dashboard" aria-hidden="true">
+                <div class="operation-metric"><strong>100%</strong><span>应用纳管</span></div>
+                <div class="operation-metric"><strong>7×24</strong><span>运行监控</span></div>
+                <div class="operation-metric"><strong>1</strong><span>统一运营入口</span></div>
+              </div>
+
+              <div class="operation-foundation" aria-hidden="true">
+                <span>统一门户</span>
+                <span>统一用户</span>
+                <span>统一服务</span>
+                <span>统一授权</span>
+                <span>统一数据对标</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 应用推广运营链路 ============ -->
+    <section class="strip">
+      <div class="strip__inner">
+        <span class="strip__item">应用上架</span>
+        <span class="strip__sep">·</span>
+        <span class="strip__item">推广触达</span>
+        <span class="strip__sep">·</span>
+        <span class="strip__item">用户激活</span>
+        <span class="strip__sep">·</span>
+        <span class="strip__item">使用增长</span>
+        <span class="strip__sep">·</span>
+        <span class="strip__item">数据复盘</span>
+      </div>
+    </section>
+
+    <!-- ============ 推广运营能力 ============ -->
+    <section class="section" id="capabilities">
+      <div class="section__head reveal">
+        <h2 class="section__title">围绕应用推广运营，提升应用使用成效</h2>
+        <p class="section__lead">从上架曝光到用户激活、使用增长与数据复盘，OORT.sh 帮助每个业务应用被看见、被使用、被持续优化。</p>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card__icon icon--blue">↗</div>
+          <h3 class="card__title">应用上架推广</h3>
+          <p class="card__text">统一管理应用资料、分类、标签与推荐位，让重点应用快速上架、集中展示、精准曝光。</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon icon--red">◎</div>
+          <h3 class="card__title">用户触达激活</h3>
+          <p class="card__text">面向组织、岗位和用户群体进行定向触达，引导用户首次使用并形成持续访问习惯。</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon icon--yellow">★</div>
+          <h3 class="card__title">运营活动配置</h3>
+          <p class="card__text">通过公告、推荐、活动专区和专题运营，围绕重点业务场景提升应用关注度与参与度。</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon icon--green">▣</div>
+          <h3 class="card__title">应用使用分析</h3>
+          <p class="card__text">持续跟踪访问量、活跃度、使用路径和转化效果，让推广效果可量化、可比较、可复盘。</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon icon--blue">↑</div>
+          <h3 class="card__title">增长优化闭环</h3>
+          <p class="card__text">基于数据反馈优化入口、内容和运营策略，推动应用从“已上线”走向“常使用”。</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon icon--mix">∞</div>
+          <h3 class="card__title">持续维护运营</h3>
+          <p class="card__text">将发布、监控、反馈、迭代和下架统一纳管，让应用运营动作有计划、有记录、有改进。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 建设成效 / 解决问题 ============ -->
+    <section class="section section--tint" id="value">
+      <div class="section__head reveal">
+        <h2 class="section__title">主要使用成效</h2>
+        <p class="section__lead">OORT.sh 直击信息化建设中的四类典型痛点。</p>
+      </div>
+
+      <div class="value-grid">
+        <article class="value-card reveal">
+          <div class="value-card__num">01</div>
+          <h3 class="value-card__title">建设应用生态</h3>
+          <p class="value-card__text">以统一平台为底座，让各业务应用互联互通、协同共生，从一个个系统升级为一个生态。</p>
+        </article>
+        <article class="value-card reveal">
+          <div class="value-card__num">02</div>
+          <h3 class="value-card__title">避免信息孤岛</h3>
+          <p class="value-card__text">打通系统之间的数据与流程壁垒，信息不再各自封闭，跨部门协作顺畅高效。</p>
+        </article>
+        <article class="value-card reveal">
+          <div class="value-card__num">03</div>
+          <h3 class="value-card__title">拆除信息烟囱</h3>
+          <p class="value-card__text">改变烟囱式独立建设的旧模式，统一规划、统一接入，告别重复且割裂的系统结构。</p>
+        </article>
+        <article class="value-card reveal">
+          <div class="value-card__num">04</div>
+          <h3 class="value-card__title">避免重复开发</h3>
+          <p class="value-card__text">公共能力一次建设、处处复用，把资源集中到真正的业务创新上，降本又增效。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 全生命周期 ============ -->
+    <section class="section" id="lifecycle">
+      <div class="section__head reveal">
+        <h2 class="section__title">业务应用全生命周期管理</h2>
+        <p class="section__lead">从开发到维护，OORT.sh 对各业务应用的每一个环节统一纳管。</p>
+      </div>
+
+      <div class="lifecycle reveal">
+        <div class="lifecycle__line" aria-hidden="true"></div>
+        <ol class="lifecycle__list">
+          <li class="lifecycle__step"><span class="lifecycle__dot">①</span><h4>开发</h4><p>统一规范与脚手架</p></li>
+          <li class="lifecycle__step"><span class="lifecycle__dot">②</span><h4>发布</h4><p>统一上架与版本</p></li>
+          <li class="lifecycle__step"><span class="lifecycle__dot">③</span><h4>管理</h4><p>统一编排与配置</p></li>
+          <li class="lifecycle__step"><span class="lifecycle__dot">④</span><h4>下载</h4><p>统一分发与获取</p></li>
+          <li class="lifecycle__step"><span class="lifecycle__dot">⑤</span><h4>使用</h4><p>统一入口与体验</p></li>
+          <li class="lifecycle__step"><span class="lifecycle__dot">⑥</span><h4>统计</h4><p>统一度量与分析</p></li>
+          <li class="lifecycle__step"><span class="lifecycle__dot">⑦</span><h4>维护</h4><p>统一监控与运维</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ 为何选择 ============ -->
+    <section class="section section--tint" id="why">
+      <div class="why">
+        <div class="why__text reveal">
+          <h2 class="section__title">信息化统筹建设的抓手<br />集约化建设的利器</h2>
+          <p class="why__lead">
+            OORT.sh 把分散的建设需求收敛到统一平台之上，让每一次投入都沉淀为可复用的能力，
+            真正实现统筹规划、集约推进。
+          </p>
+          <ul class="why__list">
+            <li><span class="why__check">✓</span>避免业务系统重复建设</li>
+            <li><span class="why__check">✓</span>显著降低整体开发成本</li>
+            <li><span class="why__check">✓</span>大幅缩短项目交付周期</li>
+            <li><span class="why__check">✓</span>统一标准，治理有据可依</li>
+          </ul>
+        </div>
+        <div class="why__stats reveal">
+          <div class="stat">
+            <div class="stat__num" data-count="5">5</div>
+            <div class="stat__label">大统一能力</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num" data-count="7">7</div>
+            <div class="stat__label">个生命周期环节</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num" data-count="1">1</div>
+            <div class="stat__label">个统一门户入口</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num" data-suffix="%" data-count="100">100</div>
+            <div class="stat__label">应用纳管覆盖</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="cta">
+      <div class="cta__inner reveal">
+        <h2 class="cta__title">让信息化建设，从「各自为政」走向「统筹一体」</h2>
+        <p class="cta__text">用 OORT.sh 构建统一门户，开启应用运营的集约化新阶段。</p>
+        <div class="cta__actions">
+          <a href="#hero" class="btn btn--primary btn--lg">立即了解 OORT.sh</a>
+          <a href="#capabilities" class="btn btn--ghost btn--lg">回顾核心能力</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <span class="nav__logo" aria-hidden="true">
+        </span>
+                    <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="访问 OORT.sh 官网">
+            <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+          </a>
+      </div>
+      <p class="footer__desc">统一门户 · 统一用户 · 统一服务 · 统一授权 · 统一数据对标</p>
+      <p class="footer__copy">© 2026 OORT.sh — 应用运营统一平台。信息化统筹建设的抓手。</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ============================================================
+       OORT.sh 应用运营统一门户 — 交互脚本
+       - 导航：滚动阴影、移动端菜单、点击后收起
+       - 滚动揭示动画（IntersectionObserver）
+       - 统计数字滚动计数
+       ============================================================ */
+    (function () {
+      "use strict";
+
+      /* ---------- 导航：滚动时加阴影 ---------- */
+      var nav = document.getElementById("nav");
+      function onScroll() {
+        if (!nav) return;
+        if (window.scrollY > 8) {
+          nav.classList.add("is-scrolled");
+        } else {
+          nav.classList.remove("is-scrolled");
+        }
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      /* ---------- 移动端菜单切换 ---------- */
+      var toggle = document.getElementById("navToggle");
+      var links = document.getElementById("navLinks");
+
+      function closeMenu() {
+        if (!toggle || !links) return;
+        toggle.classList.remove("is-open");
+        links.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "打开菜单");
+      }
+
+      if (toggle && links) {
+        toggle.addEventListener("click", function () {
+          var open = toggle.classList.toggle("is-open");
+          links.classList.toggle("is-open", open);
+          toggle.setAttribute("aria-expanded", open ? "true" : "false");
+          toggle.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+        });
+
+        links.addEventListener("click", function (e) {
+          var t = e.target;
+          if (t && t.tagName === "A") closeMenu();
+        });
+
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 720) closeMenu();
+        });
+      }
+
+      /* ---------- 滚动揭示动画 ---------- */
+      var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+
+      if ("IntersectionObserver" in window && revealEls.length) {
+        var io = new IntersectionObserver(
+          function (entries, obs) {
+            entries.forEach(function (entry, i) {
+              if (entry.isIntersecting) {
+                var delay = Math.min(i * 60, 240);
+                setTimeout(function () {
+                  entry.target.classList.add("is-visible");
+                }, delay);
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+        );
+        revealEls.forEach(function (el) { io.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add("is-visible"); });
+      }
+
+      /* ---------- 统计数字计数动画 ---------- */
+      var counters = Array.prototype.slice.call(document.querySelectorAll(".stat__num"));
+      var prefersReduced = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function animateCount(el) {
+        var target = parseInt(el.getAttribute("data-count"), 10);
+        var suffix = el.getAttribute("data-suffix") || "";
+        if (isNaN(target)) return;
+
+        if (prefersReduced) {
+          el.textContent = target + suffix;
+          return;
+        }
+
+        var duration = 1100;
+        var start = null;
+
+        function tick(ts) {
+          if (start === null) start = ts;
+          var progress = Math.min((ts - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased) + suffix;
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            el.textContent = target + suffix;
+          }
+        }
+        requestAnimationFrame(tick);
+      }
+
+      if ("IntersectionObserver" in window && counters.length) {
+        var counterIO = new IntersectionObserver(
+          function (entries, obs) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                animateCount(entry.target);
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.6 }
+        );
+        counters.forEach(function (el) { counterIO.observe(el); });
+      } else {
+        counters.forEach(function (el) {
+          var t = el.getAttribute("data-count");
+          var s = el.getAttribute("data-suffix") || "";
+          if (t) el.textContent = t + s;
+        });
+      }
+
+      /* ---------- 平滑锚点（兼容性兜底） ---------- */
+      document.addEventListener("click", function (e) {
+        var link = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!link) return;
+        var id = link.getAttribute("href");
+        if (id.length < 2) return;
+        var target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    })();
+  </script>
+</body>
+</html>
+

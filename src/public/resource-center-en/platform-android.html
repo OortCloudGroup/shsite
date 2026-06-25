@@ -1,0 +1,907 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OORT.sh · Android Endpoint Distribution | Google Mobile App Marketplace Integration</title>
+    <meta name="description" content="OORT.sh Android endpoint distribution — distribute applications to Android phones and tablets through APK signing, enterprise app stores, and MDM, with native capabilities such as biometrics, FCM push, and Material You.">
+    <style>
+    :root{
+        --blue:#1a73e8;--blue-bg:#e8f0fe;--red:#ea4335;--red-bg:#fce8e6;
+        --yellow:#fbbc04;--yellow-bg:#fef7e0;--green:#34a853;--green-bg:#e6f4ea;
+        --purple:#9334e6;--purple-bg:#f3e8fd;--orange:#ea8600;--orange-bg:#fef7e0;
+        --ink:#202124;--ink-soft:#3c4043;--muted:#5f6368;--line:#dadce0;
+        --bg:#fff;--bg-soft:#f8f9fa;--dark:#202a3c;--platform:#3DDC84;--platform-bg:#e6f7ee;
+        --r:14px;--r-lg:20px;--r-xl:28px;
+        --s1:0 1px 3px rgba(60,64,67,.1),0 1px 2px rgba(60,64,67,.06);
+        --s2:0 1px 4px rgba(60,64,67,.12),0 4px 12px rgba(60,64,67,.08);
+        --s3:0 4px 16px rgba(60,64,67,.14),0 8px 28px rgba(60,64,67,.10);
+        --s4:0 8px 28px rgba(60,64,67,.18);
+        --t:.25s ease;--max:1200px;
+        --font:"Google Sans","Inter","Helvetica Neue","PingFang SC","Microsoft YaHei","Segoe UI",Roboto,Arial,sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:80px}
+    body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.65;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}svg{display:block}
+    .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 24px}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:500;line-height:1;padding:10px 22px;border-radius:999px;cursor:pointer;border:1.5px solid transparent;transition:all var(--t);white-space:nowrap}
+    .btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+    .btn:active{transform:scale(.97)}
+    .btn-lg{padding:14px 32px;font-size:15px}
+    .btn-primary{background:var(--blue);color:#fff;box-shadow:var(--s1)}
+    .btn-primary:hover{background:#1557b0;box-shadow:var(--s2);transform:translateY(-2px)}
+    .btn-outline{border-color:var(--line);color:var(--blue);background:#fff}
+    .btn-outline:hover{background:var(--blue-bg);border-color:var(--blue)}
+    .btn-ghost{color:var(--ink-soft);background:transparent;border-color:transparent}
+    .btn-ghost:hover{background:var(--bg-soft)}
+    .btn-sm{padding:7px 16px;font-size:13px}
+
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:saturate(200%) blur(16px);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+    .navbar.scrolled{border-color:rgba(218,220,224,.7);box-shadow:0 1px 4px rgba(60,64,67,.08)}
+    .nav-in{max-width:var(--max);margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:24px}
+    .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:20px}
+    .brand-logo{display:block;width:auto;height:51px;object-fit:contain}
+    .brand-dot{color:var(--blue)}
+    .nav-links{display:flex;gap:2px;margin-left:8px}
+    .nav-link{font-size:14px;color:var(--ink-soft);font-weight:500;padding:7px 12px;border-radius:8px;transition:all .2s}
+    .nav-link:hover{background:var(--bg-soft);color:var(--blue)}
+    .nav-link.active{color:var(--blue);background:var(--blue-bg)}
+    .nav-acts{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px}
+    .nav-toggle span{width:20px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+
+    .hero{padding:140px 0 86px;overflow:hidden;background:radial-gradient(circle at 78% 18%,rgba(61,220,132,.18),transparent 34%),linear-gradient(180deg,#fff,#f8fafc);position:relative}
+    .hero-bg{position:absolute;inset:0;pointer-events:none}
+    .hero-bg::after{content:"";position:absolute;right:3%;top:112px;width:480px;height:480px;background-image:linear-gradient(rgba(32,33,36,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(32,33,36,.045) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(circle,rgba(0,0,0,.75),transparent 72%)}
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.3}
+    .b1{width:500px;height:500px;background:var(--platform-bg);top:-140px;right:-100px}
+    .b2{width:380px;height:380px;background:#d4edda;bottom:-120px;left:-80px}
+    .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--platform);background:var(--platform-bg);padding:5px 12px;border-radius:999px;margin-bottom:18px}
+    .eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--platform);box-shadow:0 0 0 3px rgba(61,220,132,.15)}
+    .hero-title{font-size:48px;font-weight:700;letter-spacing:-1.5px;line-height:1.12}
+    .grad{background:linear-gradient(135deg,var(--platform),#00C853 45%,#3DDC84);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{font-size:17px;color:var(--muted);margin:20px 0 28px;max-width:560px;line-height:1.7}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:13px;color:var(--muted)}
+    .hero-badge svg{color:var(--yellow)}
+
+    .hero-visual{position:relative;min-height:520px;display:flex;align-items:center;justify-content:center}
+    .hero-orbit{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(61,220,132,.16),transparent 62%);border:1px solid rgba(61,220,132,.18)}
+    .device-frame{position:relative;width:100%;max-width:282px;margin:0 auto;aspect-ratio:9/16;border-radius:32px;background:#202124;padding:9px;box-shadow:0 18px 45px rgba(32,33,36,.22),0 3px 12px rgba(61,220,132,.18);z-index:2}
+    .device-frame::before{content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);width:76px;height:5px;border-radius:999px;background:#3c4043;z-index:4}
+    .device-screen{width:100%;height:100%;border-radius:24px;overflow:hidden;background:linear-gradient(160deg,#f7fff9 0%,#eef7ff 54%,#f8f9fa 100%);display:flex;flex-direction:column;padding:34px 16px 16px;position:relative}
+    .device-screen::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 12%,rgba(61,220,132,.24),transparent 30%);pointer-events:none}
+    .phone-top{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;font-size:11px;color:var(--ink-soft);font-weight:700}
+    .phone-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.78);box-shadow:var(--s1);font-size:10px;color:#137333}
+    .install-card{position:relative;background:rgba(255,255,255,.88);border:1px solid rgba(218,220,224,.7);border-radius:18px;padding:14px;box-shadow:var(--s2);backdrop-filter:blur(10px)}
+    .install-card h3{font-size:17px;line-height:1.2;margin-bottom:5px}
+    .install-card p{font-size:11px;color:var(--muted);line-height:1.45}
+    .progress-track{height:7px;background:var(--platform-bg);border-radius:999px;overflow:hidden;margin:13px 0 8px}
+    .progress-bar{height:100%;width:78%;border-radius:999px;background:linear-gradient(90deg,var(--platform),#00c853)}
+    .deploy-list{position:relative;display:grid;gap:8px;margin-top:14px}
+    .deploy-item{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.72);border:1px solid rgba(218,220,224,.58);border-radius:14px;padding:9px 10px;font-size:11px;color:var(--ink-soft)}
+    .deploy-item b{font-size:12px;color:var(--ink);display:block;line-height:1.2}
+    .deploy-dot{width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--platform-bg);color:#137333;flex-shrink:0}
+    .app-grid{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:auto;padding-top:14px}
+    .app-cell{aspect-ratio:1;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;box-shadow:0 5px 12px rgba(32,33,36,.12)}
+    .floating-card{position:absolute;z-index:3;background:rgba(255,255,255,.92);border:1px solid rgba(218,220,224,.7);border-radius:18px;box-shadow:var(--s3);backdrop-filter:blur(14px);padding:14px 16px}
+    .hero-status{left:0;top:76px;display:flex;align-items:center;gap:10px;min-width:178px}
+    .hero-status strong{display:block;font-size:20px;line-height:1;color:#137333}
+    .hero-status span{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+    .hero-status .ring{width:42px;height:42px;border-radius:50%;background:conic-gradient(var(--platform) 86%,var(--platform-bg) 0);display:flex;align-items:center;justify-content:center;color:#137333;font-size:12px;font-weight:700}
+    .hero-status .ring::before{content:"";position:absolute;width:30px;height:30px;background:#fff;border-radius:50%}
+    .hero-status .ring em{position:relative;font-style:normal}
+    .hero-flow{right:-10px;bottom:76px;min-width:210px}
+    .mini-flow{display:grid;gap:10px}
+    .mini-flow-row{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--ink-soft)}
+    .mini-flow-row i{width:8px;height:8px;border-radius:50%;background:var(--platform);box-shadow:0 0 0 4px var(--platform-bg);flex-shrink:0}
+    .mini-flow-row span{font-weight:600;color:var(--ink)}
+
+    .sec{padding:80px 0}
+    .sec-soft{background:linear-gradient(180deg,#f8f9fa,#fff)}
+    .sec-head{max-width:680px;margin:0 auto 48px;text-align:center}
+    .sec-title{font-size:36px;font-weight:700;letter-spacing:-.8px;line-height:1.18}
+    .sec-desc{font-size:17px;color:var(--muted);margin-top:16px;line-height:1.65}
+
+    .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+    .feat-card{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);padding:28px 22px;text-align:center;transition:transform var(--t),box-shadow var(--t)}
+    .feat-card:hover{transform:translateY(-5px);box-shadow:var(--s3)}
+    .feat-ic{width:52px;height:52px;border-radius:14px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+    .feat-card h3{font-size:17px;font-weight:600;margin-bottom:8px}
+    .feat-card p{font-size:13.5px;color:var(--muted);line-height:1.55}
+
+    .dist-panel{position:relative;background:#fff;border:1px solid rgba(218,220,224,.72);border-radius:var(--r-xl);box-shadow:var(--s2);padding:28px;overflow:hidden}
+    .dist-panel::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(61,220,132,.08),transparent 42%);pointer-events:none}
+    .dist-steps{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .dist-step{position:relative;background:linear-gradient(180deg,#fff,#fbfffd);border:1px solid rgba(218,220,224,.78);border-radius:20px;padding:22px 18px 20px;min-height:236px;transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
+    .dist-step:hover{transform:translateY(-5px);box-shadow:var(--s3);border-color:rgba(61,220,132,.42)}
+    .dist-step::after{content:"";position:absolute;top:44px;right:-25px;width:32px;height:2px;background:linear-gradient(90deg,var(--platform),rgba(61,220,132,0));z-index:2}
+    .dist-step:last-child::after{display:none}
+    .dist-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:999px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;margin-bottom:14px}
+    .dist-dot{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;border:1px solid rgba(61,220,132,.35);background:var(--platform-bg);color:#137333;transition:all var(--t)}
+    .dist-step:hover .dist-dot{transform:scale(1.06) rotate(-3deg);background:var(--platform);color:#fff}
+    .dist-dot svg{width:24px;height:24px}
+    .dist-step h4{font-size:17px;font-weight:700;margin-bottom:8px;line-height:1.25}
+    .dist-step p{font-size:13.5px;color:var(--muted);line-height:1.55}
+    .dist-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+    .dist-tags span{font-size:11px;color:#137333;background:var(--platform-bg);border-radius:999px;padding:4px 8px;font-weight:600}
+    .dist-summary{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .dist-summary-item{background:var(--bg-soft);border:1px solid rgba(218,220,224,.7);border-radius:16px;padding:14px 16px}
+    .dist-summary-item b{display:block;font-size:14px;margin-bottom:4px}
+    .dist-summary-item span{font-size:12.5px;color:var(--muted);line-height:1.45}
+
+    .mp-mock{background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--s2)}
+    .mp-header{padding:20px 24px;border-bottom:1px solid var(--line)}
+    .mp-search{display:flex;align-items:center;gap:10px;background:var(--bg-soft);border:1px solid var(--line);border-radius:28px;padding:8px 16px}
+    .mp-search svg{color:var(--muted);flex-shrink:0}
+    .mp-search input{border:none;background:transparent;outline:none;font-size:14px;color:var(--ink);width:100%;font-family:var(--font)}
+    .mp-search input::placeholder{color:var(--muted)}
+    .mp-body{padding:24px}
+    .mp-apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+    .mp-app{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r);border:1px solid var(--line);transition:all var(--t)}
+    .mp-app:hover{border-color:rgba(61,220,132,.3);box-shadow:var(--s1)}
+    .mp-app-ic{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
+    .mp-app-info{min-width:0}
+    .mp-app-info b{font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mp-app-info span{font-size:12px;color:var(--muted)}
+    .mp-install{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;background:var(--platform-bg);color:#1B5E20;border:none;cursor:pointer;transition:all var(--t);white-space:nowrap;flex-shrink:0}
+    .mp-install:hover{background:var(--platform);color:#fff}
+
+    .spec-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid rgba(218,220,224,.6);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--s1)}
+    .spec-table tr{border-bottom:1px solid var(--line)}
+    .spec-table tr:last-child{border-bottom:none}
+    .spec-table td{padding:14px 20px;font-size:14px}
+    .spec-table td:first-child{font-weight:600;color:var(--ink-soft);width:35%;background:var(--bg-soft)}
+    .spec-table td:last-child{color:var(--muted)}
+
+    .cta{padding:80px 0;background:linear-gradient(135deg,var(--platform),#00C853);position:relative;overflow:hidden}
+    .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(255,255,255,.1),transparent 60%);pointer-events:none}
+    .cta-in{position:relative;z-index:1;text-align:center;color:#fff}
+    .cta-in h2{font-size:38px;font-weight:700;letter-spacing:-1px;line-height:1.15}
+    .cta-in p{font-size:18px;margin:18px 0 32px;color:rgba(255,255,255,.9);max-width:560px;margin-inline:auto;line-height:1.6}
+    .cta-acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    .footer{background:var(--bg-soft);border-top:1px solid rgba(218,220,224,.5);padding:56px 0 32px}
+    .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+    .footer-brand p{font-size:13px;color:var(--muted);line-height:1.6}
+    .footer-brand .ft{margin-top:10px;color:var(--ink-soft);font-weight:500}
+    .footer-col h5{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:14px;text-transform:uppercase;letter-spacing:.3px}
+    .footer-col a{display:block;font-size:13.5px;color:var(--muted);padding:5px 0;transition:color var(--t)}
+    .footer-col a:hover{color:var(--blue)}
+    .footer-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px;padding-top:20px;border-top:1px solid rgba(218,220,224,.4);font-size:12px;color:var(--muted)}
+
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s cubic-bezier(.4,0,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    @media(max-width:900px){
+        .hero-in{grid-template-columns:1fr}
+        .hero-visual{min-height:500px;margin-top:18px}
+        .device-frame{max-width:246px}
+        .hero-status{left:8%}
+        .hero-flow{right:5%}
+        .feat-grid{grid-template-columns:repeat(2,1fr)}
+        .dist-panel{padding:22px}
+        .dist-steps{grid-template-columns:repeat(2,1fr);gap:14px}
+        .dist-step::after{display:none}
+        .dist-summary{grid-template-columns:1fr}
+        .footer-grid{grid-template-columns:1fr 1fr}
+        .hero-title{font-size:36px}
+        .sec-title{font-size:28px}
+        .sec{padding:64px 0}
+    }
+    @media(max-width:640px){
+        .nav-links{display:none}
+        .nav-links.open{display:flex;flex-direction:column;position:absolute;top:64px;left:0;right:0;background:#fff;padding:12px 20px 16px;border-bottom:1px solid var(--line);box-shadow:var(--s2);gap:4px}
+        .nav-acts .btn-ghost{display:none}
+        .nav-toggle{display:flex}
+        .hero{padding:110px 0 60px}
+        .hero-title{font-size:30px}
+        .hero-sub{font-size:15.5px}
+        .hero-visual{min-height:430px;transform:scale(.92);transform-origin:top center;margin-bottom:-28px}
+        .floating-card{display:none}
+        .feat-grid{grid-template-columns:1fr}
+        .mp-apps{grid-template-columns:1fr}
+        .dist-panel{padding:16px}
+        .dist-steps{grid-template-columns:1fr}
+        .dist-step{min-height:auto}
+        .footer-grid{grid-template-columns:1fr}
+        .cta{padding:60px 0}
+        .cta-in h2{font-size:26px}
+    }
+    @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+    
+
+    /* ===== Global title bold override: make section/main headings bold ===== */
+    h1,h2,h3,h4,h5,h6,
+    .hero-title,.sec-title,.section-title,.page-title,.block-title,.card-title,
+    .module-title,.feature-title,.panel-title,.area-title,.part-title,
+    [class*='-title'],[class*='_title']{font-weight:700!important}
+
+
+    
+
+/* ===== Benchmark white pill navigation sync ===== */
+:root {
+  --benchmark-nav-bg: rgba(255, 255, 255, .94);
+  --benchmark-nav-line: rgba(218, 225, 235, .92);
+  --benchmark-nav-text: #182337;
+  --benchmark-nav-muted: #5f6f86;
+  --benchmark-nav-brand: #0f172a;
+  --benchmark-nav-accent: #1a73e8;
+  --benchmark-nav-accent-2: #44b7ff;
+  --benchmark-nav-hover: rgba(26, 115, 232, .08);
+  --benchmark-nav-shadow: 0 18px 48px rgba(15, 23, 42, .12), 0 2px 10px rgba(15, 23, 42, .06);
+}
+
+html { scroll-padding-top: 112px; }
+body { padding-top: 0 !important; }
+
+body > header.navbar,
+body > header.topbar,
+body > header.nav,
+body > header:first-child:has(.wrap.nav),
+body > nav.nav {
+  position: fixed !important;
+  top: 18px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  max-width: min(var(--max, 1180px), calc(100% - 32px)) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 64px !important;
+  padding: 0 !important;
+  border: 1px solid var(--benchmark-nav-line) !important;
+  border-radius: 999px !important;
+  background: var(--benchmark-nav-bg) !important;
+  backdrop-filter: saturate(180%) blur(22px) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(22px) !important;
+  box-shadow: var(--benchmark-nav-shadow) !important;
+  overflow: visible !important;
+}
+
+body > header.navbar.scrolled,
+body > header.topbar.scrolled,
+body > header.nav.scrolled {
+  border-color: rgba(203, 213, 225, .98) !important;
+  box-shadow: 0 20px 54px rgba(15, 23, 42, .14), 0 2px 12px rgba(15, 23, 42, .08) !important;
+}
+
+body > header.navbar .nav-in,
+body > header.navbar .nav-inner,
+body > header.topbar > .nav,
+body > header.nav .nav__inner,
+body > header:first-child > .wrap.nav,
+body > nav.nav,
+body > nav.nav > .nav-inner,
+body > nav.nav > .container.nav-inner,
+body > .nav > .nav-inner,
+body > .nav > .container.nav-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 64px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 14px 10px 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body > nav.nav {
+  justify-content: space-between !important;
+  padding: 10px 14px 10px 18px !important;
+}
+
+body > header.navbar .brand,
+body > header.topbar .brand,
+body > header.nav .nav__brand,
+body > header:first-child .brand,
+body > nav.nav .brand,
+body > .nav .brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: var(--benchmark-nav-brand) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 42px !important;
+  flex: 0 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .brand svg,
+body > header.navbar .brand-mark,
+body > header.navbar .logo,
+body > header.topbar .brand-mark,
+body > header.topbar .logo,
+body > header.nav .nav__logo,
+body > header:first-child .logo,
+body > nav.nav .brand-mark,
+body > nav.nav .logo,
+body > .nav .brand-mark,
+body > .nav .logo {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  place-items: center !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  box-shadow: 0 10px 24px rgba(26, 115, 232, .18) !important;
+  font-weight: 950 !important;
+  overflow: hidden !important;
+}
+
+body > header.navbar .brand svg * { display: initial !important; }
+body > header.nav .nav__logo .dot { display: none !important; }
+body > header.topbar .brand-mark::after,
+body > header:first-child .logo::after,
+body > nav.nav .brand-mark::after,
+body > .nav .brand-mark::after { display: none !important; }
+
+body > header.navbar .brand-text,
+body > header.navbar .brand-dot,
+body > header.topbar .brand span,
+body > header.nav .nav__name,
+body > header.nav .nav__name-suffix,
+body > header:first-child .brand span,
+body > nav.nav .brand span,
+body > .nav .brand span,
+body > .nav .brand b,
+body > .nav .brand .sh {
+  color: var(--benchmark-nav-brand) !important;
+  font-weight: 800 !important;
+}
+body > header.navbar .brand-dot,
+body > header.nav .nav__name-suffix,
+body > .nav .brand .sh { color: var(--benchmark-nav-accent) !important; }
+
+body > header.navbar .nav-links,
+body > header.topbar .nav-links,
+body > header.topbar > nav.nav,
+body > header.nav .nav__links,
+body > header:first-child nav,
+body > nav.nav .nav-links,
+body > nav.nav > .nav-links,
+body > .nav .nav-links {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: var(--benchmark-nav-muted) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+body > header.navbar .nav-links::-webkit-scrollbar,
+body > header.topbar .nav-links::-webkit-scrollbar,
+body > header.topbar > nav.nav::-webkit-scrollbar,
+body > header.nav .nav__links::-webkit-scrollbar,
+body > header:first-child nav::-webkit-scrollbar,
+body > nav.nav .nav-links::-webkit-scrollbar,
+body > .nav .nav-links::-webkit-scrollbar { display: none; }
+
+body > header.navbar .nav-link,
+body > header.navbar .nav-links a,
+body > header.topbar .nav-links a,
+body > header.topbar > nav.nav a,
+body > header.nav .nav__link,
+body > header:first-child nav a,
+body > nav.nav .nav-links a,
+body > nav.nav > .nav-links a,
+body > .nav .nav-links a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--benchmark-nav-muted) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  min-height: 38px !important;
+  padding: 0 13px !important;
+  border-radius: 999px !important;
+  transition: color .22s ease, background .22s ease, transform .22s ease !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body > header.navbar .nav-link:hover,
+body > header.navbar .nav-link.active,
+body > header.navbar .nav-links a:hover,
+body > header.navbar .nav-links a.active,
+body > header.topbar .nav-links a:hover,
+body > header.topbar .nav-links a.active,
+body > header.topbar > nav.nav a:hover,
+body > header.topbar > nav.nav a.active,
+body > header.nav .nav__link:hover,
+body > header.nav .nav__link.active,
+body > header:first-child nav a:hover,
+body > header:first-child nav a.active,
+body > nav.nav .nav-links a:hover,
+body > nav.nav .nav-links a.active,
+body > .nav .nav-links a:hover,
+body > .nav .nav-links a.active {
+  color: var(--benchmark-nav-accent) !important;
+  background: var(--benchmark-nav-hover) !important;
+  transform: translateY(-1px) !important;
+}
+
+body > header.navbar .nav-actions,
+body > header.navbar .nav-acts,
+body > header.topbar .nav-acts,
+body > header:first-child .nav-cta {
+  margin-left: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: 0 0 auto !important;
+}
+
+body > header.navbar .nav-actions .btn,
+body > header.navbar .nav-acts .btn,
+body > header.topbar .btn,
+body > header.nav .nav__cta,
+body > header:first-child .nav-cta .btn,
+body > header.topbar > nav.nav .nav-cta,
+body > header.topbar > .nav-links .nav-cta,
+body > nav.nav .nav-cta,
+body > .nav .nav-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 42px !important;
+  border: 1px solid rgba(26, 115, 232, .16) !important;
+  border-radius: 999px !important;
+  padding: 0 17px !important;
+  background: linear-gradient(135deg, var(--benchmark-nav-accent), var(--benchmark-nav-accent-2)) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 12px 26px rgba(26, 115, 232, .20) !important;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease !important;
+  white-space: nowrap !important;
+}
+
+body > header.navbar .nav-actions .btn:hover,
+body > header.navbar .nav-acts .btn:hover,
+body > header.topbar .btn:hover,
+body > header.nav .nav__cta:hover,
+body > header:first-child .nav-cta .btn:hover,
+body > header.topbar > nav.nav .nav-cta:hover,
+body > header.topbar > .nav-links .nav-cta:hover,
+body > nav.nav .nav-cta:hover,
+body > .nav .nav-cta:hover {
+  transform: translateY(-2px) !important;
+  filter: saturate(1.08) !important;
+  box-shadow: 0 16px 34px rgba(26, 115, 232, .28) !important;
+}
+
+body > header.navbar .nav-actions .btn-ghost,
+body > header.navbar .nav-acts .btn-ghost,
+body > header:first-child .nav-cta .btn.text,
+body > header:first-child .nav-cta .btn.ghost {
+  background: rgba(248, 250, 252, .9) !important;
+  color: var(--benchmark-nav-accent) !important;
+  border-color: rgba(26, 115, 232, .14) !important;
+  box-shadow: none !important;
+}
+body > header.navbar .nav-actions .btn-ghost:hover,
+body > header.navbar .nav-acts .btn-ghost:hover,
+body > header:first-child .nav-cta .btn.text:hover,
+body > header:first-child .nav-cta .btn.ghost:hover {
+  background: var(--benchmark-nav-hover) !important;
+  color: #1557b0 !important;
+}
+
+.nav-toggle,
+.nav__toggle,
+.menu {
+  border: 1px solid var(--benchmark-nav-line) !important;
+  background: #ffffff !important;
+  color: var(--benchmark-nav-text) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, .08) !important;
+}
+.nav-toggle span,
+.nav__toggle span { background: var(--benchmark-nav-text) !important; }
+
+@media (max-width: 980px) {
+  body > header.navbar,
+  body > header.topbar,
+  body > header.nav,
+  body > header:first-child:has(.wrap.nav),
+  body > nav.nav {
+    top: 10px !important;
+    width: min(100% - 24px, var(--max, 1180px)) !important;
+    max-width: min(100% - 24px, var(--max, 1180px)) !important;
+    border-radius: 24px !important;
+  }
+  body > header.navbar .nav-in,
+  body > header.navbar .nav-inner,
+  body > header.topbar > .nav,
+  body > header.nav .nav__inner,
+  body > header:first-child > .wrap.nav,
+  body > nav.nav,
+  body > nav.nav > .nav-inner,
+  body > nav.nav > .container.nav-inner,
+  body > .nav > .nav-inner,
+  body > .nav > .container.nav-inner {
+    min-height: 58px !important;
+    padding: 8px 12px 8px 14px !important;
+  }
+  body > header.navbar .nav-links,
+  body > header.topbar .nav-links,
+  body > header.topbar > nav.nav,
+  body > header.nav .nav__links,
+  body > header:first-child nav,
+  body > nav.nav .nav-links,
+  body > .nav .nav-links {
+    display: none !important;
+  }
+  body > header.navbar .nav-links.open,
+  body > header.topbar .nav-links.open,
+  body > header.topbar > nav.nav.open,
+  body > header.nav .nav__links.open,
+  body > header:first-child nav.open,
+  body > nav.nav .nav-links.open,
+  body > .nav .nav-links.open {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px !important;
+    border: 1px solid var(--benchmark-nav-line) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: var(--benchmark-nav-shadow) !important;
+  }
+  body > header.navbar .nav-links.open a,
+  body > header.topbar .nav-links.open a,
+  body > header.topbar > nav.nav.open a,
+  body > header.nav .nav__links.open a,
+  body > header:first-child nav.open a,
+  body > nav.nav .nav-links.open a,
+  body > .nav .nav-links.open a {
+    min-height: 42px !important;
+    justify-content: flex-start !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  html { scroll-padding-top: 90px; }
+  body > header.navbar .nav-actions .btn-ghost,
+  body > header.navbar .nav-acts .btn-ghost,
+  body > header.topbar .btn,
+  body > header:first-child .nav-cta .btn:not(:last-child),
+  body > nav.nav .nav-cta,
+  body > .nav .nav-cta { display: none !important; }
+}
+/* ===== End benchmark white pill navigation sync ===== */
+
+    </style>
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <div class="nav-in">
+                        <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh website">
+              <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+            </a>
+            <nav class="nav-links" id="navLinks">
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#distribution" class="nav-link">Dist Flow</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#marketplace" class="nav-link">Marketplace</a>
+            </nav>
+            <div class="nav-acts">
+                <a href="portal.html#platforms" class="btn btn-ghost btn-sm">← Back to Multi-end</a>
+                <a href="#distribution" class="btn btn-primary btn-sm">Explore Distribution</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span></div>
+            <div class="container hero-in">
+                <div>
+                    <span class="eyebrow">Android Endpoint Distribution</span>
+                    <h1 class="hero-title">Distribute apps to<br><span class="grad">every Android device</span></h1>
+                    <p class="hero-sub">Quickly distribute OORT applications to Android phones and tablets through APK signing, enterprise app stores, and MDM silent installation. Deeply integrate native capabilities such as biometrics, FCM push, and Material You themes.</p>
+                    <div class="hero-cta">
+                        <a href="#distribution" class="btn btn-primary btn-lg">Explore Distribution</a>
+                        <a href="portal.html#platforms" class="btn btn-outline btn-lg">View Other Platforms</a>
+                    </div>
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor"><path d="M10 1l2.39 4.84L18 6.71l-4 3.9.94 5.5L10 13.47l-4.94 2.64.94-5.5-4-3.9 5.61-.87L10 1z"/></svg>
+                        Supports Android 8.0+ · APK signing · MDM silent installation
+                    </div>
+                </div>
+                <div class="hero-visual" aria-label="Android enterprise app distribution diagram">
+                    <div class="hero-orbit" aria-hidden="true"></div>
+                    <div class="floating-card hero-status" aria-hidden="true">
+                        <div class="ring"><em>86%</em></div>
+                        <div><strong>12.8k</strong><span>devices deployed</span></div>
+                    </div>
+                    <div class="device-frame">
+                        <div class="device-screen">
+                            <div class="phone-top"><span>OORT App Marketplace</span><span class="phone-pill">● Managed Device</span></div>
+                            <div class="install-card">
+                                <h3>Ticket System 3.2.1</h3>
+                                <p>Signature verification passed. Pushing to Android devices in batches.</p>
+                                <div class="progress-track"><div class="progress-bar"></div></div>
+                                <p>Canary batch B · Estimated completion in 6 minutes</p>
+                            </div>
+                            <div class="deploy-list">
+                                <div class="deploy-item"><span class="deploy-dot">✓</span><div><b>APK/AAB Signed</b><span>Enterprise certificate · v4 Scheme</span></div></div>
+                                <div class="deploy-item"><span class="deploy-dot">↗</span><div><b>MDM Silent Install</b><span>Intune / Knox / Workspace ONE</span></div></div>
+                                <div class="deploy-item"><span class="deploy-dot">🔔</span><div><b>FCM Update Reminder</b><span>Reach by organization and device tags</span></div></div>
+                            </div>
+                            <div class="app-grid">
+                                <div class="app-cell" style="background:var(--blue)">📊</div>
+                                <div class="app-cell" style="background:var(--green)">💬</div>
+                                <div class="app-cell" style="background:var(--red)">📁</div>
+                                <div class="app-cell" style="background:var(--purple)">🎥</div>
+                                <div class="app-cell" style="background:var(--orange)">📋</div>
+                                <div class="app-cell" style="background:var(--platform)">🔐</div>
+                                <div class="app-cell" style="background:var(--blue)">🗓️</div>
+                                <div class="app-cell" style="background:var(--yellow)">📝</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floating-card hero-flow" aria-hidden="true">
+                        <div class="mini-flow">
+                            <div class="mini-flow-row"><i></i><span>Build & Sign</span> Auto validation</div>
+                            <div class="mini-flow-row"><i></i><span>Policy Groups</span> Canary release</div>
+                            <div class="mini-flow-row"><i></i><span>Install Receipts</span> Real-time tracking</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" id="overview">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Platform Overview</span>
+                    <h2 class="sec-title">Android endpoint: an open and flexible enterprise mobile foundation</h2>
+                    <p class="sec-desc">Android provides OORT.sh with an open and flexible mobile foundation. With APK signing, enterprise app stores, and MDM device management, teams can achieve broad application distribution and device control.</p>
+                </div>
+                <div class="feat-grid reveal">
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--platform-bg);color:var(--platform)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                        </div>
+                        <h3>Material You</h3>
+                        <p>Adaptive themes aligned with the system UI style.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--green-bg);color:var(--green)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3>APK Signing</h3>
+                        <p>Automatic signing with enterprise certificates ensures secure distribution.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--red-bg);color:var(--red)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3"/></svg>
+                        </div>
+                        <h3>FCM Push</h3>
+                        <p>Firebase Cloud Messaging delivers real-time messages.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--purple-bg);color:var(--purple)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                        </div>
+                        <h3>Split-screen Multitasking</h3>
+                        <p>Supports split-screen mode and concurrent multi-window operation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec sec-soft" id="distribution">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Distribution Workflow</span>
+                    <h2 class="sec-title">Close the Android distribution loop from build to receipt</h2>
+                    <p class="sec-desc">Connect signing, inspection, canary release, push, and installation receipts into a traceable workflow that supports both self-service enterprise store installation and MDM silent deployment.</p>
+                </div>
+                <div class="dist-panel reveal">
+                    <div class="dist-steps">
+                        <div class="dist-step">
+                            <span class="dist-num">01</span>
+                            <div class="dist-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg></div>
+                            <h4>Build and Sign</h4>
+                            <p>After uploading APK/AAB, automatically perform version identification, enterprise certificate signing, channel package generation, and integrity verification.</p>
+                            <div class="dist-tags"><span>APK/AAB</span><span>v3/v4 Signing</span></div>
+                        </div>
+                        <div class="dist-step">
+                            <span class="dist-num">02</span>
+                            <div class="dist-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                            <h4>Security and Compliance</h4>
+                            <p>Scan high-risk permissions, SDK risks, vulnerable dependencies, and privacy inventories to generate auditable release admission results.</p>
+                            <div class="dist-tags"><span>Permission Review</span><span>Risk Scan</span></div>
+                        </div>
+                        <div class="dist-step">
+                            <span class="dist-num">03</span>
+                            <div class="dist-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-8-8 18-2-7-8-3z"/><path d="M11 14l4-4"/></svg></div>
+                            <h4>Policy-based Distribution</h4>
+                            <p>Push to enterprise app stores by organization, role, device tag, or canary batch, while synchronizing MDM silent installation policies.</p>
+                            <div class="dist-tags"><span>Enterprise Store</span><span>MDM Policy</span></div>
+                        </div>
+                        <div class="dist-step">
+                            <span class="dist-num">04</span>
+                            <div class="dist-dot"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M9 12l2 2 4-4"/></svg></div>
+                            <h4>Installation Receipts</h4>
+                            <p>Track downloads, installations, failure retries, and version coverage in real time to form device-level closed-loop operations reports.</p>
+                            <div class="dist-tags"><span>Status Receipts</span><span>Coverage</span></div>
+                        </div>
+                    </div>
+                    <div class="dist-summary">
+                        <div class="dist-summary-item"><b>Controlled Release</b><span>Supports canary release, targeted release, forced upgrades, and device-tag-based batch pushes.</span></div>
+                        <div class="dist-summary-item"><b>Dual-channel Installation</b><span>Users can self-install in the enterprise store, while managed devices can install silently through MDM.</span></div>
+                        <div class="dist-summary-item"><b>End-to-end Tracking</b><span>Status is recorded from package signing to successful installation, helping operations teams review and improve.</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" id="features">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Platform Features</span>
+                    <h2 class="sec-title">Deep integration with native Android capabilities</h2>
+                    <p class="sec-desc">The OORT Android endpoint fully uses the Android ecosystem to provide an open, secure, and customizable mobile experience.</p>
+                </div>
+                <div class="feat-grid reveal">
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--blue-bg);color:var(--blue)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                        </div>
+                        <h3>Biometrics</h3>
+                        <p>Fingerprint and face recognition for secure, fast login.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--red-bg);color:var(--red)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                        </div>
+                        <h3>FCM Push</h3>
+                        <p>Firebase push notifications deliver messages instantly to users.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--green-bg);color:var(--green)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 010 18"/><path d="M12 7v5l3 3"/></svg>
+                        </div>
+                        <h3>Material You</h3>
+                        <p>Dynamic theme colors blend with the system visual style.</p>
+                    </div>
+                    <div class="feat-card">
+                        <div class="feat-ic" style="background:var(--purple-bg);color:var(--purple)">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                        </div>
+                        <h3>Split-screen Multitasking</h3>
+                        <p>Supports split-screen, picture-in-picture, and other multi-window modes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec sec-soft" id="marketplace">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">App Marketplace Integration</span>
+                    <h2 class="sec-title">A Material Design-style app marketplace</h2>
+                    <p class="sec-desc">On Android, the OORT App Marketplace follows Material Design 3 guidelines to provide a familiar and consistent user experience.</p>
+                </div>
+                <div class="mp-mock reveal">
+                    <div class="mp-header">
+                        <div class="mp-search">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                            <input type="text" placeholder="Search Android apps..." readonly>
+                        </div>
+                    </div>
+                    <div class="mp-body">
+                        <div class="mp-apps">
+                            <div class="mp-app"><div class="mp-app-ic" style="background:var(--blue)">📊</div><div class="mp-app-info"><b>Data Dashboard</b><span>Data analytics</span></div><button class="mp-install">Install</button></div>
+                            <div class="mp-app"><div class="mp-app-ic" style="background:var(--green)">💬</div><div class="mp-app-info"><b>Instant Messaging</b><span>Team collaboration</span></div><button class="mp-install">Install</button></div>
+                            <div class="mp-app"><div class="mp-app-ic" style="background:var(--red)">📁</div><div class="mp-app-info"><b>Cloud Drive Service</b><span>File management</span></div><button class="mp-install">Install</button></div>
+                            <div class="mp-app"><div class="mp-app-ic" style="background:var(--purple)">🎥</div><div class="mp-app-info"><b>Video Meeting</b><span>Remote collaboration</span></div><button class="mp-install">Install</button></div>
+                            <div class="mp-app"><div class="mp-app-ic" style="background:var(--orange)">📋</div><div class="mp-app-info"><b>Ticket System</b><span>Approval workflow</span></div><button class="mp-install">Install</button></div>
+                            <div class="mp-app"><div class="mp-app-ic" style="background:var(--platform)">🔐</div><div class="mp-app-info"><b>Electronic Signature</b><span>Secure signing</span></div><button class="mp-install">Install</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" id="tech">
+            <div class="container">
+                <div class="sec-head reveal">
+                    <span class="eyebrow">Technical Requirements</span>
+                    <h2 class="sec-title">Android endpoint deployment conditions</h2>
+                    <p class="sec-desc">The following are the technical conditions and environment requirements for deploying the OORT Android endpoint.</p>
+                </div>
+                <div class="reveal">
+                    <table class="spec-table">
+                        <tr><td>Minimum OS Version</td><td>Android 8.0 (API 26)+</td></tr>
+                        <tr><td>Supported Devices</td><td>Phones, tablets, foldable devices</td></tr>
+                        <tr><td>Development Languages</td><td>Kotlin 1.9+ / Java 11+</td></tr>
+                        <tr><td>Signing Method</td><td>APK Signature Scheme v3 / v4</td></tr>
+                        <tr><td>MDM Support</td><td>VMware Workspace ONE, Samsung Knox, Microsoft Intune</td></tr>
+                        <tr><td>Push Service</td><td>FCM (Firebase Cloud Messaging)</td></tr>
+                        <tr><td>Distribution Methods</td><td>Enterprise store / MDM silent installation / Direct download</td></tr>
+                        <tr><td>Security Capabilities</td><td>BiometricPrompt, Keystore, SafetyNet Attestation</td></tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container cta-in reveal">
+                <h2>Start Android Endpoint Distribution</h2>
+                <p>Quickly distribute your enterprise applications to every Android device and enjoy full-lifecycle management capabilities from the OORT platform.</p>
+                <div class="cta-acts">
+                    <a href="portal.html#platforms" class="btn btn-white btn-lg">View Other Platforms</a>
+                    <a href="index.html" class="btn btn-ghost-white btn-lg">Explore Platform Capabilities</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                                <a target="_blank" rel="noopener" href="https://sh.oortcloudsmart.com" class="brand" aria-label="Visit the OORT.sh website">
+                  <img src="oortshlogo.png" alt="OORT.sh" class="brand-logo" width="204" height="51" decoding="async">
+                </a>
+                <p>Developer deployment platform OORT.sh<br>Android endpoint distribution · App marketplace integration</p>
+                <p class="ft">Open, flexible, and widely compatible.</p>
+            </div>
+            <div class="footer-col"><h5>Endpoint Platforms</h5><a href="platform-ios.html">iOS</a><a href="platform-android.html">Android</a><a href="platform-harmony.html">HarmonyOS</a><a href="platform-desktop.html">OortCloud Desktop</a><a href="platform-axi.html">AxI</a></div>
+            <div class="footer-col"><h5>More Platforms</h5><a href="platform-claw.html">OortClaw Local Claw</a><a href="platform-web.html">PC Web</a><a href="platform-miniprogram.html">Mini Program</a><a href="platform-h5.html">Mobile H5</a></div>
+            <div class="footer-col"><h5>Get Started</h5><a href="portal.html">Multi-end Coverage</a><a href="portal.html#visibility">Visibility Management</a><a href="dev.html">Developer Docs</a><a href="index.html">Back to Home</a></div>
+        </div>
+        <div class="container footer-bot">
+            <span>© 2026 OORT.sh · Developer Deployment Platform</span>
+            <span>Android Endpoint Distribution</span>
+        </div>
+    </footer>
+
+    <script>
+    (function(){"use strict";var navbar=document.getElementById("navbar");function onScroll(){if(window.scrollY>8)navbar.classList.add("scrolled");else navbar.classList.remove("scrolled")}window.addEventListener("scroll",onScroll,{passive:true});onScroll();var toggle=document.getElementById("navToggle"),links=document.getElementById("navLinks");if(toggle&&links){toggle.addEventListener("click",function(){links.classList.toggle("open")});links.addEventListener("click",function(e){if(e.target.classList.contains("nav-link"))links.classList.remove("open")})}var reveals=document.querySelectorAll(".reveal");if("IntersectionObserver" in window){var ro=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");ro.unobserve(e.target)}})},{threshold:.08,rootMargin:"0px 0px -20px 0px"});reveals.forEach(function(el){ro.observe(el)})}else{reveals.forEach(function(el){el.classList.add("in")})}var sections=document.querySelectorAll("main section[id]"),nm={};document.querySelectorAll(".nav-link").forEach(function(link){var id=link.getAttribute("href").slice(1);nm[id]=link});if("IntersectionObserver" in window&&sections.length){var so=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){var id=e.target.getAttribute("id");Object.keys(nm).forEach(function(k){nm[k].classList.toggle("active",k===id)})}})},{threshold:.3,rootMargin:"-80px 0px -40% 0px"});sections.forEach(function(sec){so.observe(sec)})}})();
+    </script>
+</body>
+</html>
